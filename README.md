@@ -13,4 +13,4 @@ Format: Full name | GitHub name | Student ID
 * Front End: HTML/CSS/JS
 * Back End: MERN Structure (not final)
 # Description/ Objective/ Core Features
-TBD
+We will implement a simplified version of Stack Overflow (Q&A website).
