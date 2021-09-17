@@ -10,6 +10,7 @@ Format: Full name | GitHub name | Student ID
 * Shawn Gorman | gormshaw23 | 40157925
 * Lyuba Georgieva | lyubageorgieva | 40173739
 # Languages & Techniques
-TBD
+* Front End: HTML/CSS/JS
+* Back End: MERN Structure (not final)
 # Description/ Objective/ Core Features
 TBD
