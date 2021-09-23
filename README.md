@@ -3,7 +3,7 @@
 Format: Full name | GitHub name | Student ID
 * Allan Paul Lopez | allanation | 40000945
 * Matthieu Pourrat | MatthieuPourrat | 40089209 
-* Argiro Skokos | RGlovesyou | 40126415
+* Argiro Skokos | SimplyRed900 | 40126415
 * Nicholas Werugia | NicholasWahome | 40131956
 * Kenny Dao | KungFuKennyOG | 40166523 
 * Rudy Zoghaib | gucciz7 | 40025399
