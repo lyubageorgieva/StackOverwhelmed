@@ -9,8 +9,19 @@ Format: Full name | GitHub name | Student ID
 * Rudy Zoghaib | gucciz7 | 40025399
 * Shawn Gorman | gormshaw23 | 40157925
 * Lyuba Georgieva | lyubageorgieva | 40173739
+# Objective
+Implement a simplified version of Stack Overflow (Q&A website).
+# Description
+Stack Overflow is a platform used to be able to ask or respond to coding questions in a professional matter by programmers.   
+# Core Features
+3 Core Features
+* Asking and answering questions
+* Voting on the answers
+* Accepting the best answer
 # Languages & Techniques
-* Front End: HTML/CSS/JS
-* Back End: MERN Structure (not final)
-# Description/ Objective/ Core Features
-We will implement a simplified version of Stack Overflow (Q&A website).
+Using web devolpment framework MERN stack
+* Front End: HTML/CSS/React.JS
+* Back End: Node.JS/Express.JS
+* Database: MongoDB
+
+
