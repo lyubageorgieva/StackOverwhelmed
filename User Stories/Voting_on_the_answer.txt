@@ -3,8 +3,8 @@ I want a two features to upvote: one normal upvote and one super upvote
 so that I can upvote or super upvote a comment.
 
 As a user
-I want a hierchary of the best comments
-so that I can know which to trust.
+I want to know the number of downvotes on a comment
+so that I can know if the comment is trustworthy.
 
 As a user
 I want the most upvoted comment to be prioritized
