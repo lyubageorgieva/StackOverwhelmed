@@ -1,0 +1,4 @@
+As a user, I want to ask a question on the forum so that someone can help me with the inquiery I ask.
+As a user, I want to be able to answer to questions posted by other members so that they have an answer.
+As a user, I want to be able to reply to other answers to obtain a cascading chat so that everybody can reply to the question.
+As a user, I want to be able to add code, or multimedia content to my question so that other users can better understand my problem.
