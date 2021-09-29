@@ -1,0 +1,14 @@
+As a user
+of the StackOverFlow mock, I want to be able to give an upvote/downvote feature to
+all comments so that the highest ranking comment can be seen first
+and therefore be accepted to help the largest amount of people.
+
+As a user
+Every button implemented should be functioning statically (via javascript).
+i.e: An upvote should increment the score by 1 in order to keep track of the best answer.
+
+As a user
+Our database must be able to reflect all changes made by the user in the front end.
+i.e: If a comment has 4 votes and someone downvotes to 3 votes, our database should be able to see those changes in order to make 
+sure front/back end systems works. 
+
