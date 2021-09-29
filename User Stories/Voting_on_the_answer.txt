@@ -8,4 +8,4 @@ so that I can know if the comment is trustworthy.
 
 As a user
 I want the most upvoted comment to be prioritized
-so that I can get general idea of what most people think.
+so that I can get a general idea of what most people think.
