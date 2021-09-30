@@ -1,0 +1,7 @@
+As a user, I want to have a access to a homepage, because I want to be able to see all the user features/pages clearly.
+
+As a user, I want to be able to sign up, because I wish to save my questions and responses under my account name.
+
+As a user, I want to be able to login, because I wish to access my account and all the data/features associated with it.
+
+As a user, I want to have a navigation bar, because I wish to navigate throughout the website with ease.
