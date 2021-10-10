@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConcordiaFlow | Student Q&A Platform</title>
     <link rel="stylesheet" href="myStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -15,11 +16,11 @@
 
             <div class="navbar">
                 <div class="logo">
-                    <img src="images/unknown.png" alt="" width="200px">
+                    <img src="images/Screenshot_2021-10-09_181223-removebg-preview.png" alt="" width="300px">
 
                 </div>
                 <nav>
-                    <ul>
+                    <ul id="MenuItems">
                         <li><a href="">Home</a></li>
                         <li><a href="">Questions</a></li>
                         <li><a href="">About</a></li>
@@ -27,6 +28,7 @@
                         <li><a href="">Account</a></li>
                     </ul>
                 </nav>
+                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
             <div class="row">
                 <div class="col-2">
@@ -42,7 +44,145 @@
         </div>
     </div>
 
+    <!-- Core Features -->
+    <div class="features">
+        <div class="small-container">
+            <h1 class="row">The Core Features</h1>
+            <div class="row">
+                <div class="col-3">
+                    <img src="images/—Pngtree—question mark pattern_6070996.png" alt="">
+                    <h3>Q&A<br>System</h3>
+                </div>
+                <div class="col-3">
+                    <img src="images/png-transparent-check-mark-computer-icons-checkmark-miscellaneous-angle-text-thumbnail-removebg-preview.png" alt="">
+                    <h3>Answer<br>Voting</h3>
+                </div>
+                <div class="col-3">
+                    <img src="images/30-300999_happy-icons-happy-face-icon-black-and-white-removebg-preview.png" alt="">
+                    <h3>Best<br>Answers</h3>
+                </div>
+            </div>
+        </div>
+        <!--  More description -->
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <h1>Official Q&A <br>For The Community</h1>
+                        <p>Thousands of Concordia Students around the globe <br> use Concordia Flow for increased productivity</p>
+                        <a href="" class="btn">Sign Up &#8594; </a>
+                    </div>
+                    <div class="col-2">
+                        <img src="images/EKaYlfKWkAENcD1-removebg-preview.png" alt="">
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonial">
+        <div class="small-container">
+            <h1 class="row">Some Testimonials</h1>
+            <div class="row">
+                <div class="col-3">
+                    <p>" Students should help solve the hardest questions, the unknowns, where being familiar with how the problem was built is essential. But we don’t want to keep answering solved problems over and over again. That’s where Concordia Flow
+                        really helps."</p>
+                    <img src="images/Carey_price.jpg" alt="">
+                    <h3>Carey Price</h3>
+                </div>
+                <div class="col-3">
+                    <p>
+                        " Concordia Flow has been a resource for our entire institution. Not only for students to solve problems, it’s also enabled our professors to answer technical questions that help them close issues. "
+                    </p>
+                    <img src="images/geoff_molson_headshot.jpg" alt="">
+                    <h3>Geoff Molson</h3>
+                </div>
+                <div class="col-3">
+                    <p>" What we love about Concordia Flow is that it’s a very dynamic tool…there’s just so many ways to use this as a liaison between different students and different knowledge bases. "</p>
+                    <img src="images/vaul8inwolg5axbehf2b.jpg" alt="">
+                    <h3>Valerie Plante</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- brands/sponsors -->
+
+    <div class="brands">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-5">
+                    <img src="images/intact.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/villemtl.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/desjardins.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/image-removebg-preview.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/EKaYlfKWkAENcD1-removebg-preview.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and iOs mobile phones.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/Screenshot_2021-10-09_181223-removebg-preview.png" alt="">
+                    <p>For more than 100 years,<br>ConcordiaFlow’s story has always been about innovation</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Moodle</li>
+                        <li>myConcordia</li>
+                        <li>WebWork</li>
+                        <li>COLE Concordia</li>
+                        <li>Udemy</li>
+
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Youtube</li>
+                        <li>Instagram</li>
+                        <li>Snapchat</li>
+                        <li>TikTok</li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- for dynamic menu -->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight = "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
     <!-- Path -->
     <!--C:\Users\gorma\OneDrive\Desktop\SOEN341\index.html  -->
 </body>
