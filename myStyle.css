@@ -77,7 +77,7 @@ p {
 
 .btn {
     display: inline-block;
-    background: #FF9999;
+    background: #FFB085;
     color: #fff;
     padding: 8px 30px;
     margin: 30px 0;
@@ -86,7 +86,7 @@ p {
 }
 
 .header {
-    background: radial-gradient(#FF9999, #FFC8C8);
+    background: radial-gradient(#FFB085, #90AACB);
 }
 
 .header .row {
