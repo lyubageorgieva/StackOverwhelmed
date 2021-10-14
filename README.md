@@ -10,7 +10,7 @@ Format: Full name | GitHub name | Student ID
 * Shawn Gorman | gormshaw23 | 40157925
 * Lyuba Georgieva | lyubageorgieva | 40173739
 # Team Lead
-TBD
+* Lyuba Georgieva | lyubageorgieva | 40173739
 # Objective
 Implement a simplified version of Stack Overflow (Q&A website).
 # Description
