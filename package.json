@@ -4,7 +4,8 @@
   "description": "Implement a simplified version of Stack Overflow (Q&A website).",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+    "server": "nodemon server"
   },
   "repository": {
     "type": "git",
