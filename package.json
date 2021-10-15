@@ -1,0 +1,33 @@
+{
+  "name": "soen341",
+  "version": "1.0.0",
+  "description": "Implement a simplified version of Stack Overflow (Q&A website).",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyubageorgieva/SOEN341.git"
+  },
+  "author": "Allan Paul Lopez, Matthieu Pourrat, Argiro Skokos, Nicholas Werugia, Kenny Dao, Rudy Zoghaib, Shawn Gorman, Lyuba Georgieva.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyubageorgieva/SOEN341/issues"
+  },
+  "homepage": "https://github.com/lyubageorgieva/SOEN341#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "gravatar": "^1.8.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.11",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "nodemon": "^2.0.13"
+  }
+}
