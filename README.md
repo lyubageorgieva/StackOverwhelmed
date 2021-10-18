@@ -9,6 +9,8 @@ Format: Full name | GitHub name | Student ID
 * Rudy Zoghaib | gucciz7 | 40025399
 * Shawn Gorman | gormshaw23 | 40157925
 * Lyuba Georgieva | lyubageorgieva | 40173739
+# Team Lead
+* Lyuba Georgieva | lyubageorgieva | 40173739
 # Objective
 Implement a simplified version of Stack Overflow (Q&A website).
 # Description
@@ -18,6 +20,8 @@ Stack Overflow is a platform used to be able to ask or respond to coding questio
 * Asking and answering questions
 * Voting on the answers
 * Accepting the best answer
+# Extra Features
+TBD
 # Languages & Techniques
 Using web development framework MERN stack
 * Front End: HTML/CSS/React.JS
