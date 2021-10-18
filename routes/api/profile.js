@@ -87,6 +87,35 @@ router.post('/',[auth,
 
   }
 );
+// @route       GET api/profile
+// @description Display All Profiles
+// @access      Public
+router.get('/',async (req, res) =>{
+try{
+    const profiles = await Profile.find().populate('user', ['name','avatar']);
+    res.json(profiles);
+} catch(error){
+    console.error(error.message);
+    res.status(500).send('Server Err');
+}
+});
+
+// @route       GET api/profile/user/user_ID
+// @description Get profile by user ID
+// @access      Public
+router.get('/user/:user_ID',async (req, res) =>{
+    try{
+        const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name','avatar']);
+        if(!profile) return res.status(400).json({msg: 'Profile not found'});
+        res.json(profile);
+    } catch(error){
+        console.error(error.message);
+        if(err.kind == 'ObjectID'){
+           return res.status(400).json({msg: 'Profile not found'});
+        }
+        res.status(500).send('Server Err');
+    }
+    });
 // export route
 module.exports = router;
     
