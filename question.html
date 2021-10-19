@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Overwhelmed | Student Q&A Platform</title>
+    <link rel="stylesheet" href="myStyle.css">
+    <link rel="stylesheet" href="feedStyle.css">
+    <link rel="stylesheet" href="questionStyle.css">
+    <script src="tags.js"></script>
+    <link rel="icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">  
+                    <a href="index.html"><img src="images/1.svg" alt="" width="300px"></a>
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="question.html">Q&A</a></li>
+                        <li><a href="">Login</a></li>
+                        <li><a href="signUp.html">Sign Up</a></li>
+                    </ul>
+                </nav>
+                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Question -->
+    <div id="Feed">
+        <h1 class="row">Ask A Question</h1>
+        <div class="row q1">
+            <form action="/action_page.php">
+                <label for="title">Title</label>
+                <input type="text" class="title col_right" name="title" maxlength="280" placeholder="What's your question?"><br><br>
+                <textarea id="details" name="details" rows="10" cols="100"></textarea><br><br>
+                <div class="row tags-box">
+                    <ul id="myUL">
+                        <input type="text" id="myInput" placeholder="Add a tag..." maxlength="16" >
+                    </ul>
+                </div>
+                
+                <div id="myDIV" class="row">
+                    <span onclick="newElement()" class="addBtn">Add</span>
+                </div>
+
+                
+                <label for="img">Select image:</label>
+                <input type="file" id="img" name="img" accept="audio/*,video/*,image/">
+                <br><br>
+                <input type="submit" value="Submit question"/>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and iOs mobile phones.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/1.svg" alt="">
+                    <p>For more than 100 years,<br>Stack Overwhelmed's story has always been about innovation</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Moodle</li>
+                        <li>myConcordia</li>
+                        <li>WebWork</li>
+                        <li>COLE Concordia</li>
+                        <li>Udemy</li>
+
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Youtube</li>
+                        <li>Instagram</li>
+                        <li>Snapchat</li>
+                        <li>TikTok</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- for dynamic menu -->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight = "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
+</body>
+
+</html>
