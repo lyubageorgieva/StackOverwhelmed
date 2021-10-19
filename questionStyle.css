@@ -1,0 +1,78 @@
+body{
+    background-color: #FEF1E6;
+}
+
+#details, .title{
+    background-color: #FEF1E6;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.tags-box{
+    background-color: #F9D5A7;
+    border-radius: 5px;
+}
+
+/* Remove margins and padding from the list */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the list items */
+ul#myUL li, #myInput {
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #FEF1E6;
+    font-size: 18px;
+    transition: 0.2s;
+    display: inline;
+    border-radius: 5px;
+    margin-left: 5px;
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Style the close button */
+.close {
+    position: relative;
+    padding: 5px;
+    background: #FFB085;
+    font-size: 18px;
+    transition: 0.2s;
+    display: inline;
+    border-radius: 5px;
+    margin-left: 5px;
+    /* make the list items unselectable */
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.close:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Style the "Add" button */
+.addBtn, input[type=submit] {
+    padding: 10px;
+    width: 25%;
+    background: #FEF1E6;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.addBtn:hover, input[type=submit]:hover{
+    background-color: #FFB085;
+}
