@@ -6,31 +6,7 @@ const ProfileSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    bio: {
-        type: String,
-        required: true
-    },
-    githubname: {
-        type: String
-    },
-     social: {
-         youtube:{
-             type: String
-         },
-         twitter:{
-             type: String
-         },
-         facebook:{
-             type: String
-         },
-         linkedin:{
-             type: String
-         },
-         instagram: {
-             type: String
-         }
-     },
 });
 
-// Exporting Module
+//Exporting Mod
 module.exports = Profile = mongoose.model('profile',ProfileSchema);
