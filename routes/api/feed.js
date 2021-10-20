@@ -25,12 +25,12 @@ async  (req, res) => {
     try{
 const user = await User.findById(req.user.id).select('-password');
 
-    const newFeedPOST = {
+    const newFeedPOST = new Feed({
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
         user: request.user.id
-    }
+    });
 
     const feedP = await newFeedPOST.save();
 
@@ -151,7 +151,7 @@ router.get('/:id', auth,async (req,res) => {
 // @description upvote on a post
 // @access      Private        
 
-router.put('/votes/:id', auth, async (req,res) =>{
+router.put('/comment/votes/:id', auth, async (req,res) =>{                   //this forces only comments or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -159,7 +159,7 @@ router.put('/votes/:id', auth, async (req,res) =>{
             // Check if the post has been voted on by this user
            
 
-            if(feedposts.votes.filter(vote => vote.user.toString() === req.user.id).lenght>0){          //if greater than 0, then theyve used their vote
+            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).lenght>0){          //if greater than 0, then theyve used their vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
                                 }
@@ -195,7 +195,7 @@ router.put('/votes/:id', auth, async (req,res) =>{
 // @description undownvote on a post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/unvote/:id', auth, async (req,res) =>{
+router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -228,6 +228,7 @@ router.put('/unvote/:id', auth, async (req,res) =>{
 
 
 
+//HERE WE WILL ALLOW ANSWERS TO SPECIFIC POSTS
 
 
 
@@ -235,7 +236,106 @@ router.put('/unvote/:id', auth, async (req,res) =>{
 
 
 
+// @route       POST api/feed/comment/:id
+// @description Respond or comment on post
+// @access      Private        
 
+router.post('/comment/:id',[auth,[
+    check('text','Test Required').not().isEmpty()
+]],
+async  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+
+
+    try{
+const user = await User.findById(req.user.id).select('-password');
+const feedcom = await Feed.findById(req.params.id);
+
+
+
+    const newcomment =  {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: request.user.id
+    }
+
+
+    feedcom.comments.unshift(newcomment);
+ 
+    await feedcom.save();
+
+    res.json(feedcom.comments);
+
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+    
+
+});
+
+
+
+
+
+
+
+// @route       DELETE api/feed/comment/:id/:COMMENT_ID             //need to find which comment to delete
+// @description Respond or comment on post
+// @access      Private        
+
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+
+
+
+    try{
+
+        const feedcom = await Feed.findById(req.params.id);  
+
+        //get comment from post (pull out comment)
+
+        const comment = feedcom.comments.find(comment => comment.id === req.params.comment_id);
+
+
+            // Make sure comment exists
+
+        if(!comment){
+            return res.status(404).json({msg: 'Comment does not exist'});
+        }
+
+        //make sure that the user who made the comment is the one deleting it
+
+
+        if(comment.user.toString() !== req.user.id){
+            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        }
+
+        //get index to remove comment
+        const removeIndex = feedcom.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
+
+        feedcom.comments.splice(removeIndex, 1);
+
+     await feedcom.save();              //saves this value back into the database linked to the post id
+
+     res.json(feedcom.comments);
+
+
+    }catch(error)
+    {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+
+}
+    
+
+);
 
 
 
