@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
 const auth = require('../../middleware/auth');
+const { check, validationResult} = require('express-validator');
 const Profile = require('../../modules/Profile');
 const User = require('../../modules/User');
 
@@ -33,13 +33,33 @@ router.get('/me',auth, async(req, res) => {
 router.post(
     '/',
     [auth,[
+        check('Bio', 'Bio is required').not().isEmpty(),
+        check('githubname', 'Githubname is required').not().isEmpty(),
+        check('University', 'University is required').not().isEmpty(),
+        check('Field', 'Field is required').not().isEmpty(),
+        check('Year', 'Year is required').not().isEmpty(),
 
     ]
 ],
 async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty())
-    return res.status(400).json({errors: errors.array});
+    return res.status(400).json({errors: errors.array()});
+    const {
+        bio,
+        githubname,
+        University,
+        Field,
+        Year
+    } = req.body;
+    // build profile object
+    const profileFields ={};
+    profileFields.user = req.user.id;
+    if(bio) profileFields.Bio = req.user.id;
+    if(githubname) profileFields.githubname = githubname;
+    if(University) profileFields.University = University;
+    if(Field) profileFields.Field = Field;
+    if(Year) profileFields.Year = year;
 }
 )
 
