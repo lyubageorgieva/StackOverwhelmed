@@ -13,7 +13,7 @@ const Profile = require('../../modules/Profile');
 // @description Test route
 // @access      Private             //this section is for posts to be added to the feed by a user
 router.post('/',[auth,[
-    check('text','Test Required').not().isEmpty()
+    check('text','Text Required').not().isEmpty()
 ]],
 async  (req, res) => {
     const errors = validationResult(req);
@@ -21,15 +21,14 @@ async  (req, res) => {
         return res.status(400).json({errors: errors.array()});
     }
 
-
     try{
-const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
 
     const newFeedPOST = new Feed({
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
-        user: request.user.id
+        user: req.user.id
     });
 
     const feedP = await newFeedPOST.save();
@@ -91,12 +90,12 @@ router.get('/:id', auth,async (req,res) => {
 
                 res.json(feedpost);
 
-    } catch (error)
+    } catch (err)
     {
         console.error(err.message);
 
 
-        if (error.kind === 'ObjectId'){
+        if (err.kind === 'ObjectId'){
             return res.status(404).json({msg: 'Post not found'});
         }
 
@@ -134,9 +133,9 @@ router.get('/:id', auth,async (req,res) => {
 
 
 
-    } catch (error)
+    } catch (err)
     {
-        if (error.kind === 'ObjectId'){
+        if (err.kind === 'ObjectId'){
             return res.status(404).json({msg: 'Post not found'});
         }
         console.error(err.message);
@@ -159,10 +158,10 @@ router.put('/comment/votes/:id', auth, async (req,res) =>{                   //t
             // Check if the post has been voted on by this user
            
 
-            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).lenght>0){          //if greater than 0, then theyve used their vote
+            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
-                                }
+            }
             feedpost.votes.unshift({user: req.user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
@@ -171,8 +170,8 @@ router.put('/comment/votes/:id', auth, async (req,res) =>{                   //t
 
 
     }
-    catch (error){
-        console.error(error.message);
+    catch (err){
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -203,7 +202,7 @@ router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this f
             // Check if the post has been voted on by this user
            
 
-            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).lenght===0){          //if greater than 0, then theyve used their downvote
+            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
@@ -218,8 +217,8 @@ router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this f
 
 
     }
-    catch (error){
-        console.error(error.message);
+    catch (err){
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -241,7 +240,7 @@ router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this f
 // @access      Private        
 
 router.post('/comment/:id',[auth,[
-    check('text','Test Required').not().isEmpty()
+    check('text','Text Required').not().isEmpty()
 ]],
 async  (req, res) => {
     const errors = validationResult(req);
@@ -260,7 +259,7 @@ const feedcom = await Feed.findById(req.params.id);
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
-        user: request.user.id
+        user: req.user.id
     }
 
 
