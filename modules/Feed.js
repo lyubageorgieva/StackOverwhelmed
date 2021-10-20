@@ -1,14 +1,13 @@
 const mongoose = require ('mongoose');
 
-const Schema = mongoose.Schemal
 
-const FeedSchema = new Schema({
+const FeedSchema = new mongoose.Schema({
 
 
 
     user: {
-        type: Schema.Types.ObjectID,            //connects post to user
-        ref: 'users'
+        type: mongoose.Schema.Types.ObjectID,          //connects post to user
+        ref: 'user'
     },
 
     text: {
@@ -25,16 +24,17 @@ const FeedSchema = new Schema({
     votes: [
         {
             user: {
-                type: Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
-                ref: 'users'
+                type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                ref: 'user'
             }
         }
     ],
+    
     comments: [
         {
             user: {
-                type: Schema.Types.ObjectID,         
-                ref: 'users'
+                type: mongoose.Schema.Types.ObjectID,         
+                ref: 'user'
             } ,
             text: {
                 type: String,
