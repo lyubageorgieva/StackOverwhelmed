@@ -8,6 +8,7 @@ mongoose.connect(db);
 const connectDB = async () => {
     try {
     await mongoose.connect(db);
+    // useFindAndModify: fasle
 
     console.log('MongoDB Connected...');
     } catch(error) {
