@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Overwhelmed | Student Q&A Platform</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="myStyle.css">	
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+
+            <div class="navbar">
+                <div class="logo">
+                    <img src="images/1.svg" alt="" width="300px">
+
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="question.html">Q&A</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="signUp.html">Sign Up</a></li>
+                        <!-- <li><a href="">Account</a></li> -->
+                    </ul>
+                </nav>
+                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div class="form">
+          <div id="signup">
+            <h1>Login using your account</h1>
+
+            <form action="/" method="post">
+
+
+            <div class="field-wrap">
+              <label>
+                Email <span class="req"></span>
+              </label>
+              <input type="email"required autocomplete="off"/>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Password<span class="req"></span>
+              </label>
+			  <label class="forgot">
+				<a href="" style="color:blue ">Forgot password?
+			  </label>
+              <input type="password"required autocomplete="off"/>
+            </div>
+
+            <a href="" class="btn">LOGIN  </a>
+
+            </form>
+
+          </div>
+
+    </div> <!-- /form -->
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and iOs mobile phones.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/1.svg" alt="">
+                    <p>For more than 100 years,<br>Stack Overwhelmed's story has always been about innovation</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Moodle</li>
+                        <li>myConcordia</li>
+                        <li>WebWork</li>
+                        <li>COLE Concordia</li>
+                        <li>Udemy</li>
+
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Youtube</li>
+                        <li>Instagram</li>
+                        <li>Snapchat</li>
+                        <li>TikTok</li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- for dynamic menu -->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight = "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
+    <!-- Path -->
+    <!--C:\Users\gorma\OneDrive\Desktop\SOEN341\index.html  -->
+</body>
+
+</html>
