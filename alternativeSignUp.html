@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stack Overwhelmed | Student Q&A Platform</title>
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="myStyle.css">	
+    <link rel="stylesheet" href="signUp.css">
+    <link rel="stylesheet" href="myStyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
 </head>
 
@@ -25,7 +25,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="question.html">Q&A</a></li>
                         <li><a href="login.html">Login</a></li>
-                        <li><a href="alternativeSignUp.html">Sign Up</a></li>
+                        <li><a href="signUp.html">Sign Up</a></li>
                         <!-- <li><a href="">Account</a></li> -->
                     </ul>
                 </nav>
@@ -37,36 +37,41 @@
 
     <!-- Login Form -->
     <div class="form">
-          <div id="login">
-            <h1>Login</h1>
+        <div id="signup">
+            <h1>Sign up</h1>
 
             <form action="/" method="post">
 
-                
 
-            <div class="field-wrap">
-              <label>
-                Email <span class="req"></span>
-              </label>
-              <input type="email"required autocomplete="off"/>
-            </div>
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <label>
+                            Display Name<span class="req"></span>
+                        </label>
+                        <input type="text" required autocomplete="off" />
+                    </div>
+                </div>
 
-            <div class="field-wrap">
-              <label>
-                Password<span class="req"></span>
-              </label>
-			  <label class="forgot">
-				<a href="" style="color:blue ">Forgot password?
-			  </label>
-              <input type="password"required autocomplete="off"/>
-            </div>
+                <div class="field-wrap">
+                    <label>
+                        Email <span class="req"></span>
+                    </label>
+                    <input type="email" required autocomplete="off" />
+                </div>
 
-            <a href="" class="btn">LOGIN &#8594 </a>
-        
+                <div class="field-wrap">
+                    <label>
+                        Password<span class="req"></span>
+                    </label>
+                    <input type="password" required autocomplete="off" />
+                </div>
+                <small>By signing up, you agree to our terms of service and privacy policy.</small>
+                <a href="" class="btn">LOGIN &#8594 </a>
+
 
             </form>
 
-          </div>
+        </div>
 
     </div> <!-- /form -->
 
@@ -123,7 +128,7 @@
         }
     </script>
     <!-- Path -->
-    <!--C:\Users\gorma\OneDrive\Desktop\SOEN341\index.html  -->
+    <!--C:\Users\gorma\OneDrive\Desktop\SOEN341\signup.html  -->
 </body>
 
 </html>
