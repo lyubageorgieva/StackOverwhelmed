@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from '../../img/1.svg';
 import Menu from '../../img/menu.png';
 import navImg from '../../img/—Pngtree—hand-painted business handshake png free_4424701.png';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
     return (
@@ -11,29 +12,18 @@ export const Navbar = () => {
 
                 <div className="navbar">
                     <div className="logo">  
-                        <a href="index.html"><img src={Logo} alt="Logo" width="300px" /></a>
+                        <Link to="/"><img src={Logo} alt="Logo" width="300px" /></Link>
                     </div>
                     <nav>
                         <ul id="MenuItems">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="question.html">Q&A</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="signUp.html">Sign Up</a></li>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="!#">Q&A</Link></li>
+                            <li><Link to="/login">Login</Link></li>
+                            <li><Link to="/signup">Sign Up</Link></li>
                         </ul>
                     </nav>
                     <img src={Menu} className="menu-icon" onclick="menutoggle()" />
                 </div>
-                <div className="row">
-                    <div className="col-2">
-                        <h1>Questions Taken <br />To The Next Level</h1>
-                        <p>A local platform building the definitive collection of Student Questions & Answers</p>
-                        <a href="" className="btn">Discover Now &#8594; </a>
-                    </div>
-                    <div className="col-2">
-                        <img src={navImg} alt="Navbar Image" />
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
