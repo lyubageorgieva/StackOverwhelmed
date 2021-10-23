@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 // import axios from 'axios';
 
 
@@ -21,25 +22,6 @@ export const SignUp = () => {
         }
         else {
             console.log('SUCCESS');
-            // const newUser = {
-            //     name,
-            //     email,
-            //     password
-            // }
-            // try {
-            //     const config = {
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         }
-            //     }
-
-            //     const body = JSON.stringify(newUser);
-
-            //     const res = await axios.post('/api/users', body, config);
-            //     console.log(res.data);
-            // } catch (err) {
-            //     console.error(err.response.data);
-            // }
         }
     }
 
@@ -80,8 +62,8 @@ export const SignUp = () => {
                         <small>By signing up, you agree to our terms of service and privacy policy.</small>
                         <input className="btn" type="submit" value="Sign Up &#8594;" />
                     </form>
-                    <h4>Already have an account? 
-                        
+                    <h4>Already have an account?    
+                        <Link id="linkAuth" to='/login'>  Login</Link>
                     </h4>
                 </div>
             </div> 

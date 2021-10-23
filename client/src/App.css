@@ -437,9 +437,13 @@ textarea {
   margin-bottom: 40px;
 }
 
-.forgot {
+#forgot {
   color: blue;
   font-size: 12px;
   position: absolute;
   right: 0px;
+}
+
+#linkAuth {
+  color: #ffb085;
 }
