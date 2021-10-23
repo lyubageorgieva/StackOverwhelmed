@@ -1,7 +1,6 @@
 import React from 'react'
 import Logo from '../../img/1.svg';
 import Menu from '../../img/menu.png';
-import navImg from '../../img/—Pngtree—hand-painted business handshake png free_4424701.png';
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
@@ -22,7 +21,7 @@ export const Navbar = () => {
                             <li><Link to="/signup">Sign Up</Link></li>
                         </ul>
                     </nav>
-                    <img src={Menu} className="menu-icon" onclick="menutoggle()" />
+                    <img src={Menu} className="menu-icon" alt="menu" onclick="menutoggle()" />
                 </div>
             </div>
         </div>
