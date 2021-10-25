@@ -447,3 +447,9 @@ textarea {
 #linkAuth {
   color: #ffb085;
 }
+
+.alert-danger {
+  padding-top: 20px;
+  font-size: larger;
+  color: red;
+}

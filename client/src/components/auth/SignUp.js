@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
+import Alert from '../layout/Alert'; 
 
 
 export const SignUp = ({ setAlert }) => {
@@ -60,6 +61,7 @@ export const SignUp = ({ setAlert }) => {
                                 Confirm Password<span className="req"></span>
                             </label>
                             <input type="password" name="passwordConfirm"  value={passwordConfirm} onChange={e => onChange(e)} required autocomplete="off" minLength="8"/>
+                            <Alert />
                         </div>
                         <small>By signing up, you agree to our terms of service and privacy policy.</small>
                         <input className="btn" type="submit" value="Sign Up &#8594;" />
