@@ -2,11 +2,12 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
+import { signup } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import Alert from '../layout/Alert'; 
 
 
-export const SignUp = ({ setAlert }) => {
+
+export const SignUp = ({ setAlert, signup }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -24,7 +25,7 @@ export const SignUp = ({ setAlert }) => {
             setAlert('Passwords are not matching', 'danger');
         }
         else {
-            console.log('SUCCESS');
+            signup({ name, email, password });
         }
     }
 
@@ -61,7 +62,6 @@ export const SignUp = ({ setAlert }) => {
                                 Confirm Password<span className="req"></span>
                             </label>
                             <input type="password" name="passwordConfirm"  value={passwordConfirm} onChange={e => onChange(e)} required autocomplete="off" minLength="8"/>
-                            <Alert />
                         </div>
                         <small>By signing up, you agree to our terms of service and privacy policy.</small>
                         <input className="btn" type="submit" value="Sign Up &#8594;" />
@@ -76,7 +76,10 @@ export const SignUp = ({ setAlert }) => {
 };
 
 SignUp.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    signup: PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(SignUp);
+export default connect(null, 
+    { setAlert, signup }
+    )(SignUp);

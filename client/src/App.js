@@ -4,7 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
-// import Alert from './components/layout/Alert'; //previous alert possition for SignUp.js
+import Alert from './components/layout/Alert'; //previous alert possition for SignUp.js
 
 //REDUX imports
 import { Provider } from 'react-redux';
@@ -19,7 +19,8 @@ const App = () => (
       <Fragment>
         <Navbar />
         <section className="container">
-          {/* <Alert /> //previous alert possition for SignUp.js */}
+          <Alert /> 
+          {/* //previous alert possition for SignUp.js */}
 
           <Switch>
             <Route exact path="/signup" component={SignUp} />
