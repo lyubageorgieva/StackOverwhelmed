@@ -21,7 +21,7 @@ Stack Overflow is a platform used to be able to ask or respond to coding questio
 * Voting on the answers
 * Accepting the best answer
 # Extra Features
-TBD
+* Adding comments to answers
 # Languages & Techniques
 Using web development framework MERN stack
 * Front End: HTML/CSS/React.JS
