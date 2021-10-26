@@ -106,4 +106,4 @@ export const indexFeatures = () => {
     )
 }
 
-export default indexFeatures
+export default indexFeatures;
