@@ -29,6 +29,14 @@ const FeedSchema = new mongoose.Schema({
             }
         }
     ],
+    supervotes: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectID,            // user can only supervote an answer to a question they asked
+                ref: 'user'
+            }
+        }
+    ],
     
     comments: [
         {

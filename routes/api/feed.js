@@ -25,7 +25,7 @@ async  (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
 
     const newFeedPOST = new Feed({
-        text: req.body.text,
+        text: req.body.maxChar(text),
         name: user.name,
         avatar: user.avatar,
         user: req.user.id
@@ -61,7 +61,7 @@ router.get('/', auth,async (req,res) => {
                 });
                 res.json(feedposts);
 
-    } catch (error)
+    } catch (err)
     {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -256,7 +256,7 @@ const feedcom = await Feed.findById(req.params.id);
 
 
     const newcomment =  {
-        text: req.body.text,
+        text: req.body.maxChar(text),
         name: user.name,
         avatar: user.avatar,
         user: req.user.id
@@ -335,6 +335,135 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
     
 
 );
+
+
+
+function maxChar(element)
+{
+    var max_chars = 280;
+
+    if(element.value.length > max_chars) {
+        element.value = element.value.substr(0, max_chars);
+        return res.status(401).json({msg: 'Text has surpassed limit of characters'});
+
+    }
+}
+
+
+
+
+
+
+
+
+//this section is for the question asker/user who posted their query can choose the best answer/comment
+
+
+// @route       PUT api/feed/supervotes/:id
+// @description supervote only allowed for user who asked the original question
+// @access      Private        
+
+router.put('/comment/supervotes/User/:id', auth, async (req,res) =>{                   //this isolates the supervotes to a user who made the original post
+    try{
+
+            const feedpost = await Feed.findById(req.params.id);
+
+            // Check if the post has been voted on by this user
+           
+            
+
+            
+
+
+
+
+
+            if(user.feedP.id = user.feedpost.id){          //if the user's feedpost id matches then they are the author of the original post
+                                                            //they are permitted to supervote a comment
+            //
+            if(feedpost.supervotes.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their supervote
+
+                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
+            }
+            feedpost.supervotes.unshift({user: req.user.id});
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.supervotes);
+        }
+
+
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+//the following will remove the supervote or superdownnvote and save that value back into the array
+
+
+
+
+
+
+
+
+// @route       PUT api/feed/unsupervote/User/:id
+// @description Unsupervote a comment on your post
+// @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
+
+router.put('/comment/unsupervote/User/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
+    try{
+
+            const feedpost = await Feed.findById(req.params.id);
+
+            // Check if the post has been voted on by this user
+           
+
+
+            if(user.feedP.id = user.feedpost.id){ 
+
+
+            if(feedpost.supervotes.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+
+                    return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
+                                }
+            
+               const removeIndex = feedpost.supervotes.map(vote => vote.user.toString()).indexOf(req.user.id);
+
+               feedpost.supervotes.splice(removeIndex, 1);
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.supervotes);
+
+
+    }
+}
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
