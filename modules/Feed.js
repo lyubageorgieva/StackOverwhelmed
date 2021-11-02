@@ -29,13 +29,18 @@ const FeedSchema = new mongoose.Schema({
             }
         }
     ],
-    supervotes: [
+    bestanswer:[
+
         {
             user: {
-                type: mongoose.Schema.Types.ObjectID,            // user can only supervote an answer to a question they asked
+                type: mongoose.Schema.Types.ObjectID,
                 ref: 'user'
             }
+
         }
+
+
+
     ],
     
     comments: [
