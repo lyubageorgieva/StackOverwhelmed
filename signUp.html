@@ -22,10 +22,10 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Q&A</a></li>
-                        <li><a href="">Login</a></li>
-                        <li><a href="">Sign Up</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="question.html">Q&A</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="signUp.html">Sign Up</a></li>
                         <!-- <li><a href="">Account</a></li> -->
                     </ul>
                 </nav>
@@ -37,8 +37,8 @@
 
     <!-- Sign Up Form -->
     <div class="form">
-          <div id="signup">
-            <h1>Sign Up</h1>
+          <div  id="signup">
+            <h1 class="account">Sign Up</h1>
 
             <form action="/" method="post">
 
@@ -64,11 +64,17 @@
               </label>
               <input type="password"required autocomplete="off"/>
             </div>
+            <div className="field-wrap">
+                <label>
+                    Confirm Password<span className="req"></span>
+                </label>
+                <input type="password" required autocomplete="off" />
+            </div>
             <small>By signing up, you agree to our terms of service and privacy policy.</small>
             <a href="" class="btn">Sign Up &#8594; </a>
 
             </form>
-
+            <h3>Did you have an account?</h3>
           </div>
 
     </div> <!-- /form -->
