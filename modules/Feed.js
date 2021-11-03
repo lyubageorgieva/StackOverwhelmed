@@ -21,7 +21,7 @@ const FeedSchema = new mongoose.Schema({
     avatar:{
         type: String
     },
-    votes: [
+    vote: [
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
@@ -29,7 +29,7 @@ const FeedSchema = new mongoose.Schema({
             }
         }
     ],
-    bestanswer:[
+    supervote:[
 
         {
             user: {

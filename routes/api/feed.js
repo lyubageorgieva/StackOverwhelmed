@@ -147,10 +147,10 @@ router.get('/:id', auth,async (req,res) => {
 
 
 // @route       PUT api/feed/votes/:id
-// @description upvote on a post
+// @description vote on a post
 // @access      Private        
 
-router.put('/comment/votes/:id', auth, async (req,res) =>{                   //this forces only comments or answers to have votes allowed
+router.put('/comment/vote/:id', auth, async (req,res) =>{                   //this forces only comments or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -191,7 +191,7 @@ router.put('/comment/votes/:id', auth, async (req,res) =>{                   //t
 
 
 // @route       PUT api/feed/undownvote/:id
-// @description undownvote on a post
+// @description unvote on a post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
 router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
@@ -256,7 +256,7 @@ const feedcom = await Feed.findById(req.params.id);
 
 
     const newcomment =  {
-        text: req.body.maxChar(text),
+        text: req.body.text,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id
@@ -324,7 +324,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
      res.json(feedcom.comments);
 
 
-    }catch(error)
+    }catch(err)
     {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -338,7 +338,15 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
 
 
-function maxChar(element)
+
+
+
+
+
+
+
+
++function maxChar(element)
 {
     var max_chars = 280;
 
@@ -350,20 +358,15 @@ function maxChar(element)
 }
 
 
+//the person who originally posted their question will be able to vote on their favorite answer
 
+ 
 
-
-
-
-
-//this section is for the question asker/user who posted their query can choose the best answer/comment
-
-
-// @route       PUT api/feed/supervotes/:id
-// @description supervote only allowed for user who asked the original question
+// @route       PUT api/feed/bestanswer/user/:id           //vote on the best response to YOUR post
+// @description vote on best response
 // @access      Private        
 
-router.put('/comment/supervotes/User/:id', auth, async (req,res) =>{                   //this isolates the supervotes to a user who made the original post
+router.put('/comment/supervote/:id', auth, async (req,res) =>{                   
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -371,29 +374,26 @@ router.put('/comment/supervotes/User/:id', auth, async (req,res) =>{            
             // Check if the post has been voted on by this user
            
             
-
+            if(user.feedP.id = user.feedpost.id){ 
             
 
 
 
 
 
-            if(user.feedP.id = user.feedpost.id){          //if the user's feedpost id matches then they are the author of the original post
-                                                            //they are permitted to supervote a comment
-            //
-            if(feedpost.supervotes.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their supervote
+            if(feedpost.bestanswer.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
+                    return res.status(400).json({msg: 'You have exceeded your limit of best answer votes for this post'});
             }
-            feedpost.supervotes.unshift({user: req.user.id});
+            feedpost.bestanswer.unshift({user: req.user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.supervotes);
-        }
+            res.json(feedpost.votes);
 
 
     }
+}
     catch (err){
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -418,7 +418,7 @@ router.put('/comment/supervotes/User/:id', auth, async (req,res) =>{            
 // @description Unsupervote a comment on your post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/comment/unsupervote/User/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
+router.put('/comment/unsupervote/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
