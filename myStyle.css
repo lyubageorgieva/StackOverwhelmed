@@ -260,7 +260,7 @@ ul {
     font-size: 14px;
 }
 
-.col-4 hover {
+.col-4:hover {
     transform: translateY(-5px);
 }
 
@@ -278,6 +278,23 @@ ul {
 
 .profile h2 {
     font-weight: bold;
+}
+
+.small-container .wtv {
+    font-size: 60px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.small-container .col-2 .profile {
+    padding: 40px 20px;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.small-container .col-2 .profile:hover {
+    transform: translateY(-5px);
 }
 
 
