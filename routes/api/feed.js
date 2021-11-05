@@ -25,10 +25,10 @@ async  (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
 
     const newFeedPOST = new Feed({
-        text: req.body.maxChar(text),
+        text: req.body.text,
         name: user.name,
         avatar: user.avatar,
-        user: req.user.id
+        user: user.id
     });
 
     const feedP = await newFeedPOST.save();
@@ -111,7 +111,7 @@ router.get('/:id', auth,async (req,res) => {
 // @description delete post from user based on their ID
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.get('/:id', auth,async (req,res) => {
+router.delete('/:id', auth,async (req,res) => {
 
 
     try{
@@ -158,15 +158,15 @@ router.put('/comment/vote/:id', auth, async (req,res) =>{                   //th
             // Check if the post has been voted on by this user
            
 
-            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their vote
+            if(feedpost.vote.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
             }
-            feedpost.votes.unshift({user: req.user.id});
+            feedpost.vote.unshift({user: req.user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.votes);
+            res.json(feedpost.vote);
 
 
     }
@@ -202,18 +202,18 @@ router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this f
             // Check if the post has been voted on by this user
            
 
-            if(feedpost.votes.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+            if(feedpost.vote.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
             
-               const removeIndex = feedpost.votes.map(vote => vote.user.toString()).indexOf(req.user.id);
+               const removeIndex = feedpost.vote.map(vote => vote.user.toString()).indexOf(req.user.id);
 
-               feedpost.votes.splice(removeIndex, 1);
+               feedpost.vote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.votes);
+            res.json(feedpost.vote);
 
 
     }
@@ -259,7 +259,7 @@ const feedcom = await Feed.findById(req.params.id);
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
-        user: req.user.id
+        user: user.id
     }
 
 
@@ -370,26 +370,22 @@ router.put('/comment/supervote/:id', auth, async (req,res) =>{
     try{
 
             const feedpost = await Feed.findById(req.params.id);
-
+            const postW = await User.findById(req.params.id);       //gets id of user
             // Check if the post has been voted on by this user
            
             
-            if(user.feedP.id = user.feedpost.id){ 
+            if(feedpost.User.id === postW){ 
             
 
-
-
-
-
-            if(feedpost.bestanswer.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of best answer votes for this post'});
             }
-            feedpost.bestanswer.unshift({user: req.user.id});
+            feedpost.supervote.unshift({user: req.user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.votes);
+            res.json(feedpost.supervote);
 
 
     }
@@ -426,22 +422,21 @@ router.put('/comment/unsupervote/:id', auth, async (req,res) =>{             //t
             // Check if the post has been voted on by this user
            
 
+            if(feedpost.supervote.user.id === user.id){
 
-            if(user.feedP.id = user.feedpost.id){ 
 
-
-            if(feedpost.supervotes.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
             
-               const removeIndex = feedpost.supervotes.map(vote => vote.user.toString()).indexOf(req.user.id);
+               const removeIndex = feedpost.supervote.map(vote => vote.user.toString()).indexOf(req.user.id);
 
-               feedpost.supervotes.splice(removeIndex, 1);
+               feedpost.supervote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.supervotes);
+            res.json(feedpost.supervote);
 
 
     }
