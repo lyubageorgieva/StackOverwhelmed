@@ -66,7 +66,7 @@ export const SignUp = ({ setAlert, signup, isAuthenticated }) => {
                             <input type="password" name="passwordConfirm"  value={passwordConfirm} onChange={e => onChange(e)} required autocomplete="off" minLength="8"/>
                         </div>
                         <small>By signing up, you agree to our terms of service and privacy policy.</small>
-                        <input className="btn" type="submit" value="Sign Up &#8594;" />
+                        <button className="btn" type="submit">Sign Up &#8594;</button>
                     </form>
                     <h4>Already have an account?    
                         <Link id="linkAuth" to='/login'>  Login</Link>
