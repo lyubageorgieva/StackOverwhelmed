@@ -63,6 +63,26 @@ const FeedSchema = new mongoose.Schema({
             },
         }
     ],
+    reply: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectID,         
+                ref: 'user'
+            } ,
+            text: {
+                type: String,
+                required: true
+
+            },
+            avatar: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            },
+        }
+    ],
     date: {
         type: Date,
         default: Date.now

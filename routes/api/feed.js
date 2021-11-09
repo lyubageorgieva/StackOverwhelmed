@@ -374,7 +374,7 @@ router.put('/comment/supervote/:id', auth, async (req,res) =>{
             // Check if the post has been voted on by this user
            
             
-            if(feedpost.User.id === postW){ 
+            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id) === postW.user.id){ 
             
 
             if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
@@ -455,7 +455,109 @@ router.put('/comment/unsupervote/:id', auth, async (req,res) =>{             //t
 
 
 
+////////////////////
+// reply on an answer to a post
+////////////////////
+// @route       POST api/feed/reply/comment/:id
+// @description reply to a comment on a post
+// @access      Private        
 
+router.post('/reply/comment/:id',[auth,[
+    check('text','Text Required').not().isEmpty()
+]],
+async  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+
+
+    try{
+const user = await User.findById(req.user.id).select('-password');
+const feedcom = await Feed.findById(req.params.id);
+
+
+
+    const newreply =  {
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: user.id
+    }
+
+
+    feedcom.reply.unshift(newreply);
+ 
+    await feedcom.save();
+
+    res.json(feedcom.reply);
+
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+    
+
+});
+
+
+
+
+
+
+
+// @route       DELETE api/feed/reply/comment/:id/:COMMENT_ID             //need to find which comment to delete
+// @description reply to comment on post
+// @access      Private        
+
+router.delete('/reply/comment/:id/:comment_id', auth, async (req, res) => {
+
+
+
+    try{
+
+        const comreply = await Feed.findById(req.params.id);  
+
+        //get comment from post (pull out comment)
+
+        const reply = comreply.reply.find(reply => reply.id === req.params.comment_id);
+
+
+            // Make sure comment exists
+
+        if(!reply){
+            return res.status(404).json({msg: 'Comment does not exist'});
+        }
+
+        //make sure that the user who made the comment is the one deleting it
+
+
+        if(reply.user.toString() !== req.user.id){
+            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        }
+
+        //get index to remove comment
+        const removeIndex = comreply.reply.map(reply => reply.user.toString()).indexOf(req.user.id);
+
+        comreply.reply.splice(removeIndex, 1);
+
+     await comreply.save();              //saves this value back into the database linked to the post id
+
+     res.json(comreply.reply);
+
+
+    }catch(err)
+    {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+
+}
+    
+
+);
 
 
 
