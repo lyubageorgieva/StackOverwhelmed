@@ -47,7 +47,7 @@ export const Login = ({ login, isAuthenticated }) => {
                             </label>
                             <input type="password" name="password" value={password} onChange={e => onChange(e)} minLength='8' required autocomplete="off"/>
                         </div>
-                        <input className="btn" type="submit" value="Login &#8594;" />
+                       <button className="btn" type="submit">Login &#8594;</button>
                     </form>
                     <h4>
                         Don't have an account? 
