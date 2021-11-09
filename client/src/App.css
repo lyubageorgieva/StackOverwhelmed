@@ -311,16 +311,23 @@ ul {
 
 /* Upvote, downvote button*/
 .col_left .up {
-  border-radius: 5px 5px 0 0;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 25px solid blue;
 }
 
 .col_left .down {
-  border-radius: 0 0 5px 5px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 25px solid red;
 }
 
 .up,
 .down {
-  background-color: #f9d5a7;
   width: 80%;
   text-align: center;
   height: 15px;
@@ -335,7 +342,6 @@ ul {
   margin-top: 3px;
   margin-bottom: 3px;
   width: 80%;
-  text-align: center;
 }
 
 /* Question and description */
