@@ -51,6 +51,7 @@ const FeedSchema = new mongoose.Schema({
             },
             commentANSW: [               
                 {
+                  
                     user: {
                         type: mongoose.Schema.Types.ObjectID,         
                         ref: 'user'
@@ -67,6 +68,14 @@ const FeedSchema = new mongoose.Schema({
                         type: Date,
                         default: Date.now
                     },
+                    comANSWvote: [
+                        {
+                            user: {
+                                type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                                ref: 'user'
+                            }
+                        }
+                    ],
                 }
                 
             ],

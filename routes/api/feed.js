@@ -600,8 +600,9 @@ async  (req, res) => {
 
     try{
 const user = await User.findById(req.user.id).select('-password');
-const feedcom = await Feed.findById(req.params.id);
-const ans = feedcom.answer.find(ans => ans.id === req.params.answer_id);
+const feedcom = await Feed.findById(req.params.id);             //feedcom is now equal to the id of the post we are looking at 
+const ans = await feedcom.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+
 
 
 // Make sure answer exists
@@ -618,8 +619,8 @@ const newcomment =  {
     user: user.id
 }
 
-
-feedcom.commentANSW.unshift(newcomment);            //adds newcomment to begining of commentANSW array 
+ans.commentANSW.unshift(newcomment);
+//feedcom.commentANSW.unshift(newcomment);            //adds newcomment to begining of commentANSW array 
 
 await feedcom.save();
 
@@ -640,44 +641,45 @@ catch (err){
 
 
 
-// @route       DELETE api/feed/answer/comment/:id/:comment_ID             
+// @route       DELETE api/feed/answer/comment/:id/:answer_id/:comment_id             
 // @description delete comment to an answer
 // @access      Private        
 
-router.delete('/answer/comment/:id/:comment_id', auth, async (req, res) => {
+router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async (req, res) => {
 
 
 
     try{
-
-        const comcomment = await Feed.findById(req.params.id);  
-
+        const user = await User.findById(req.user.id).select('-password');
+        
+        const comcomment = await Feed.findById(req.params.id);              //has post_id
+        const ans = await comcomment.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
         //get answer from post (pull out answer)
 
-        const comment = comcomment.comment.find(comment => comment.id === req.params.comment_id);
+        const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
 
 
             // Make sure answer exists
 
-        if(!comment){
+        if(!com){
             return res.status(404).json({msg: 'comment does not exist'});
         }
 
-        //make sure that the user who made the answer is the one deleting it
+        //make sure that the user who made the comment is the one deleting it
 
 
-        if(comment.user.toString() !== req.user.id){
+        if(com.user.toString() !== req.user.id){
             return res.status(401).json({msg: 'User not authorized to delete comment'});
         }
 
-        //get index to remove answer
-        const removeIndex = comcomment.comment.map(comment => comment.user.toString()).indexOf(req.user.id);
+        //get index to remove comment on answer
+        const removeIndex = ans.commentANSW.map(com => com.user.toString()).indexOf(req.user.id);
 
-        comcomment.comment.splice(removeIndex, 1);
+        ans.commentANSW.splice(removeIndex, 1);
 
      await comcomment.save();              //saves this value back into the database linked to the post id
 
-     res.json(comcomment.comment);
+     res.json(comcomment.com);
 
 
     }catch(err)
