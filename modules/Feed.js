@@ -29,21 +29,9 @@ const FeedSchema = new mongoose.Schema({
             }
         }
     ],
-    supervote:[
-
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectID,
-                ref: 'user'
-            }
-
-        }
-
-
-
-    ],
     
-    comments: [
+    
+    answer: [             
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,         
@@ -61,9 +49,57 @@ const FeedSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
-        }
-    ],
-    reply: [
+            commentANSW: [               
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,         
+                        ref: 'user'
+                    } ,
+                    text: {
+                        type: String,
+                        required: true
+        
+                    },
+                    avatar: {
+                        type: String
+                    },
+                    date: {
+                        type: Date,
+                        default: Date.now
+                    },
+                }
+                
+            ],
+        
+        ANSWvote: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                    ref: 'user'
+                }
+            }
+        ],
+    
+        supervote: [
+
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectID,
+                    ref: 'user'
+                }
+    
+            }
+    
+    
+    
+        ],
+    
+    
+    
+    
+    }
+    ],  
+    comment: [               
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,         
@@ -81,6 +117,14 @@ const FeedSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
+            Comvote: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
         }
     ],
     date: {

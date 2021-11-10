@@ -150,7 +150,7 @@ router.delete('/:id', auth,async (req,res) => {
 // @description vote on a post
 // @access      Private        
 
-router.put('/comment/vote/:id', auth, async (req,res) =>{                   //this forces only comments or answers to have votes allowed
+router.put('/answer/vote/:id', auth, async (req,res) =>{                   //this forces only answers or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -194,7 +194,7 @@ router.put('/comment/vote/:id', auth, async (req,res) =>{                   //th
 // @description unvote on a post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
+router.put('/answer/unvote/:id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -235,11 +235,11 @@ router.put('/comment/unvote/:id', auth, async (req,res) =>{             //this f
 
 
 
-// @route       POST api/feed/comment/:id
-// @description Respond or comment on post
+// @route       POST api/feed/answer/:id
+// @description Answer on post
 // @access      Private        
 
-router.post('/comment/:id',[auth,[
+router.post('/answer/:id',[auth,[
     check('text','Text Required').not().isEmpty()
 ]],
 async  (req, res) => {
@@ -255,7 +255,7 @@ const feedcom = await Feed.findById(req.params.id);
 
 
 
-    const newcomment =  {
+    const newAnswer =  {
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
@@ -263,11 +263,11 @@ const feedcom = await Feed.findById(req.params.id);
     }
 
 
-    feedcom.comments.unshift(newcomment);
+    feedcom.answer.unshift(newAnswer);
  
     await feedcom.save();
 
-    res.json(feedcom.comments);
+    res.json(feedcom.answer);
 
     }
     catch (err){
@@ -284,11 +284,11 @@ const feedcom = await Feed.findById(req.params.id);
 
 
 
-// @route       DELETE api/feed/comment/:id/:COMMENT_ID             //need to find which comment to delete
-// @description Respond or comment on post
+// @route       DELETE api/feed/answer/:id/:answer_ID             //need to find which answer to delete
+// @description Delete Answer on post
 // @access      Private        
 
-router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
 
 
@@ -296,32 +296,32 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
         const feedcom = await Feed.findById(req.params.id);  
 
-        //get comment from post (pull out comment)
+        //get answer from post (pull out answer)
 
-        const comment = feedcom.comments.find(comment => comment.id === req.params.comment_id);
+        const ans = feedcom.answer.find(ans => ans.id === req.params.answer_id);
 
 
-            // Make sure comment exists
+            // Make sure answer exists
 
-        if(!comment){
-            return res.status(404).json({msg: 'Comment does not exist'});
+        if(!ans){
+            return res.status(404).json({msg: 'Answer does not exist'});
         }
 
-        //make sure that the user who made the comment is the one deleting it
+        //make sure that the user who made the answer is the one deleting it
 
 
-        if(comment.user.toString() !== req.user.id){
-            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        if(ans.user.toString() !== req.user.id){
+            return res.status(401).json({msg: 'User not authorized to delete answer'});
         }
 
-        //get index to remove comment
-        const removeIndex = feedcom.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
+        //get index to remove answer
+        const removeIndex = feedcom.answer.map(ans => ans.user.toString()).indexOf(req.user.id);
 
-        feedcom.comments.splice(removeIndex, 1);
+        feedcom.answer.splice(removeIndex, 1);
 
      await feedcom.save();              //saves this value back into the database linked to the post id
 
-     res.json(feedcom.comments);
+     res.json(feedcom.answer);
 
 
     }catch(err)
@@ -366,22 +366,25 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 // @description vote on best response
 // @access      Private        
 
-router.put('/comment/supervote/:id', auth, async (req,res) =>{                   
+router.put('/answer/supervote/:id', auth, async (req,res) =>{                   
     try{
-
+            const user = await User.findById(req.user.id).select('-password');
             const feedpost = await Feed.findById(req.params.id);
-            const postW = await User.findById(req.params.id);       //gets id of user
+            
             // Check if the post has been voted on by this user
            
-            
-            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id) === postW.user.id){ 
+            if(feedpost.user.toString() !== user.id)
+            {
+                return res.status(400).json({msg: 'You are not the original author of the post and your request to supervote is denied'});
+            }
+            if(feedpost.user.toString() === user.id){
             
 
-            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+            if(feedpost.supervote.filter(supervote => supervote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of best answer votes for this post'});
             }
-            feedpost.supervote.unshift({user: req.user.id});
+            feedpost.supervote.unshift({user: user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
@@ -389,6 +392,7 @@ router.put('/comment/supervote/:id', auth, async (req,res) =>{
 
 
     }
+    
 }
     catch (err){
         console.error(err.message);
@@ -411,26 +415,29 @@ router.put('/comment/supervote/:id', auth, async (req,res) =>{
 
 
 // @route       PUT api/feed/unsupervote/User/:id
-// @description Unsupervote a comment on your post
+// @description Unsupervote a answer on your post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/comment/unsupervote/:id', auth, async (req,res) =>{             //this forces only comments or answers to have votes allowed
+router.put('/answer/unsupervote/:id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
-
+            const user = await User.findById(req.user.id).select('-password');
             // Check if the post has been voted on by this user
-           
+            if(feedpost.user.toString() !== user.id)
+            {
+                return res.status(400).json({msg: 'You are not the original author of the post and your request is denied'});
+            }
 
-            if(feedpost.supervote.user.id === user.id){
+            if(feedpost.user.toString() === user.id){
 
 
-            if(feedpost.supervote.filter(supervote => supervote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+            if(feedpost.supervote.filter(supervote => supervote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
             
-               const removeIndex = feedpost.supervote.map(vote => vote.user.toString()).indexOf(req.user.id);
+               const removeIndex = feedpost.supervote.map(vote => vote.user.toString()).indexOf(ser.id);
 
                feedpost.supervote.splice(removeIndex, 1);
 
@@ -456,13 +463,13 @@ router.put('/comment/unsupervote/:id', auth, async (req,res) =>{             //t
 
 
 ////////////////////
-// reply on an answer to a post
+//comment on a post
 ////////////////////
-// @route       POST api/feed/reply/comment/:id
-// @description reply to a comment on a post
+// @route       POST api/feed/comment/:id
+// @description comment  on a post
 // @access      Private        
 
-router.post('/reply/comment/:id',[auth,[
+router.post('/comment/:id',[auth,[
     check('text','Text Required').not().isEmpty()
 ]],
 async  (req, res) => {
@@ -478,7 +485,7 @@ const feedcom = await Feed.findById(req.params.id);
 
 
 
-    const newreply =  {
+    const newcomment =  {
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
@@ -486,11 +493,11 @@ const feedcom = await Feed.findById(req.params.id);
     }
 
 
-    feedcom.reply.unshift(newreply);
+    feedcom.comment.unshift(newcomment);
  
     await feedcom.save();
 
-    res.json(feedcom.reply);
+    res.json(feedcom.comment);
 
     }
     catch (err){
@@ -507,44 +514,44 @@ const feedcom = await Feed.findById(req.params.id);
 
 
 
-// @route       DELETE api/feed/reply/comment/:id/:COMMENT_ID             //need to find which comment to delete
-// @description reply to comment on post
+// @route       DELETE api/feed/comment/:id/:comment_ID             //need to find which answer to delete
+// @description delete comment to  post
 // @access      Private        
 
-router.delete('/reply/comment/:id/:comment_id', auth, async (req, res) => {
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
 
 
     try{
 
-        const comreply = await Feed.findById(req.params.id);  
+        const comcomment = await Feed.findById(req.params.id);  
 
-        //get comment from post (pull out comment)
+        //get answer from post (pull out answer)
 
-        const reply = comreply.reply.find(reply => reply.id === req.params.comment_id);
+        const comment = comcomment.comment.find(comment => comment.id === req.params.comment_id);
 
 
-            // Make sure comment exists
+            // Make sure answer exists
 
-        if(!reply){
-            return res.status(404).json({msg: 'Comment does not exist'});
+        if(!comment){
+            return res.status(404).json({msg: 'comment does not exist'});
         }
 
-        //make sure that the user who made the comment is the one deleting it
+        //make sure that the user who made the answer is the one deleting it
 
 
-        if(reply.user.toString() !== req.user.id){
+        if(comment.user.toString() !== req.user.id){
             return res.status(401).json({msg: 'User not authorized to delete comment'});
         }
 
-        //get index to remove comment
-        const removeIndex = comreply.reply.map(reply => reply.user.toString()).indexOf(req.user.id);
+        //get index to remove answer
+        const removeIndex = comcomment.comment.map(comment => comment.user.toString()).indexOf(req.user.id);
 
-        comreply.reply.splice(removeIndex, 1);
+        comcomment.comment.splice(removeIndex, 1);
 
-     await comreply.save();              //saves this value back into the database linked to the post id
+     await comcomment.save();              //saves this value back into the database linked to the post id
 
-     res.json(comreply.reply);
+     res.json(comcomment.comment);
 
 
     }catch(err)
@@ -561,6 +568,129 @@ router.delete('/reply/comment/:id/:comment_id', auth, async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////
+//comment on an answer
+////////////////////
+// @route       POST api/feed/answer/commentANSW/:id
+// @description comment  on an answer
+// @access      Private                 //need post_id to be able to get answer_id
+
+router.post('/answer/commentANSW/:id/:answer_id',[auth,[            //we want to take the id of the answer and of the post in order to comment on them 
+    check('text','Text Required').not().isEmpty()
+]],
+async  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+
+
+    try{
+const user = await User.findById(req.user.id).select('-password');
+const feedcom = await Feed.findById(req.params.id);
+const ans = feedcom.answer.find(ans => ans.id === req.params.answer_id);
+
+
+// Make sure answer exists
+
+if(!ans){
+return res.status(404).json({msg: 'Answer does not exist'});
+}
+
+
+const newcomment =  {
+    text: req.body.text,
+    name: user.name,
+    avatar: user.avatar,
+    user: user.id
+}
+
+
+feedcom.commentANSW.unshift(newcomment);            //adds newcomment to begining of commentANSW array 
+
+await feedcom.save();
+
+res.json(feedcom.commentANSW);
+
+}
+catch (err){
+    console.error(err.message);
+    res.status(500).send('Server Error');
+}
+
+
+});
+
+
+
+
+
+
+
+// @route       DELETE api/feed/answer/comment/:id/:comment_ID             
+// @description delete comment to an answer
+// @access      Private        
+
+router.delete('/answer/comment/:id/:comment_id', auth, async (req, res) => {
+
+
+
+    try{
+
+        const comcomment = await Feed.findById(req.params.id);  
+
+        //get answer from post (pull out answer)
+
+        const comment = comcomment.comment.find(comment => comment.id === req.params.comment_id);
+
+
+            // Make sure answer exists
+
+        if(!comment){
+            return res.status(404).json({msg: 'comment does not exist'});
+        }
+
+        //make sure that the user who made the answer is the one deleting it
+
+
+        if(comment.user.toString() !== req.user.id){
+            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        }
+
+        //get index to remove answer
+        const removeIndex = comcomment.comment.map(comment => comment.user.toString()).indexOf(req.user.id);
+
+        comcomment.comment.splice(removeIndex, 1);
+
+     await comcomment.save();              //saves this value back into the database linked to the post id
+
+     res.json(comcomment.comment);
+
+
+    }catch(err)
+    {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+
+}
+    
+
+);
 
 
 
