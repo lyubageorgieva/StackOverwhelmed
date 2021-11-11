@@ -21,7 +21,7 @@ const FeedSchema = new mongoose.Schema({
     avatar:{
         type: String
     },
-    votes: [
+    vote: [
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
@@ -30,7 +30,8 @@ const FeedSchema = new mongoose.Schema({
         }
     ],
     
-    comments: [
+    
+    answer: [             
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,         
@@ -48,6 +49,91 @@ const FeedSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
+            commentANSW: [               
+                {
+                  
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,         
+                        ref: 'user'
+                    } ,
+                    text: {
+                        type: String,
+                        required: true
+        
+                    },
+                    avatar: {
+                        type: String
+                    },
+                    date: {
+                        type: Date,
+                        default: Date.now
+                    },
+                        comANSWvote: [
+                        {
+                            user: {
+                                type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                                ref: 'user'
+                            }
+                        }
+                                    ],
+                }
+                
+            ],
+        
+        ANSWvote: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                    ref: 'user'
+                }
+            }
+        ],
+    
+        supervote: [
+
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectID,
+                    ref: 'user'
+                }
+    
+            }
+    
+    
+    
+        ],
+    
+    
+    
+    
+    }
+    ],  
+    comment: [               
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectID,         
+                ref: 'user'
+            } ,
+            text: {
+                type: String,
+                required: true
+
+            },
+            avatar: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            Comvote: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
         }
     ],
     date: {
