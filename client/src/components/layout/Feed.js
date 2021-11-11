@@ -29,9 +29,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">25<br/>answers</p>
                         <br/>
@@ -56,9 +63,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">6<br/>answers</p>
                         <br/>
@@ -84,9 +98,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">41<br/>answers</p>
                         <br/>
@@ -113,9 +134,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">9<br/>answers</p>
                         <br/>
@@ -142,9 +170,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">3<br/>answers</p>
                         <br/>
@@ -175,9 +210,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">15<br/>answers</p>
                         <br/>
@@ -204,9 +246,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">22<br/>answers</p>
                         <br/>
@@ -233,9 +282,16 @@ export const Feed = () => {
                 <div className="row q1">
                     <div className="col_left">
                         <br/>
-                        <div className="up" onclick="upvote();"></div>
-                        <p id="vote">1</p>
-                        <div className="down" onclick="downvote();"></div>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
                         <br/>
                         <p className="answer-button">18<br/>answers</p>
                         <br/>
