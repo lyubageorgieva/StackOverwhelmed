@@ -150,7 +150,7 @@ router.delete('/:id', auth,async (req,res) => {
 // @description vote on a post
 // @access      Private        
 
-router.put('/answer/vote/:id', auth, async (req,res) =>{                   //this forces only answers or answers to have votes allowed
+router.put('/vote/:id', auth, async (req,res) =>{                   //this forces only answers or answers to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -194,7 +194,7 @@ router.put('/answer/vote/:id', auth, async (req,res) =>{                   //thi
 // @description unvote on a post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/answer/unvote/:id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
+router.put('/unvote/:id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
     try{
 
             const feedpost = await Feed.findById(req.params.id);
@@ -362,15 +362,15 @@ router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
  
 
-// @route       PUT api/feed/bestanswer/user/:id           //vote on the best response to YOUR post
+// @route       PUT api/feed/bestanswer/user/:id/:answer_id'           //vote on the best response to YOUR post
 // @description vote on best response
 // @access      Private        
 
-router.put('/answer/supervote/:id', auth, async (req,res) =>{                   
+router.put('/answer/supervote/:id/:answer_id', auth, async (req,res) =>{                   
     try{
             const user = await User.findById(req.user.id).select('-password');
             const feedpost = await Feed.findById(req.params.id);
-            
+            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
             // Check if the post has been voted on by this user
            
             if(feedpost.user.toString() !== user.id)
@@ -380,11 +380,11 @@ router.put('/answer/supervote/:id', auth, async (req,res) =>{
             if(feedpost.user.toString() === user.id){
             
 
-            if(feedpost.supervote.filter(supervote => supervote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+            if(ans.supervote.filter(supervote => supervote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
 
                     return res.status(400).json({msg: 'You have exceeded your limit of best answer votes for this post'});
             }
-            feedpost.supervote.unshift({user: user.id});
+            ans.supervote.unshift({user: user.id});
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
@@ -418,28 +418,29 @@ router.put('/answer/supervote/:id', auth, async (req,res) =>{
 // @description Unsupervote a answer on your post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/answer/unsupervote/:id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
+router.put('/answer/unsupervote/:id/:answer_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
     try{
-
+        
             const feedpost = await Feed.findById(req.params.id);
             const user = await User.findById(req.user.id).select('-password');
             // Check if the post has been voted on by this user
-            if(feedpost.user.toString() !== user.id)
+            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+            if(ans.user.toString() !== user.id)
             {
                 return res.status(400).json({msg: 'You are not the original author of the post and your request is denied'});
             }
 
-            if(feedpost.user.toString() === user.id){
+            if(ans.user.toString() === user.id){
 
 
-            if(feedpost.supervote.filter(supervote => supervote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
+            if(ans.supervote.filter(supervote => supervote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
             
-               const removeIndex = feedpost.supervote.map(vote => vote.user.toString()).indexOf(ser.id);
+               const removeIndex = ans.supervote.map(supervote => supervote.user.toString()).indexOf(user.id);
 
-               feedpost.supervote.splice(removeIndex, 1);
+               ans.supervote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
@@ -693,6 +694,308 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
     
 
 );
+
+
+
+
+//////////////////
+// Vote on comments to Answers
+//////////////////
+
+
+// @route       PUT api/feed/answer/commentANSW/comANSWvote/:id/:answer_id/:comment_id'
+// @description vote on a comment to an answer
+// @access      Private        
+
+router.put('answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{                   
+    try{
+            const user = await User.findById(req.user.id).select('-password');
+            const feedpost = await Feed.findById(req.params.id);
+            const ans = await comcomment.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+            const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
+            // Check if the comment has been voted on by this user
+           
+
+            if(com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their vote
+
+                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
+            }
+            com.comANSWvote.unshift({user: user.id});
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.comANSWvote);
+
+
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+//the following will remove the upvote and downvote and save that value back into the array
+
+
+
+
+
+
+
+
+// @route       PUT api/feed/answer/commentANSW/comANSWvote/:id/:answer_id/:comment_id'
+// @description unvote on a comment to an answer
+// @access      Private                             /
+
+router.put('answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
+    try{
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
+            
+
+            // Check if the post has been voted on by this user
+           
+
+            if(com.vote.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+
+                    return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
+                                }
+            
+               const removeIndex = com.vote.map(vote => vote.user.toString()).indexOf(req.user.id);
+
+               com.vote.splice(removeIndex, 1);
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.vote);
+
+
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+//////////////////
+// Vote on Comments
+/////////////////
+
+
+
+router.put('/comment/Comvote/:id/:comment_id', auth, async (req,res) =>{                   
+    try{
+            const user = await User.findById(req.user.id).select('-password');
+            const feedpost = await Feed.findById(req.params.id);
+            const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+            // Check if the post has been voted on by this user
+          
+            
+{
+            if(com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+
+                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
+            }
+            com.Comvote.unshift({user: user.id});
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.Comvote);
+
+
+    }
+    
+}
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+//the following will remove the supervote or superdownnvote and save that value back into the array
+
+
+
+
+
+
+
+
+// @route       PUT api/feed/comment/UNComvote/:id/:comment_id
+// @description Unvoting a comment on your post
+// @access      Private                           
+
+router.put('/comment/UNComvote/:id/:comment_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
+    try{
+        
+            const feedpost = await Feed.findById(req.params.id);
+            const user = await User.findById(req.user.id).select('-password');
+            // Check if the post has been voted on by this user
+            const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+           {
+
+            if(com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
+
+                    return res.status(400).json({msg: 'You have not used your downvote yet for this comment'});
+                                }
+            
+               const removeIndex = com.Comvote.map(Comvote => Comvote.user.toString()).indexOf(user.id);
+
+               com.Comvote.splice(removeIndex, 1);
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.Comvote);
+
+
+    }
+}
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////
+// Vote on Answers
+/////////////////
+
+
+
+router.put('/answer/ANSWvote/:id/:answer_id', auth, async (req,res) =>{                   
+    try{
+            const user = await User.findById(req.user.id).select('-password');
+            const feedpost = await Feed.findById(req.params.id);
+            //const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+            
+            // Check if the post has been voted on by this user
+          
+            
+{
+            if(ans.ANSWvote.filter(ANSWvote => ANSWvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+
+                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
+            }
+            ans.ANSWvote.unshift({user: user.id});
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.ANSWvote);
+
+
+    }
+    
+}
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+//the following will remove the supervote or superdownnvote and save that value back into the array
+
+
+
+
+
+
+
+
+// @route       PUT api/feed/comment/UNComvote/:id/:comment_id
+// @description Unvoting an answer on your post
+// @access      Private                           
+
+router.put('/answer/UNANSWvote/:id/:answer_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
+    try{
+        
+            const feedpost = await Feed.findById(req.params.id);
+            const user = await User.findById(req.user.id).select('-password');
+            // Check if the post has been voted on by this user
+           // const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+           const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+           {
+
+            if(ans.ANSWvote.filter(ANSWvote => ANSWvote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
+
+                    return res.status(400).json({msg: 'You have not used your downvote yet for this comment'});
+                                }
+            
+               const removeIndex = ans.ANSWvote.map(ANSWvote => ANSWvote.user.toString()).indexOf(user.id);
+
+               ans.ANSWvote.splice(removeIndex, 1);
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.ANSWvote);
+
+
+    }
+}
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
