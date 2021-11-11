@@ -707,11 +707,11 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
 // @description vote on a comment to an answer
 // @access      Private        
 
-router.put('answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{                   
+router.put('/answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{                   
     try{
             const user = await User.findById(req.user.id).select('-password');
             const feedpost = await Feed.findById(req.params.id);
-            const ans = await comcomment.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
             const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
             // Check if the comment has been voted on by this user
            
@@ -752,7 +752,7 @@ router.put('answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth
 // @description unvote on a comment to an answer
 // @access      Private                             /
 
-router.put('answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
+router.put('/answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
     try{
         const user = await User.findById(req.user.id).select('-password');
         const feedpost = await Feed.findById(req.params.id);
@@ -763,18 +763,18 @@ router.put('answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', au
             // Check if the post has been voted on by this user
            
 
-            if(com.vote.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+            if(com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
                     return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
                                 }
             
-               const removeIndex = com.vote.map(vote => vote.user.toString()).indexOf(req.user.id);
+               const removeIndex = com.comANSWvote.map(comANSWvote => comANSWvote.user.toString()).indexOf(req.user.id);
 
-               com.vote.splice(removeIndex, 1);
+               com.comANSWvote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.vote);
+            res.json(feedpost.comANSWvote);
 
 
     }
