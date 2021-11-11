@@ -27,3 +27,4 @@ Using web development framework MERN stack
 * Front End: HTML/CSS/React.JS
 * Back End: Node.JS/Express.JS
 * Database: MongoDB
+ # Architecture
