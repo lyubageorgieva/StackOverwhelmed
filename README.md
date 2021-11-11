@@ -28,3 +28,4 @@ Using web development framework MERN stack
 * Back End: Node.JS/Express.JS
 * Database: MongoDB
  # Architecture
+![Capture](https://user-images.githubusercontent.com/50846358/141234099-cff552d5-2e7b-45f3-a859-9db1790a5ab7.PNG)
