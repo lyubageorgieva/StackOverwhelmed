@@ -471,3 +471,21 @@ textarea {
   text-align: center;
   color: red;
 }
+
+
+.star{
+  font-size: 20px;
+}
+
+.col_right .answer{
+  border: 3px solid #FFB085;
+  width: 30%;
+
+}
+
+.thumb{
+  font-size: 20px;
+}
+.thumb:hover{
+  background-color: #FFB085;
+}
