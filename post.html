@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Overwhelmed | Student Q&A Platform</title>
+    <link rel="stylesheet" href="myStyle.css">
+    <link rel="stylesheet" href="postStyle.css">
+    <link rel="icon" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">  
+                    <a href="index.html"><img src="images/1.svg" alt="" width="300px"></a>
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="question.html">Q&A</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="signUp.html">Sign Up</a></li>
+                    </ul>
+                </nav>
+                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Question -->
+    <div id="Feed">
+        <div class="row q1">
+            <span>&#735;</span>
+            <div class="row">
+                <div class="col_left">
+                    <br>
+                    <div class="votes">
+                        <div>
+                            <p class="thumb">&#128077;</p>
+                            <p class="upvote">1</p>
+                        </div>
+                        <div>
+                            <p class="thumb">&#128078;</p>
+                            <p class="downvote">-1</p>
+                        </div>
+                    </div>
+                    <br>
+                    <p>1.5k views</p>
+                </div>
+                <div class="col_right">
+
+                    <p class="question">Why is processing a sorted array faster than processing an unsorted array?</p>
+
+                    <p class="description">An additional thing I will need to do is hide the right column based on user interaction, in which case the left column would still keep its fixed width, but the center column would fill the rest of the space. An additional thing I will
+                        to do is hide the right column based on user interaction, in which case the left column would still keep its fixed width, but the center column would fill the rest of the space.</p>
+
+                    <div class=" row user">
+                        <img src="images/logo.png" class="col_left user_pf" />
+                        <div class="col_right">
+                            <p>posted on: Oct 14 2021 at 17:30</p>
+                            <a href="" class="question user_link">u/SO_allan</a>
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row q1">
+                <p class="footer-col-3">Answer</p>
+                <textarea id="details" name="details" rows="3" cols="100" class="footer-col-3"></textarea><br><br>
+                <div class="submit_btn footer-col-3">Submit</div>
+        </div>
+
+        <div class="row q1">
+            <p class="footer-col-3">Comment</p>
+            <textarea id="details" name="details" rows="3" cols="100" class="footer-col-3"></textarea><br><br>
+            <div class="submit_btn footer-col-3">Submit</div>
+        </div>
+
+        <div class="row q1">
+            <div class=" row answer">
+                <span>&#735;</span>
+                <div class="col_left">
+                    <p class="star">&#9733;</p>
+                    <div class="votes">
+                        <div>
+                            <p class="thumb">&#128077;</p>
+                            <p class="upvote">1</p>
+                        </div>
+                        <div>
+                            <p class="thumb">&#128078;</p>
+                            <p class="downvote">-1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_right">
+                    <p class="description">
+                        New answer!
+                    </p>
+                    <div class="row user">
+                        <div class="col_right">
+                            <div class="col_right answer">
+                                <p>posted on: Oct 14 2021 at 17:30</p>
+                                <a href="" class="question user_link">u/SO_allan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" row answer">
+                    <span>&#735;</span>
+                    <div class="col_left">
+                        <p class="star">&#9733;</p>
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                            <div>
+                                <p class="thumb">&#128078;</p>
+                                <p class="downvote">-1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_right">
+                        <p class="description">
+                            Answer reply!!
+                        </p>
+                        <div class="row user">
+                            <div class="col_right">
+                                <div class="col_right answer">
+                                    <p>posted on: Oct 14 2021 at 17:30</p>
+                                    <a href="" class="question user_link">u/SO_allan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" row answer">
+                        <span>&#735;</span>
+                        <div class="col_left">
+                            <p class="star">&#9733;</p>
+                            <div class="votes">
+                                <div>
+                                    <p class="thumb">&#128077;</p>
+                                    <p class="upvote">1</p>
+                                </div>
+                                <div>
+                                    <p class="thumb">&#128078;</p>
+                                    <p class="downvote">-1</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col_right">
+                            <p class="description">
+                                Reply to the answer reply!!!
+                            </p>
+                            <div class="row user">
+                                <div class="col_right">
+                                    <div class="col_right answer">
+                                        <p>posted on: Oct 14 2021 at 17:30</p>
+                                        <a href="" class="question user_link">u/SO_allan</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="rounded">
+
+            <div class=" row answer">
+                <span>&#735;</span>
+                <div class="col_left">
+                    <div class="votes">
+                        <div>
+                            <p class="thumb">&#128077;</p>
+                            <p class="upvote">1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_right">
+                    <p class="description">
+                        New comment!
+                    </p>
+                    <div class="row user">
+                        <div class="col_right">
+                            <div class="col_right answer">
+                                <p>posted on: Oct 14 2021 at 17:30</p>
+                                <a href="" class="question user_link">u/SO_allan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" row answer">
+                    <span>&#735;</span>
+                    <div class="col_left">
+                        <div class="votes">
+                            <div>
+                                <p class="thumb">&#128077;</p>
+                                <p class="upvote">1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_right">
+                        <p class="description">
+                            Replying to the comment!
+                        </p>
+                            <div class="row user">
+                            <div class="col_right">
+                                <div class="col_right answer">
+                                    <p>posted on: Oct 14 2021 at 17:30</p>
+                                    <a href="" class="question user_link">u/SO_allan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and iOs mobile phones.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/1.svg" alt="">
+                    <p>For more than 100 years,<br>Stack Overwhelmed's story has always been about innovation</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Moodle</li>
+                        <li>myConcordia</li>
+                        <li>WebWork</li>
+                        <li>COLE Concordia</li>
+                        <li>Udemy</li>
+
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Youtube</li>
+                        <li>Instagram</li>
+                        <li>Snapchat</li>
+                        <li>TikTok</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- for dynamic menu -->
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+
+        function menutoggle() {
+            if (MenuItems.style.maxHeight = "0px") {
+                MenuItems.style.maxHeight = "200px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+    </script>
+</body>
+
+</html>
