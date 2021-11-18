@@ -22,6 +22,7 @@ async  (req, res) => {
     }
 
     try{
+    const profile = await Profile.findOne({user: req.user.id}).populate('user', ['name', 'avatar']);
     const user = await User.findById(req.user.id).select('-password');
 
     const newFeedPOST = new Feed({
@@ -32,6 +33,9 @@ async  (req, res) => {
     });
 
     const feedP = await newFeedPOST.save();
+   
+
+
 
     res.json(feedP);
 

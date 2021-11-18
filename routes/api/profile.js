@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const {check, validationResult} = require('express-validator'); // no need for express-validator/check anymore
-
+const Feed = require('../../modules/Feed');     //this is so we can aquire the feed setup to use for allocating posts
 const Profile = require('../../modules/Profile');
 const User = require('../../modules/User');
 //@route GET api/profile/me
@@ -81,6 +81,9 @@ router.post('/',[auth, [
 
 });
 
+
+
+
 //@route GET api/profile
 //@desc Get all profiles
 //@access Public
@@ -127,5 +130,40 @@ router.get('/', auth, async (req, res) => {
         res.status(500).send('Server Err');
         }
 });
+
+
+
+// @route       GET api/profile/Posts
+// @description get all posts by user id
+// @access      Private         
+
+router.get('/Posts/user_id', auth,async (req,res) => {
+
+    const user = await User.findById(req.user.id).select('-password');
+    const profile = await Profile.findOne({user: req.user.id}).populate('user', ['name', 'avatar']);
+    try{
+
+                const feedposts = await Feed.find().sort({
+                    date: -1,               //most recent first
+                    user: user.id,
+                });
+                res.json(profile.feedposts);
+               
+
+    } catch (err)
+    {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
 module.exports = router;
 
