@@ -1,15 +1,13 @@
-const supertest = require("supertest");
 
-var server = supertest.agent("http://localhost:5000");
-
-describe("SAMPLE unit test", () => {
-    it("should return homepage", (done) => {
-        server
-        .get("/")
-        .expect("Content-type",/test/)
-        .expect(200)
-        .end(function (err, res) {
-            done();
-        });
-    });
+const express = require('express');
+var app = express();
+const request = require('supertest');
+ describe("/POST Create User",function(){
+         it('Created a user', function(done) {
+          request(app.listen()).post('/auth')
+         .send({name: "Koala",email: "lorette@hotmail.com", password: "12345678" })
+         .expect(200)
+         .end(function(err,res){
+         done();
+        });});
 });
