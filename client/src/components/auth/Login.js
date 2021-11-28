@@ -3,7 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
-import { getCurrentProfile } from '../../actions/profile';
 
 
 export const Login = ({ login, isAuthenticated }) => {
@@ -23,7 +22,7 @@ export const Login = ({ login, isAuthenticated }) => {
 
     // Redirection if the user is logged in
     if(isAuthenticated) {
-        return <Redirect to="/account" />
+        return <Redirect to="/profile" />
     }
 
     return (

@@ -7,9 +7,6 @@ import Feed from './components/layout/Feed';
 import indexFeatures from './components/layout/indexFeatures';
 import Question from './components/layout/Question';
 import Alert from './components/layout/Alert'; 
-import Account from './components/account/Account'; 
-import PrivateRoute from './components/routing/PrivateRoute'; 
-import CreateProfile from './components/profile-forms/CreateProfile'; 
 
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
@@ -63,8 +60,6 @@ const App = () => {
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/question" component={Question} />
-            <PrivateRoute exact path="/account" component={Account} />
-            <PrivateRoute exact path="/create-profile" component={CreateProfile} />
           </Switch>
         </section>
         <Footer/>
