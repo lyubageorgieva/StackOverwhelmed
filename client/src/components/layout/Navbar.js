@@ -26,7 +26,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <Link to="/question">Q&A</Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to="/account">Account</Link>
         </li>
         <li>
           <Link onClick={logout} to="/">
