@@ -46,6 +46,22 @@ router.post('/', [
             if(err) throw err;
             res.json({token});
         } );
+
+
+        const loadPosts = (user) => {
+            listByUser({
+            userId: user
+            }, {
+            t: jwt.token
+            }).then((data) => {
+            if (data.error) {
+            console.log(data.error)
+            } else {
+            setPosts(data)
+            }
+            })
+           }
+
     }
     catch(err)
     {

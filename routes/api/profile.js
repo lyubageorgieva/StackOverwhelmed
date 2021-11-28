@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const {check, validationResult} = require('express-validator'); // no need for express-validator/check anymore
+const {check, validationResult, Result} = require('express-validator'); // no need for express-validator/check anymore
 const Feed = require('../../modules/Feed');     //this is so we can aquire the feed setup to use for allocating posts
 const Profile = require('../../modules/Profile');
 const User = require('../../modules/User');
@@ -133,29 +133,62 @@ router.get('/', auth, async (req, res) => {
 
 
 
-// @route       GET api/profile/Posts
-// @description get all posts by user id
-// @access      Private         
 
-router.get('/Posts/user_id', auth,async (req,res) => {
+// @route       GET api/profile/:id/:user_id
+// @description get USer posts by IDs
+// @access      Private         //why? because you cant see the posts page unless you have an account
 
-    const user = await User.findById(req.user.id).select('-password');
-    const profile = await Profile.findOne({user: req.user.id}).populate('user', ['name', 'avatar']);
-    try{
-
-                const feedposts = await Feed.find().sort({
-                    date: -1,               //most recent first
-                    user: user.id,
-                });
-                res.json(profile.feedposts);
-               
-
-    } catch (err)
-    {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+router.post('/Posts/:user_id', async (req, res) => {
+   
+    const errors = validationResult(req);
+    if (!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
     }
+   
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        //const u = await Feed.findOne(req.params.text);
+        //const profileID = await Profile.findById(user.id);
+        if(feedpost.user.toString() !== user.id)
+        {
+            return res.status(400).json({msg: 'You are not the original author of the post and your request is denied'});
+        }
+        if(feedpost.user.toString() === user.id){
+    
+            const bodyFormData = new FormData();
+            bodyFormData.append('user', user.id)
+            bodyFormData.append('text', text)
+            bodyFormData.append('name', name)
+            bodyFormData.append('avatar', avatar)
+            
+            
+            Posts({ bodyFormData })
+            };
+}
+
+
+        
+
+       
+
+
+
+ catch (err)
+{
+    console.error(err.message);
+
+
+    if (err.kind === 'ObjectId'){
+        return res.status(404).json({msg: 'Post not found'});
+    }
+
+
+    res.status(500).send('Server Error');
+}
 });
+
+
 
 
 

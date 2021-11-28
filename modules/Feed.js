@@ -5,6 +5,7 @@ const FeedSchema = new mongoose.Schema({
 
 
 
+    
     user: {
         type: mongoose.Schema.Types.ObjectID,          //connects post to user
         ref: 'user'
@@ -21,16 +22,26 @@ const FeedSchema = new mongoose.Schema({
     avatar:{
         type: String
     },
-    vote: [
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
-                ref: 'user'
-            }
-        }
-    ],
-    
-    
+  
+  
+            upvote: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
+            downvote: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
+
+      
     answer: [             
         {
             user: {
@@ -79,15 +90,29 @@ const FeedSchema = new mongoose.Schema({
                 }
                 
             ],
+
+           
+
         
-        ANSWvote: [
-            {
-                user: {
-                    type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
-                    ref: 'user'
-                }
-            }
-        ],
+       
+                 upvoteANS: [
+                    {
+                        user: {
+                            type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                            ref: 'user'
+                        }
+                    }
+                ],
+                downvoteANS: [
+                    {
+                        user: {
+                            type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                            ref: 'user'
+                        }
+                    }
+                ],
+            
+            
     
         supervote: [
 
@@ -140,6 +165,8 @@ const FeedSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+    
+
 });
 
 module.exports = Feed = mongoose.model('feed',FeedSchema );
