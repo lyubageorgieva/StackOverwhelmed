@@ -22,7 +22,7 @@ const FeedSchema = new mongoose.Schema({
     avatar:{
         type: String
     },
-  
+    
   
             upvote: [
                 {
@@ -39,7 +39,17 @@ const FeedSchema = new mongoose.Schema({
                         ref: 'user'
                     }
                 }
-            ],
+            ],totalvotes:[
+            {
+               
+                    type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                    required: true
+                
+            },
+        ],
+        
+
+            
 
       
     answer: [             
@@ -60,6 +70,14 @@ const FeedSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
+            totalvotesANSW:[
+                {
+                   
+                        type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                        required: true
+                    
+                },
+            ],
             commentANSW: [               
                 {
                   
@@ -87,6 +105,14 @@ const FeedSchema = new mongoose.Schema({
                             }
                         }
                                     ],
+                                    totalvotescomANSW:[
+                                        {
+                                           
+                                                type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                                                required: true
+                                            
+                                        },
+                                    ],
                 }
                 
             ],
@@ -109,6 +135,12 @@ const FeedSchema = new mongoose.Schema({
                             type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
                             ref: 'user'
                         }
+                    }
+                ],
+                totalvotesANS:[
+                    {
+                        type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                        required: true
                     }
                 ],
             
@@ -159,13 +191,22 @@ const FeedSchema = new mongoose.Schema({
                     }
                 }
             ],
+            totalvotesCOM:[
+                {
+                    type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                        required: true
+                }
+            
+                     ],
         }
     ],
+
     date: {
         type: Date,
         default: Date.now
     }
-    
+
+
 
 });
 

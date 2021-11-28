@@ -54,7 +54,7 @@ async  (req, res) => {
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
 router.get('/', auth,async (req,res) => {
-    const profile = await Profile.findById(req.params.id);
+   
     try{
 
                 const feedposts = await Feed.find().sort({
@@ -156,7 +156,7 @@ router.delete('/:id', auth,async (req,res) => {
 
 router.put('/upvote/:id', auth, async (req,res) =>{                   //this forces only answers or answers to have votes allowed
     try{
-
+             
             const feedpost = await Feed.findById(req.params.id);
 
             // Check if the post has been voted on by this user
@@ -168,13 +168,13 @@ router.put('/upvote/:id', auth, async (req,res) =>{                   //this for
                 return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
             }
         
-      
+      else{
             feedpost.upvote.unshift({user: req.user.id});
-
+          
             await feedpost.save();              //saves this value back into the database linked to the post id
 
             res.json(feedpost.upvote);
-        
+      }
     }
 
 
@@ -184,6 +184,7 @@ router.put('/upvote/:id', auth, async (req,res) =>{                   //this for
         res.status(500).send('Server Error');
     }
 });
+
 
 
 
@@ -217,9 +218,6 @@ router.put('/downvote/:id', auth, async (req,res) =>{                   //this f
         res.status(500).send('Server Error');
     }
 });
-
-
-
 
 
 
@@ -305,6 +303,115 @@ router.put('/undownvote/:id', auth, async (req,res) =>{             //this force
         res.status(500).send('Server Error');
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+//////////////////
+//Vote counting
+/////////////////
+
+router.get('/totalvotes/:id', auth, async (req,res) =>{                   //+/- counter for post votes
+    try{
+   
+        const feedpost = await Feed.findById(req.params.id);
+        const upvotes = (feedpost.upvote.length);
+        const downvotes = -(feedpost.downvote.length);
+      const sum =  [upvotes,downvotes].reduce(function(result,item){
+          return result-item;
+      },0);
+       
+        feedpost.totalvotes.push(sum);
+        
+       await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+        
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+router.get('/answer/totalvotesANSW/:id/:answer_id', auth, async (req,res) =>{                    //+/- counter for answer votes
+    try{
+        
+         const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);  
+       
+        const upvotes = (ans.upvoteANS.length);
+        const downvotes = -(ans.downvoteANS.length);
+      const sum =  [upvotes,downvotes].reduce(function(result,item){
+          return result+item;
+      },0);
+       
+        ans.totalvotesANSW.push(sum);
+        
+       await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+        
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/answer/commentANSW/:id/:answer_id/:comment_id', auth, async (req,res) =>{                 //+/- counter for comment votes
+    try{
+        
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id); 
+        const com = await ans.commentANSW.find(com => com.id === req.params.comment_id); 
+        const v = (com.comANSWvote.length);
+        
+        
+     const sum =  [v,0].reduce(function(result,item){
+         return result+item;
+      },0);
+       
+        com.totalvotescomANSW.push(sum);
+        
+       await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+        
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -430,16 +537,6 @@ router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
 
 
-+function maxChar(element)
-{
-    var max_chars = 280;
-
-    if(element.value.length > max_chars) {
-        element.value = element.value.substr(0, max_chars);
-        return res.status(401).json({msg: 'Text has surpassed limit of characters'});
-
-    }
-}
 
 
 //the person who originally posted their question will be able to vote on their favorite answer

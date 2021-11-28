@@ -138,7 +138,11 @@ router.get('/', auth, async (req, res) => {
 // @description get USer posts by IDs
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.post('/Posts/:user_id', async (req, res) => {
+router.get('/Posts/:user_id', async (req, res) => {
+   
+   const user = await User.findById(req.user.id).select('-password');
+    const p = await profile.findById(req.params.id);
+    const prof = await p.Posts.find(prof => prof.id === req.params.prof_id);
    
     const errors = validationResult(req);
     if (!errors.isEmpty()){
@@ -146,7 +150,7 @@ router.post('/Posts/:user_id', async (req, res) => {
     }
    
     try {
-        const user = await User.findById(req.user.id).select('-password');
+        
         const feedpost = await Feed.findById(req.params.id);
         //const u = await Feed.findOne(req.params.text);
         //const profileID = await Profile.findById(user.id);
@@ -157,7 +161,7 @@ router.post('/Posts/:user_id', async (req, res) => {
         if(feedpost.user.toString() === user.id){
     
             const bodyFormData = new FormData();
-            bodyFormData.append('user', user.id)
+            bodyFormData.append('user', user)
             bodyFormData.append('text', text)
             bodyFormData.append('name', name)
             bodyFormData.append('avatar', avatar)
