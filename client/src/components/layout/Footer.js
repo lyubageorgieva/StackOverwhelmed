@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from "../../img/1.svg";
 import AppStore from "../../img/app_store.png";
 import PlayStore from "../../img/play_store_logo.png";
 

@@ -1,18 +1,12 @@
 import React, { Fragment } from "react";
-import ScriptTag from "react-script-tag";
-import Logo from "../../img/1.svg";
-import BigLogo1 from "../../img/bigLogo1.svg";
-import Exit1 from "../../img/exit1.svg";
-import Menu from "../../img/menu.png";
-import Menu1 from "../../img/menu.svg";
+import LogoName from "../../img/bigLogo1.svg";
+import ExitMobile from "../../img/exit1.svg";
+import MenuMobile from "../../img/menu.svg";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
 import PropTypes from "prop-types";
-
-import { useState } from "react";
-import Helmet from "react-helmet";
 
 
 export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -40,7 +34,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <nav>
-      <img src={Exit1} alt="exit button" id="menu-exit" />
+      <img src={ExitMobile} alt="exit button" id="menu-exit" />
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -63,10 +57,10 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <div className="container">
         <div className="logo">
           <Link to="/">
-            <img src={BigLogo1} alt="stack overwhelmed logo with name" />
+            <img src={LogoName} alt="stack overwhelmed logo with name" />
           </Link>
         </div>
-        <img src={Menu}  alt="menu button" id="menuBtn"/>
+        <img src={MenuMobile}  alt="menu button" id="menuBtn"/>
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}
