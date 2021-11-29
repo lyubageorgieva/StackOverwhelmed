@@ -38,7 +38,7 @@ a{
 
     .logo{
         width:250px;
-        margin-top:2px;
+        margin-top:5px;
     }
     
     nav{
@@ -553,7 +553,6 @@ footer{
 }
 
 .post-section{
-    font-size: .9em;
     width: 90%;
     background: white;
     margin: auto auto;
@@ -572,6 +571,7 @@ footer{
 
         .post-body{
             width: 90%;
+            font-size: .9em;
         }
 
         .up:hover, .down:hover{
@@ -626,7 +626,7 @@ footer{
             border-top: 2px solid var(--quaternary-color);
             width: 80%;
             text-align: right; 
-            font-size: .8em;
+            font-size: .7em;
 
             .comment{
                 width:50%;
@@ -666,7 +666,8 @@ footer{
             margin: .5em 0 2em 0;
             &:hover{
                 color: var(--secondary-color);
-            background: var(--primary-color);
+                background: var(--primary-color);
+                cursor: pointer;
             }
         }
 
@@ -702,6 +703,7 @@ footer{
 
             .up:hover, .down:hover, .supervote:hover{
                 background-color: var(--quaternary-color);
+                cursor: pointer;
             }
             .supervote{
                 font-size: 1.5em;
@@ -754,8 +756,8 @@ footer{
             margin-right: 1em;
             border-top: 2px solid var(--quaternary-color);
             width: 80%;
-            text-align: right; 
-            font-size: .8em;
+            text-align: right;
+            font-size: .7em;
 
             .comment{
                 width:50%;
@@ -794,7 +796,8 @@ footer{
             margin: .5em 0 2em 0;
             &:hover{
                 color: var(--secondary-color);
-            background: var(--primary-color);
+                background: var(--primary-color);
+                cursor:pointer;
             }
         }
     }
@@ -827,7 +830,8 @@ footer{
         margin: .5em 0 2em 0;
         &:hover{
             color: var(--secondary-color);
-        background: white;
+            background: white;
+            cursor: pointer;
         }
     }
 }
@@ -837,7 +841,7 @@ footer{
     border: .5em solid var(--tertiary-color);
     border-radius: 3em;
     width:90%;
-    margin: 5em auto 3em auto;
+    margin: 7em auto 3em auto;
 
     h1{
         text-align: center;
@@ -962,40 +966,43 @@ footer{
         margin: 0 1em;
     }
 
-    .edit-profile-btn{
-        text-align: right;
-        margin: 1em 1em 0 1em;
-        a{
-            background: var(--secondary-color);
-            color: var(--primary-color);
-            border-radius: 5em;
-            padding: 0 1em;
-
-            &:hover{
-                background: var(--primary-color);
-                color: var(--secondary-color);
+    .user-info{
+        .user-profile{
+            .user-profile-image{
+                width: 250px;
+                height: 250px;
+                display: block;
+                margin: 0 auto;
+            }
+            .edit-profile-btn{
+                text-align: center;
+                margin: 1em 0;
+                a{
+                    background: var(--secondary-color);
+                    color: var(--primary-color);
+                    border-radius: 5em;
+                    padding: 0 1em;
+        
+                    &:hover{
+                        background: var(--primary-color);
+                        color: var(--secondary-color);
+                    }
+                }
             }
         }
-    }
-
-    .user-info{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        img{
-            width: 100px;
-            height: 100px;
-        }
-    }
-
-    .about{
-        h3{
-            margin-top: 1.2em;
-            margin-bottom: 0;
-        }
         
-        p{
-            margin-top: 0;
+        .user-info-table{
+            display: flex;
+            ul{
+                &:first-of-type{
+                    text-align: right;
+                    font-weight: bold;
+                    margin-right: 1em;
+                }
+                li{
+                    margin-bottom: .5em;
+                }
+            }
         }
     }
 
@@ -1139,12 +1146,12 @@ footer{
                 "left-col right-col"; 
 
             .left-col{
-                grid-area: 'left-col';
+                grid-area: left-col;
                 margin: 0;
                 padding:0;
             }
             .right-col{
-                grid-area: 'right-col';
+                grid-area: right-col;
                 display: flex;  
                 justify-content: flex-end;
                 border-top: none;
@@ -1178,12 +1185,18 @@ footer{
 
     .profile-section{
         .user-info{
-            justify-content: flex-start;
-            ul{
-                padding-left: 2em;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            .user-profile{
+                width: 40%;
+            }
+            .user-info-table{
+                width: 60%;
             }
         }
     }
+
     .profile-editor-section{
         .user-image{
             display: flex;
@@ -1262,4 +1275,8 @@ footer{
             }
         }
     }
+}
+
+@media only screen and (min-width: 1080px){
+
 }

@@ -32,6 +32,8 @@ const App = () => {
     store.dispatch(loadUser());
   }, []);
 
+  
+
   return (
   <Provider store={store}>
     <Router>
@@ -51,7 +53,9 @@ const App = () => {
         </Switch>
         
         <section className="container">
-          <Alert /> 
+          <div className="container">
+            <Alert/>
+          </div>
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/login" component={Login} />
