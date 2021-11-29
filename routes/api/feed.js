@@ -347,7 +347,7 @@ router.get('/totalvotes/:id', async (req,res) =>{                   //+/- counte
         const upvotes = (feedpost.upvote.length);
         const downvotes = -(feedpost.downvote.length);
       const sum =  [upvotes,downvotes].reduce(function(result,item){
-          return result-item;
+          return result+item;
       },0);
        
         feedpost.totalvotes.push(sum);
