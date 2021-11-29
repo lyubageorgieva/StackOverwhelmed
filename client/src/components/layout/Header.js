@@ -1,26 +1,30 @@
-import React from 'react'
-import Banner from '../../img/banner.png';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Link } from "react-router-dom";
+import Hands from "../../img/hands.svg";
+import { Helmet } from "react-helmet";
 
 export const Header = () => {
-    return (
-
-        <div className="header">
-            <Helmet>
-              <script src="../../utils/dynamicMenu.js" type="text/javascript" />
-            </Helmet>
-            <div className="row">
-                <div className="col-2">
-                    <h1>Questions Taken <br/>To The Next Level</h1>
-                    <p>A local platform building the definitive collection of Student Questions & Answers</p>
-                    <a href="/" class="btn">Discover Now &#8594; </a>
-                </div>
-                <div className="col-2">
-                    <img src={ Banner } alt="banner"/>
-                </div>
-            </div>
+  return (
+    <div>
+      <section className="hero-section">
+        <div className="container">
+          <div className="left-col">
+            <h1>
+              Questions Taken To The <span>Next Level</span>
+            </h1>
+            <p className="subhead">
+              A local platform building the definitive collection of <br />
+              Student Questions &amp; Answers
+            </p>
+            <Link to="/signup" className="discover-btn">
+              Discover Now &#8594;{" "}
+            </Link>
+          </div>
+          <img src={Hands} className="hero-img" alt="hand shaking" />
         </div>
-    )
-}
+      </section>
+    </div>
+  );
+};
 
 export default Header;
