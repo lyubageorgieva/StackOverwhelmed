@@ -49,11 +49,33 @@ async  (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // @route       GET api/feed
 // @description get all posts
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.get('/', auth,async (req,res) => {
+router.get('/',async (req,res) => {
    
     try{
 
@@ -318,7 +340,7 @@ router.put('/undownvote/:id', auth, async (req,res) =>{             //this force
 //Vote counting
 /////////////////
 
-router.get('/totalvotes/:id', auth, async (req,res) =>{                   //+/- counter for post votes
+router.get('/totalvotes/:id', async (req,res) =>{                   //+/- counter for post votes
     try{
    
         const feedpost = await Feed.findById(req.params.id);
@@ -340,10 +362,10 @@ router.get('/totalvotes/:id', auth, async (req,res) =>{                   //+/- 
         res.status(500).send('Server Error');
     }
 });
-router.get('/answer/totalvotesANSW/:id/:answer_id', auth, async (req,res) =>{                    //+/- counter for answer votes
+router.get('/answer/totalvotesANSW/:id/:answer_id', async (req,res) =>{                    //+/- counter for answer votes
     try{
         
-         const feedpost = await Feed.findById(req.params.id);
+        const feedpost = await Feed.findById(req.params.id);
         const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);  
        
         const upvotes = (ans.upvoteANS.length);
@@ -365,7 +387,7 @@ router.get('/answer/totalvotesANSW/:id/:answer_id', auth, async (req,res) =>{   
     }
 });
 
-router.get('/answer/commentANSW/:id/:answer_id/:comment_id', auth, async (req,res) =>{                 //+/- counter for comment votes
+router.get('/answer/commentANSW/:id/:answer_id/:comment_id', async (req,res) =>{                 //+/- counter for comment votes
     try{
         
         const feedpost = await Feed.findById(req.params.id);

@@ -140,36 +140,23 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/Posts/:user_id', async (req, res) => {
    
-   const user = await User.findById(req.user.id).select('-password');
-    const p = await profile.findById(req.params.id);
-    const prof = await p.Posts.find(prof => prof.id === req.params.prof_id);
-   
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
-   
-    try {
-        
+  
+    try { 
+        const user = await User.findById(req.user.id).select('-password');
         const feedpost = await Feed.findById(req.params.id);
-        //const u = await Feed.findOne(req.params.text);
-        //const profileID = await Profile.findById(user.id);
-        if(feedpost.user.toString() !== user.id)
-        {
-            return res.status(400).json({msg: 'You are not the original author of the post and your request is denied'});
-        }
-        if(feedpost.user.toString() === user.id){
-    
-            const bodyFormData = new FormData();
-            bodyFormData.append('user', user)
-            bodyFormData.append('text', text)
-            bodyFormData.append('name', name)
-            bodyFormData.append('avatar', avatar)
+        const profile = await Profile.findById(req.params.id);
+        const a = await feedpost.user.find(a => a.id === req.params.user_id);
+     
+       
+          
+            profile.Posts.push(a);
+           await profile.save();              //saves this value back into the database linked to the post id
+
+            res.json(a);
             
-            
-            Posts({ bodyFormData })
-            };
+          
 }
+    
 
 
         

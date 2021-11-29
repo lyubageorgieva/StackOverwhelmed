@@ -25,7 +25,8 @@ Field:{
 
   
 
-Posts:[{
+Posts:[
+    {
 
     user: {
         type: mongoose.Schema.Types.ObjectID,          //connects post to user
@@ -44,7 +45,8 @@ Posts:[{
         type: String
     },
    
-}],
+}
+    ],
 });
 
 module.exports = Profile = mongoose.model('profile',ProfileSchema);
