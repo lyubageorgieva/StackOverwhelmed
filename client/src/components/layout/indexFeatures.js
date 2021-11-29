@@ -1,4 +1,9 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
+
 import QuestionMark from "../../img/questionMark.svg";
 import Check from "../../img/check.svg";
 import Happy from "../../img/happy.svg";
