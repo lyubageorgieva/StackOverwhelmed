@@ -16,7 +16,12 @@ import Ville from "../../img/villemtl.png";
 import Desjardins from "../../img/desjardins.png";
 import Saputo from "../../img/saputo.png";
 
-export const indexFeatures = () => {
+export const indexFeatures = ({isAuthenticated, profile}) => {
+
+    if (isAuthenticated && profile){
+        return <Redirect to="/account"/>;
+    }
+
 return (
     <div>
         <section className="core-features-section">
@@ -105,4 +110,12 @@ return (
 );
 };
 
-export default indexFeatures;
+indexFeatures.propTypes ={
+    isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(indexFeatures);
