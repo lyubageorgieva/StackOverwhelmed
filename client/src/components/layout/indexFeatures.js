@@ -1,109 +1,121 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import image1 from '../../img/questionMarkPattern.png';
-import image2 from '../../img/transparentCheckMark.png';
-import image3 from '../../img/smileyFace.png';
-import image4 from '../../img/jmsb.png';
-import image5 from '../../img/Carey_price.jpg';
-import image6 from '../../img/geoff_molson_headshot.jpg';
-import image7 from '../../img/valeriePlante.jpg';
-import image8 from '../../img/intact.png';
-import image9 from '../../img/villemtl.png';
-import image10 from '../../img/desjardins.png';
-import image11 from '../../img/saputo.png';
+import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
-export const indexFeatures = () => {
-    return (
-        <div>     
-            {/* <!-- Core Features --> */}
-            <div className="features">
-                <div className="small-container">
-                    <h1 className="row">The Core Features</h1>
-                    <div className="row">
-                        <div className="col-3">
-                            <img src={image1} alt="Core Features 1"/>
-                            <h3>Q&A<br/>System</h3>
-                        </div>
-                        <div className="col-3">
-                            <img src={image2} alt="Core Feature 2"/>
-                            <h3>Answer<br/>Voting</h3>
-                        </div>
-                        <div className="col-3">
-                            <img src={image3} alt="Core Feature 3"/>
-                            <h3>Best<br/>Answers</h3>
-                        </div>
-                    </div>
+
+import QuestionMark from "../../img/questionMark.svg";
+import Check from "../../img/check.svg";
+import Happy from "../../img/happy.svg";
+import Jmsb from "../../img/jmsb.png";
+import Carey from "../../img/Carey_price.jpg";
+import Geoff from "../../img/geoff_molson_headshot.jpg";
+import Valerie from "../../img/valeriePlante.jpg";
+import Intact from "../../img/intact.png";
+import Ville from "../../img/villemtl.png";
+import Desjardins from "../../img/desjardins.png";
+import Saputo from "../../img/saputo.png";
+
+export const indexFeatures = ({isAuthenticated, profile}) => {
+
+    if (isAuthenticated && profile){
+        return <Redirect to="/account"/>;
+    }
+
+return (
+    <div>
+        <section className="core-features-section">
+            <div className="container">
+                <h1>The Core Features</h1>
+                <ul className="core-features-list">
+                    <li className="cf-1">
+                        <img src={QuestionMark} alt="question mark" className="core-features-img"/>
+                        <p>Q&A system</p>
+                    </li>
+                    <li className="cf-2">
+                        <img src={Check} alt="check mark" className="core-features-img" />
+                        <p>Answer voting</p>
+                    </li>
+                    <li className="cf-3">
+                        <img src={Happy} alt="happy face emoji" className="core-features-img"/>
+                        <p>Best answers</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section className="statement-section">
+            <div className="container">
+                <div className="left-col">
+                    <h1>Official Q&A <br />For The Community</h1>
+                    <p>Thousands of Concordia students around the globe use{" "}<span>Stack Overwhelmed</span> for increased productivity</p>
                 </div>
-                {/* <!--  More description --> */}
-                <div className="header">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-2">
-                                <h1>Official Q&A <br/>For The Community</h1>
-                                <p>Thousands of Concordia Students around the globe <br/> use Stack Overwhelmed for increased productivity</p>
-                                <Link to="/signup" className="btn">Sign Up &#8594; </Link>
-                            </div>
-                            <div className="col-2">
-                                <img src={image4} alt="JMSB"/>
-
-                            </div>
-                        </div>
-                    </div>
+                <img src={Jmsb} className="statement-img" alt="John Molson School of Business and Concordia University logo"/>
+            </div>
+        </section>
+        <section className="testimonials-section">
+            <div className="container">
+                <h1>Some Testimonials</h1>
+                <ul>
+                    <li>
+                        <img src={Carey} className="testimonials-img" alt="Carey Price" />
+                        <blockquote>" Students should help solve the hardest questions, the
+                            unknowns, where being familiar with how the problem was built is
+                            essential. But we don’t want to keep answering solved problems
+                            over and over again. That’s where Stack Overwhelmed really helps."
+                        </blockquote>
+                        <cite>Carey Price</cite>
+                    </li>
+                    <li>
+                        <img src={Geoff} className="testimonials-img" alt="Geoff Molson"/>
+                        <blockquote>
+                            " Stack Overwhelmed has been a resource for our entire
+                            institution. Not only for students to solve problems, it’s also
+                            enabled our professors to answer technical questions that help
+                            them close issues. "
+                        </blockquote>
+                        <cite>Geoff Molson</cite>
+                    </li>
+                    <li>
+                        <img src={Valerie} className="testimonials-img" alt="Valerie Plante"/>
+                        <blockquote>
+                            " What we love about Stack Overwhelmed is that it’s a very
+                            dynamic tool…there’s just so many ways to use this as a liaison
+                            between different students and different knowledge bases. "
+                        </blockquote>
+                        <cite>Valerie Plante</cite>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section className="sponsors-section">
+            <div className="container">
+                <div>
+                    <img src={Intact} alt="Intact insurance logo" />
+                </div>
+                <div>
+                    <img src={Ville} alt="City of Montreal logo" />
+                </div>
+                <div>
+                    <img src={Desjardins} alt="Desjardins bank logo" />
+                </div>
+                <div>
+                    <img src={Saputo} alt="Saputo company logo" />
+                </div>
+                <div>
+                    <img src={Jmsb} alt="John Molson School of Business and Concordia University logo"/>
                 </div>
             </div>
+        </section>
+    </div>
+);
+};
 
-            {/* <!-- Testimonials --> */}
-            <div className="testimonial">
-                <div className="small-container">
-                    <h1 className="row">Some Testimonials</h1>
-                    <div className="row">
-                        <div className="col-3">
-                            <p>" Students should help solve the hardest questions, the unknowns, where being familiar with how the problem was built is essential. But we don’t want to keep answering solved problems over and over again. That’s where Stack Overwhelmed
-                                really helps."</p>
-                            <img src={image5} alt="Carey Price"/>
-                            <h3>Carey Price</h3>
-                        </div>
-                        <div className="col-3">
-                            <p>
-                                " Stack Overwhelmed has been a resource for our entire institution. Not only for students to solve problems, it’s also enabled our professors to answer technical questions that help them close issues. "
-                            </p>
-                            <img src={image6} alt="Geoff Molson"/>
-                            <h3>Geoff Molson</h3>
-                        </div>
-                        <div className="col-3">
-                            <p>" What we love about Stack Overwhelmed is that it’s a very dynamic tool…there’s just so many ways to use this as a liaison between different students and different knowledge bases. "</p>
-                            <img src={image7} alt="Valerie Plante"/>
-                            <h3>Valerie Plante</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* <!-- brands/sponsors --> */}
-
-            <div className="brands">
-                <div className="small-container">
-                    <div className="row">
-                        <div className="col-5">
-                            <img src={image8} alt="Intact"/>
-                        </div>
-                        <div className="col-5">
-                            <img src={image9} alt="Ville MTL"/>
-                        </div>
-                        <div className="col-5">
-                            <img src={image10} alt="Desjardins"/>
-                        </div>
-                        <div className="col-5">
-                            <img src={image11} alt="Saputo"/>
-                        </div>
-                        <div className="col-5">
-                            <img src={image4} alt="JMSB"/>
-                        </div>
-                    </div>
-                </div>
-            </div>     
-        </div>
-    )
+indexFeatures.propTypes ={
+    isAuthenticated: PropTypes.bool
 }
 
-export default indexFeatures;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(indexFeatures);

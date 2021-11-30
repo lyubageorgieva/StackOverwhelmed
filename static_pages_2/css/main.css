@@ -1,0 +1,1340 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+:root {
+  --primary-color: #FEF1E6;
+  --secondary-color: #F9D5A7;
+  --tertiary-color: #FFB085;
+  --quaternary-color: #90AACB;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins';
+  background: var(--primary-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar {
+  background: var(--primary-color);
+  border-top: 5px solid var(--quaternary-color);
+  -webkit-box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.125);
+          box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.125);
+  padding: 0 1em;
+  margin-bottom: 5em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.navbar .logo {
+  width: 250px;
+  margin-top: 5px;
+}
+
+.navbar nav {
+  display: none;
+}
+
+.navbar .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-content: space-between;
+}
+
+.navbar #menuBtn {
+  width: 30px;
+  height: 30px;
+  margin-top: 0.7em;
+  margin-right: 2em;
+  cursor: pointer;
+}
+
+nav.menu-btn {
+  display: block;
+}
+
+nav {
+  position: fixed;
+  z-index: 999;
+  width: 66%;
+  right: 0;
+  top: 0;
+  background: var(--quaternary-color);
+  height: 100vh;
+  padding: 1em;
+}
+
+nav ul {
+  margin-top: 5em;
+}
+
+nav li {
+  list-style-type: none;
+}
+
+nav li a {
+  color: var(--primary-color);
+  text-decoration: none;
+  display: block;
+  padding: .5em;
+  font-size: 1.3em;
+  text-align: right;
+}
+
+nav li a:hover {
+  font-weight: bold;
+}
+
+#menu-exit {
+  float: right;
+  margin: .5em;
+  padding-top: 1em;
+  cursor: pointer;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 7em  0.5em;
+  height: 15em;
+  background: radial-gradient(var(--quaternary-color), var(--primary-color) 70%);
+}
+
+.hero-section h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.hero-section .hero-img {
+  display: none;
+}
+
+.hero-section .discover-btn {
+  display: inline-block;
+  color: white;
+  background-color: var(--secondary-color);
+  padding: 10px;
+  margin-top: 1em;
+  border-radius: 5em;
+}
+
+.hero-section .discover-btn:hover {
+  color: var(--secondary-color);
+  background: white;
+  padding: 10px;
+  border-radius: 5em;
+}
+
+.feed-section {
+  margin-bottom: 5em;
+}
+
+.feed-section .user-prompt {
+  font-size: 2em;
+  text-align: center;
+}
+
+.feed-section .user-prompt:first-child {
+  border-top: 5px dotted black;
+}
+
+.feed-section .user-prompt span {
+  color: var(--tertiary-color);
+}
+
+.feed-section .posts {
+  margin: 1em;
+  border-top: 2px solid black;
+}
+
+.feed-section .posts .post-template {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: 1.5em 1fr 1.5em;
+      grid-template-rows: 1.5em 1fr 1.5em;
+      grid-template-areas: "post-stats" "question-title" "poster-data";
+  border-bottom: 1px solid var(--quaternary-color);
+}
+
+.feed-section .posts .post-template span {
+  margin: 0;
+  padding: 0;
+}
+
+.feed-section .posts .post-template a:hover {
+  color: var(--quaternary-color);
+}
+
+.feed-section .posts .post-template .post-stats {
+  font-size: 0.7em;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: post-stats;
+}
+
+.feed-section .posts .post-template .post-stats .answers {
+  margin-left: 0.5em;
+}
+
+.feed-section .posts .post-template .question-title {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: question-title;
+  font-size: 0.9em;
+}
+
+.feed-section .posts .post-template .poster-data {
+  font-size: 0.7em;
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: poster-data;
+  text-align: right;
+}
+
+.feed-section .ask-btn {
+  text-align: center;
+  border: 1em solid var(--tertiary-color);
+  border-radius: 5em;
+  margin: 1em;
+  margin-bottom: 5em;
+}
+
+.feed-section .ask-btn a h2 {
+  font-size: 2em;
+}
+
+.feed-section .ask-btn a img {
+  display: none;
+}
+
+.feed-section .ask-btn a:hover h2 {
+  display: none;
+}
+
+.feed-section .ask-btn a:hover img {
+  display: block;
+  width: 100.5px;
+  margin: auto auto;
+}
+
+.hide {
+  display: none;
+}
+
+.core-features-section {
+  padding: 1em 0;
+  margin: 3em 0;
+  text-align: center;
+  border-top: 5px dotted black;
+}
+
+.core-features-section .container {
+  width: 90%;
+  margin: auto auto;
+  background: var(--quaternary-color);
+  border-radius: 3em;
+}
+
+.core-features-section h1 {
+  font-size: 2em;
+  color: var(--primary-color);
+}
+
+ul.core-features-list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: .1em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(15rem, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+ul.core-features-list li {
+  position: relative;
+  margin: 1em;
+}
+
+ul.core-features-list li p {
+  margin-top: -.1em;
+  font-size: 1.5em;
+}
+
+ul.core-features-list img {
+  width: 100px;
+  height: 100px;
+  background: var(--tertiary-color);
+  border-radius: 5em;
+  padding: 1em;
+}
+
+.statement-section {
+  margin: 5em 1em;
+}
+
+.statement-section .container {
+  background: var(--tertiary-color);
+  border-radius: 3em;
+}
+
+.statement-section .left-col {
+  width: 100%;
+  text-align: center;
+  padding-top: 1em;
+}
+
+.statement-section .left-col h1 {
+  color: var(--primary-color);
+  font-size: 2em;
+}
+
+.statement-section .left-col span {
+  color: var(--primary-color);
+  display: block;
+}
+
+.statement-section img {
+  display: block;
+  margin: 1em auto;
+  width: 50%;
+}
+
+.testimonials-section {
+  background: var(--secondary-color);
+  border-radius: 3em;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  margin: 0 1em;
+}
+
+.testimonials-section h1 {
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+.testimonials-section ul {
+  margin: 0;
+  padding: 0;
+}
+
+.testimonials-section li {
+  list-style-type: none;
+  background: var(--tertiary-color);
+  text-align: center;
+  padding: 2em 1em;
+  width: 80%;
+  margin: 0 auto 5em auto;
+  border-radius: 3em;
+}
+
+.testimonials-section li img {
+  width: 5em;
+  height: 5em;
+  border: 5px solid var(--quaternary-color);
+  border-radius: 50%;
+  margin-top: -4.5em;
+}
+
+.sponsors-section {
+  margin: 1em;
+}
+
+.sponsors-section .container {
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+  margin: 0 0 1rem 0;
+}
+
+.sponsors-section .container > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+footer {
+  background-color: var(--quaternary-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding-top: 0.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+footer .play-store-img {
+  width: 200px;
+  height: 66px;
+  border-radius: 1em;
+}
+
+footer .app-store-img {
+  width: 200px;
+}
+
+footer .right-col {
+  display: block;
+  border-top: 3px dotted var(--primary-color);
+}
+
+footer .right-col ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .right-col ul li {
+  border-top: 1px solid var(--primary-color);
+}
+
+footer .right-col ul li:last-of-type {
+  border-bottom: 1px solid var(--primary-color);
+}
+
+footer .right-col ul li:hover {
+  background: var(--primary-color);
+  color: var(--quaternary-color);
+}
+
+.feed-hero {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 5em 1em 1em 1em;
+  text-align: center;
+  font-size: 1em;
+  color: var(--tertiary-color);
+}
+
+.feed-hero .small-ask-btn {
+  text-align: center;
+  border: 5px solid var(--tertiary-color);
+  border-radius: 5em;
+  margin: auto 0;
+}
+
+.feed-hero .small-ask-btn a h2 {
+  font-size: 1em;
+}
+
+.feed-hero .small-ask-btn a img {
+  display: none;
+}
+
+.feed-hero .small-ask-btn a:hover h2 {
+  display: none;
+}
+
+.feed-hero .small-ask-btn a:hover img {
+  display: block;
+  width: 50px;
+  margin: auto auto;
+  padding: 0 2.2em;
+}
+
+.question-hero {
+  margin: 5.5em 1em .5em 1em;
+  text-align: center;
+  font-size: 1em;
+  color: var(--tertiary-color);
+}
+
+.question-section {
+  margin: 1em auto;
+  padding-bottom: 1em;
+  background: white;
+  border: 0.5em solid var(--tertiary-color);
+  border-radius: 2em;
+  width: 90%;
+}
+
+.question-section div {
+  padding: 1em 2em;
+}
+
+.question-section div h3, .question-section div p {
+  margin: 0;
+  padding: 0;
+}
+
+.question-section div p {
+  font-size: .8em;
+}
+
+.question-section .post-title .post-title-details {
+  width: 100%;
+}
+
+.question-section .post-body h3 {
+  padding-top: .3em;
+}
+
+.question-section .post-body #post-body-details {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+.question-section .submit {
+  display: inline-block;
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  padding: 10px;
+  border-radius: 5em;
+  margin-left: 1.8em;
+}
+
+.question-section .submit:hover {
+  color: var(--secondary-color);
+  background: var(--primary-color);
+  padding: 10px;
+  border-radius: 5em;
+}
+
+.post-hero {
+  padding: 3em 1em 1em 1em;
+  width: 90%;
+  margin: auto auto;
+}
+
+.post-hero .small-ask-btn {
+  display: block;
+  text-align: center;
+  border: 5px solid var(--tertiary-color);
+  border-radius: 5em;
+  width: 30%;
+  margin: 2em 0 1em auto;
+}
+
+.post-hero .small-ask-btn a h2 {
+  font-size: .8em;
+}
+
+.post-hero .small-ask-btn a img {
+  display: none;
+}
+
+.post-hero .small-ask-btn a:hover h2 {
+  display: none;
+}
+
+.post-hero .small-ask-btn a:hover img {
+  display: block;
+  width: 40px;
+  margin: auto auto;
+}
+
+.post-hero .post-title {
+  font-size: 1em;
+}
+
+.post-hero .post-title a:hover {
+  color: var(--quaternary-color);
+}
+
+.post-hero .poster-data {
+  font-size: 0.8em;
+  margin: .5em 0;
+  border-bottom: 2px solid var(--tertiary-color);
+}
+
+.post-hero .poster-data a:hover {
+  color: var(--quaternary-color);
+}
+
+.post-section {
+  width: 90%;
+  background: white;
+  margin: auto auto;
+  border: 0.5em solid var(--tertiary-color);
+  border-radius: 3em;
+}
+
+.post-section .post-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  grid-area: 'post-data';
+  margin: 1.5em;
+}
+
+.post-section .post-data .post-stats {
+  padding-top: 1em;
+  margin-right: 10%;
+}
+
+.post-section .post-data .post-body {
+  width: 90%;
+  font-size: .9em;
+}
+
+.post-section .post-data .up:hover, .post-section .post-data .down:hover {
+  background: var(--quaternary-color);
+  cursor: pointer;
+}
+
+.post-section .post-data .vote {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.post-section .poster {
+  display: block;
+  margin-left: auto;
+  margin-right: 1em;
+  background: var(--primary-color);
+  border-radius: 3em;
+  width: 50%;
+  font-size: 0.8em;
+}
+
+.post-section .poster .username {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 1em;
+}
+
+.post-section .poster img {
+  background: white;
+  border-radius: 3em;
+  padding: .5em;
+  margin: 1em;
+  width: 50px;
+  height: 50px;
+}
+
+.post-section .poster span:hover {
+  color: var(--quaternary-color);
+}
+
+.post-section .post-comments p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-left: auto;
+  margin-right: 1em;
+  border-top: 2px solid var(--quaternary-color);
+  width: 80%;
+  text-align: right;
+  font-size: .7em;
+}
+
+.post-section .post-comments p .comment {
+  width: 50%;
+}
+
+.post-section .post-comments .vote:hover {
+  background: var(--quaternary-color);
+  cursor: pointer;
+}
+
+.post-section .post-comments a:hover {
+  color: var(--quaternary-color);
+}
+
+.post-section .add-comment {
+  margin: 1em;
+  color: var(--secondary-color);
+}
+
+.post-section .add-comment .comment-prompt:hover {
+  color: var(--tertiary-color);
+  cursor: pointer;
+}
+
+.post-section .add-comment .comment-form-details {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+.post-section .add-comment .comment-submit-btn {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  text-align: center;
+  width: 25%;
+  border-radius: 5em;
+  margin: .5em 0 2em 0;
+}
+
+.post-section .add-comment .comment-submit-btn:hover {
+  color: var(--secondary-color);
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.answer-count {
+  width: 90%;
+  margin: 1em auto;
+}
+
+.answer-section {
+  background: white;
+  width: 90%;
+  margin: 1em auto 2em auto;
+  padding-top: 1em;
+  border: 0.5em solid var(--secondary-color);
+  border-radius: 3em;
+}
+
+.answer-section .answer {
+  border-bottom: 2px solid var(--quaternary-color);
+}
+
+.answer-section .answer:last-child {
+  border-bottom: none;
+}
+
+.answer-section .answer-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.answer-section .answer-data .answer-stats {
+  margin: 1em 10% 0 2em;
+}
+
+.answer-section .answer-data .answer-stats .up:hover, .answer-section .answer-data .answer-stats .down:hover, .answer-section .answer-data .answer-stats .supervote:hover {
+  background-color: var(--quaternary-color);
+  cursor: pointer;
+}
+
+.answer-section .answer-data .answer-stats .supervote {
+  font-size: 1.5em;
+}
+
+.answer-section .answer-data .answer-body {
+  width: 90%;
+  font-size: .9em;
+  margin: 0 1em;
+}
+
+.answer-section .poster {
+  display: block;
+  margin-left: auto;
+  margin-right: 1em;
+  background: var(--primary-color);
+  border-radius: 3em;
+  width: 50%;
+  font-size: 0.8em;
+}
+
+.answer-section .poster .username {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 1em;
+}
+
+.answer-section .poster img {
+  background: white;
+  border-radius: 3em;
+  padding: .5em;
+  margin: 1em;
+  width: 50px;
+  height: 50px;
+}
+
+.answer-section .poster span:hover {
+  color: var(--quaternary-color);
+}
+
+.answer-section .answer-comments p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-left: auto;
+  margin-right: 1em;
+  border-top: 2px solid var(--quaternary-color);
+  width: 80%;
+  text-align: right;
+  font-size: .7em;
+}
+
+.answer-section .answer-comments p .comment {
+  width: 50%;
+}
+
+.answer-section .answer-comments .vote:hover {
+  background: var(--quaternary-color);
+  cursor: pointer;
+}
+
+.answer-section .answer-comments a:hover {
+  color: var(--quaternary-color);
+}
+
+.answer-section .add-comment {
+  margin: 1em;
+  color: var(--secondary-color);
+}
+
+.answer-section .add-comment .comment-prompt:hover {
+  color: var(--tertiary-color);
+  cursor: pointer;
+}
+
+.answer-section .add-comment .comment-form-details {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+.answer-section .add-comment .comment-submit-btn {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  text-align: center;
+  width: 25%;
+  border-radius: 5em;
+  margin: .5em 0 2em 0;
+}
+
+.answer-section .add-comment .comment-submit-btn:hover {
+  color: var(--secondary-color);
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.your-answer {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+}
+
+.your-answer p {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.your-answer #user-answer {
+  text-align: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
+.your-answer .answer-submit-btn {
+  background: var(--secondary-color);
+  color: white;
+  text-align: center;
+  width: 20%;
+  border-radius: 5em;
+  margin: .5em 0 2em 0;
+}
+
+.your-answer .answer-submit-btn:hover {
+  color: var(--secondary-color);
+  background: white;
+  cursor: pointer;
+}
+
+.signup-section, .login-section, .profile-editor-section {
+  background: white;
+  border: 0.5em solid var(--tertiary-color);
+  border-radius: 3em;
+  width: 90%;
+  margin: 7em auto 3em auto;
+}
+
+.signup-section h1, .login-section h1, .profile-editor-section h1 {
+  text-align: center;
+}
+
+.signup-section .user-image, .login-section .user-image, .profile-editor-section .user-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1em 3em;
+}
+
+.signup-section .user-image img, .login-section .user-image img, .profile-editor-section .user-image img {
+  width: 100px;
+  height: 100px;
+}
+
+.signup-section .user-image p, .login-section .user-image p, .profile-editor-section .user-image p {
+  background: var(--quaternary-color);
+  color: var(--primary-color);
+  padding: .5em;
+  border-radius: 1em;
+}
+
+.signup-section .user-image p:hover, .login-section .user-image p:hover, .profile-editor-section .user-image p:hover {
+  background: var(--primary-color);
+  color: var(--quaternary-color);
+}
+
+.signup-section ul, .login-section ul, .profile-editor-section ul {
+  padding: 0;
+}
+
+.signup-section .left-col, .login-section .left-col, .profile-editor-section .left-col {
+  display: none;
+}
+
+.signup-section .right-col, .login-section .right-col, .profile-editor-section .right-col {
+  margin: 1em;
+}
+
+.signup-section .right-col h1, .login-section .right-col h1, .profile-editor-section .right-col h1 {
+  text-align: center;
+  font-weight: thin;
+  margin: 0 0 40px;
+}
+
+.signup-section .right-col input,
+.signup-section .right-col textarea, .login-section .right-col input,
+.login-section .right-col textarea, .profile-editor-section .right-col input,
+.profile-editor-section .right-col textarea {
+  font-size: 22px;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid gray-light;
+  border-radius: 2em;
+}
+
+.signup-section .right-col input:focus,
+.signup-section .right-col textarea:focus, .login-section .right-col input:focus,
+.login-section .right-col textarea:focus, .profile-editor-section .right-col input:focus,
+.profile-editor-section .right-col textarea:focus {
+  outline: 1em;
+}
+
+.signup-section .right-col textarea, .login-section .right-col textarea, .profile-editor-section .right-col textarea {
+  border: 2px solid gray-light;
+  resize: vertical;
+}
+
+.signup-section .right-col .field-wrap, .login-section .right-col .field-wrap, .profile-editor-section .right-col .field-wrap {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.signup-section .right-col .signup-btn, .login-section .right-col .signup-btn, .profile-editor-section .right-col .signup-btn {
+  margin: 1em 0;
+}
+
+.signup-section .right-col .signup-btn a, .login-section .right-col .signup-btn a, .profile-editor-section .right-col .signup-btn a {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 30%;
+  margin: 1em 0;
+  padding: .5em;
+  text-align: center;
+  border-radius: 5em;
+  color: var(--primary-color);
+}
+
+.signup-section .right-col .signup-btn a:hover, .login-section .right-col .signup-btn a:hover, .profile-editor-section .right-col .signup-btn a:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.signup-section .right-col a:hover, .login-section .right-col a:hover, .profile-editor-section .right-col a:hover {
+  color: var(--quaternary-color);
+}
+
+.signup-section .right-col .forgot-pass, .login-section .right-col .forgot-pass, .profile-editor-section .right-col .forgot-pass {
+  text-align: right;
+  font-size: .8em;
+}
+
+.signup-section .right-col .forgot-pass a, .login-section .right-col .forgot-pass a, .profile-editor-section .right-col .forgot-pass a {
+  color: var(--tertiary-color);
+}
+
+.signup-section .right-col .forgot-pass a:hover, .login-section .right-col .forgot-pass a:hover, .profile-editor-section .right-col .forgot-pass a:hover {
+  color: var(--quaternary-color);
+}
+
+.profile-section {
+  width: 90%;
+  background: white;
+  margin: 5em auto 2em auto;
+  border: 0.5em solid var(--tertiary-color);
+  border-radius: 3em;
+}
+
+.profile-section .container {
+  margin: 1em auto;
+}
+
+.profile-section div {
+  margin: 0 1em;
+}
+
+.profile-section .user-info .user-profile .user-profile-image {
+  width: 250px;
+  height: 250px;
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-section .user-info .user-profile .edit-profile-btn {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.profile-section .user-info .user-profile .edit-profile-btn a {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  border-radius: 5em;
+  padding: 0 1em;
+}
+
+.profile-section .user-info .user-profile .edit-profile-btn a:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.profile-section .user-info .user-info-table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile-section .user-info .user-info-table ul:first-of-type {
+  text-align: right;
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.profile-section .user-info .user-info-table ul li {
+  margin-bottom: .5em;
+}
+
+.profile-section .user-stats {
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid var(--quaternary-color);
+  border-radius: 1em;
+}
+
+.profile-section .user-stats ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  font-size: .8em;
+}
+
+.profile-section .activity ul li {
+  border: 0.2em solid var(--secondary-color);
+  border-radius: 3em;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.profile-section .activity ul li .post-summary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: .6em;
+}
+
+.profile-section .activity ul li .post-summary a {
+  width: 50%;
+}
+
+.profile-section .activity ul li .post-summary a:hover {
+  color: var(--quaternary-color);
+}
+
+.profile-section .activity .show-more-btn {
+  color: var(--tertiary-color);
+}
+
+.profile-section .activity .show-more-btn:hover {
+  color: var(--quaternary-color);
+}
+
+.profile-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-editor-section {
+  width: 90%;
+  background: white;
+  margin: 5em auto 2em auto;
+  border: 0.5em solid var(--tertiary-color);
+  border-radius: 3em;
+}
+
+.profile-editor-section h1 {
+  padding: 1em;
+  border-bottom: 5px dotted black;
+}
+
+@media only screen and (min-width: 680px) {
+  #menuBtn, #menu-exit {
+    display: none;
+  }
+  .navbar .container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 180px auto;
+        grid-template-columns: 180px auto;
+    -webkit-box-pack: unset;
+        -ms-flex-pack: unset;
+            justify-content: unset;
+  }
+  .navbar nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    background: none;
+    position: unset;
+    height: auto;
+    width: 100%;
+    padding: 0;
+  }
+  .navbar nav ul {
+    margin: 1em;
+  }
+  .navbar nav ul li {
+    display: inline-block;
+    margin: 0;
+  }
+  .navbar nav a {
+    color: black;
+    font-size: 1em;
+    padding: 0.1em 1em;
+  }
+  .hero-section .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .hero-section .left-col {
+    text-align: left;
+  }
+  .hero-section .hero-img {
+    display: block;
+    width: 50%;
+  }
+  .core-features-section .container {
+    width: 80%;
+  }
+  .sponsors-section .container {
+    margin: auto auto;
+  }
+  footer .container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+    gap: 0px 1em;
+        grid-template-areas: "left-col right-col";
+  }
+  footer .container .left-col {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: left-col;
+    margin: 0;
+    padding: 0;
+  }
+  footer .container .right-col {
+    -ms-grid-row: 1;
+    -ms-grid-column: 2;
+    grid-area: right-col;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    border-top: none;
+    margin: 0 1em 0 2em;
+    padding: 0;
+  }
+  footer .container .right-col ul {
+    margin: 0 1em;
+  }
+  footer .container .right-col ul li {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .feed-hero {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    margin: 5em 1em 1em 1em;
+    text-align: center;
+  }
+  .question-section .submit:hover img {
+    width: 28.5px;
+  }
+  .profile-section .user-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .profile-section .user-info .user-profile {
+    width: 40%;
+  }
+  .profile-section .user-info .user-info-table {
+    width: 60%;
+  }
+  .profile-editor-section .user-image {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .profile-editor-section .user-image img {
+    margin-right: 2em;
+  }
+}
+
+@media only screen and (min-width: 832px) {
+  .container {
+    width: 80%;
+    margin: auto auto;
+  }
+  .testimonials-section {
+    width: 80%;
+    margin: auto auto;
+  }
+  .testimonials-section ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .testimonials-section ul li {
+    margin: 0 1em;
+  }
+  .question-section {
+    width: 60%;
+  }
+  .answer-count, .post-hero, .post-section, .answer-section, .your-answer, .signup-section, .login-section, .profile-editor-section {
+    width: 70%;
+  }
+  /*.signup-section{
+        display: flex;
+        justify-content: center;
+        .left-col{
+            display: block;
+            width:30%;
+        }
+        .right-col{
+            display: block;
+            width: 60%;
+        }
+    }*/
+  .profile-section .activity .activity-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .profile-section .activity .activity-container .activity-divider {
+    width: 33%;
+    margin: .5em;
+  }
+  .profile-section .activity .activity-container .post-summary {
+    display: block;
+  }
+  .profile-section .activity .activity-container .post-summary p {
+    padding: 0;
+    margin: 0;
+  }
+  .profile-section .activity .activity-container .post-summary p:nth-child(2) {
+    width: 100%;
+  }
+  .profile-section .activity .activity-container .post-summary p:last-child {
+    text-align: right;
+  }
+}
+/*# sourceMappingURL=main.css.map */

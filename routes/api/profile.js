@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const {check, validationResult} = require('express-validator'); // no need for express-validator/check anymore
+const {check, validationResult, Result} = require('express-validator'); // no need for express-validator/check anymore
 const Feed = require('../../modules/Feed');     //this is so we can aquire the feed setup to use for allocating posts
 const Profile = require('../../modules/Profile');
 const User = require('../../modules/User');
@@ -133,29 +133,53 @@ router.get('/', auth, async (req, res) => {
 
 
 
-// @route       GET api/profile/Posts
-// @description get all posts by user id
-// @access      Private         
 
-router.get('/Posts/user_id', auth,async (req,res) => {
+// @route       GET api/profile/:id/:user_id
+// @description get USer posts by IDs
+// @access      Private         //why? because you cant see the posts page unless you have an account
 
-    const user = await User.findById(req.user.id).select('-password');
-    const profile = await Profile.findOne({user: req.user.id}).populate('user', ['name', 'avatar']);
-    try{
+router.get('/Posts/:user_id', async (req, res) => {
+   
+  
+    try { 
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        const profile = await Profile.findById(req.params.id);
+        const a = await feedpost.user.find(a => a.id === req.params.user_id);
+     
+       
+          
+            profile.Posts.push(a);
+           await profile.save();              //saves this value back into the database linked to the post id
 
-                const feedposts = await Feed.find().sort({
-                    date: -1,               //most recent first
-                    user: user.id,
-                });
-                res.json(profile.feedposts);
-               
+            res.json(a);
+            
+          
+}
+    
 
-    } catch (err)
-    {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+
+        
+
+       
+
+
+
+ catch (err)
+{
+    console.error(err.message);
+
+
+    if (err.kind === 'ObjectId'){
+        return res.status(404).json({msg: 'Post not found'});
     }
+
+
+    res.status(500).send('Server Error');
+}
 });
+
+
 
 
 

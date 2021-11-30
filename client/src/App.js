@@ -7,6 +7,10 @@ import Feed from './components/layout/Feed';
 import indexFeatures from './components/layout/indexFeatures';
 import Question from './components/layout/Question';
 import Alert from './components/layout/Alert'; 
+import Account from './components/account/Account'; 
+import PrivateRoute from './components/routing/PrivateRoute';
+import CreateProfile from './components/profile-forms/CreateProfile';
+import EditProfile from './components/profile-forms/EditProfile';
 
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
@@ -32,6 +36,8 @@ const App = () => {
     store.dispatch(loadUser());
   }, []);
 
+  
+
   return (
   <Provider store={store}>
     <Router>
@@ -51,11 +57,16 @@ const App = () => {
         </Switch>
         
         <section className="container">
-          <Alert /> 
+          <div className="container">
+            <Alert/>
+          </div>
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/question" component={Question} />
+            <PrivateRoute exact path="/account" component={Account} />
+            <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+            <PrivateRoute exact path="/edit-profile" component={EditProfile} />
           </Switch>
         </section>
         <Footer/>

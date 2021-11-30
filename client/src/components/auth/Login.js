@@ -22,39 +22,34 @@ export const Login = ({ login, isAuthenticated }) => {
 
     // Redirection if the user is logged in
     if(isAuthenticated) {
-        return <Redirect to="/profile" />
+        return <Redirect to="/account"/>
     }
 
     return (
         <Fragment>
-            <div className="form">
-                <div  id="login">
-                    <h1 className="account">Login</h1>
-                    <form onSubmit={e => onSubmit(e)}>
-                        <div className="field-wrap">
-                            <label>
-                                Email <span className="req"></span>
-                            </label>
-                            <input type="email" name="email" value={email} onChange={e => onChange(e)} required autocomplete="off"/>
+            <section className="login-section">
+                <div  className="container">
+                    <h1 id="h1-registration">Login</h1>
+	                <form onSubmit={e => onSubmit(e)}>
+                        <div className="right-col">
+                            <div className="field-wrap">
+                                <label>
+                                    Email Address<span className="req"></span>
+                                </label>
+                                <input type="email" name="email" value={email} onChange={e => onChange(e)} required autocomplete="off"/>
+                            </div>
+                            <div className="field-wrap">
+                                <label>
+                                    Password<span className="req"></span>
+                                </label>
+                                <input type="password" name="password" value={password} onChange={e => onChange(e)} minLength='8' required autocomplete="off"/>
+                            </div>
+                            <button id="registration-button" className="signup-btn" type="submit">Login &#8594;</button>
+                            <h4 className="have-account">Don't have an account?<Link id="linkAuth" to="/signup">{" "}Sign Up</Link></h4>
                         </div>
-
-                        <div className="field-wrap">
-                            <label>
-                                Password<span className="req"></span>
-                            </label>
-                            <label>
-                                <Link id="forgot" to="/forgot-password">Forgot password?</Link>
-                            </label>
-                            <input type="password" name="password" value={password} onChange={e => onChange(e)} minLength='8' required autocomplete="off"/>
-                        </div>
-                       <button className="btn" type="submit">Login &#8594;</button>
                     </form>
-                    <h4>
-                        Don't have an account? 
-                        <Link id="linkAuth" to='/signup'>    Sign Up</Link>
-                    </h4>
                 </div>
-            </div>
+            </section> 
         </Fragment>
     );
 }

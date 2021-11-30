@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="HandheldFriendly" content="true">
+        <title>Stack Overwhelmed | Student Q&A Platform</title>
+        <link rel="icon" href="images/smallLogo.svg">
+        <link rel="stylesheet" href="css/main.css">
+        <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap">
+    </head>
+
+<body>
+    <div class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="feed.html"><img src="images/bigLogo.svg" alt="stack overwhelmed logo with name"></a>
+            </div>
+            <img src="images/menu.svg" alt="menu button" id="menuBtn">
+            <nav>
+                <img src="images/exit.svg" alt="exit button" id="menu-exit">
+                <ul>
+                    <li><a href="feed.html">Home</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html">Log Off</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    
+
+    <div class="profile-editor-section">
+        <h1>Edit Profile</h1>
+        <div class="user-info">
+            <div class="right-col">
+                <div class="user-image">
+                    <img src="images/smallLogo.svg" alt="profile image" class="user-profile-image">
+                    <p>Change image...</p>
+                </div>
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <label>
+                        Github Username:<span class="req"></span>
+                        </label>
+                        <input type="text" required autocomplete="off" />
+                    </div>
+        
+                    <div class="field-wrap">
+                    <label>
+                        University:<span class="req"></span>
+                    </label>
+                    <input type="text" required autocomplete="off"/>
+                    </div>
+        
+                    <div class="field-wrap">
+                    <label>
+                        Field:<span class="req"></span>
+                    </label>
+                    <input type="text" required autocomplete="off"/>
+                    </div>
+        
+                    <div class="field-wrap">
+                        <label>
+                            Bio:<span class="req"></span>
+                        </label>
+                        <textarea name="about-me-bio" id="bio" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="signup-btn"><a href="profile.html">Save Changes &#8594;</a></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="left-col">
+                <h3>Download our app on:</h3>
+                <img src="images/play_store_logo.png" class="play-store-img" alt="google play store banner"/>                    
+                <img src="images/app_store.png" class="app-store-img" alt="google play store and app store download banners"/>                    
+                <p>For more than 100 years, Stack Overwhelmed's story has always been about innovation.</p>
+            </div>
+            <div class="right-col">
+                <div class="links-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Moodle</li>
+                        <li>myConcordia</li>
+                        <li>WebWork</li>
+                        <li>COLE Concordia</li>
+                        <li>Udemy</li>
+                    </ul>
+                </div>
+                <div class="socials-col">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Youtube</li>
+                        <li>Instagram</li>
+                        <li>Snapchat</li>
+                        <li>TikTok</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer> 
+
+    <script>
+        const mobileBtn = document.getElementById('menuBtn')  
+        nav = document.querySelector('nav')
+        mobileBtnExit = document.getElementById('menu-exit');
+
+        mobileBtn.addEventListener('click', () => {
+            nav.classList.add('menu-btn');
+        })
+
+        mobileBtnExit.addEventListener('click', () => {
+            nav.classList.remove('menu-btn');
+        })
+    </script>
+</body>
+</html>
