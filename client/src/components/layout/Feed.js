@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import SmallLogo1 from '../../img/smallLogo1.svg';
-import {Helmet} from "react-helmet";
+
 
 
 export const Feed = () => {

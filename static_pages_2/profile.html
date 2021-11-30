@@ -29,25 +29,32 @@
     </div>
 
     <section class="profile-section">
-        <div class="container">
-            <div class="edit-profile-btn">
-                <a href="profile-editor.html">Edit Profile &#8594;</a> 
-            </div>
-            
+        <div class="container">            
             <div class="user-info">
-                <img src="images/smallLogo.svg" alt="profile image" class="user-profile-image">
-                <ul>
-                    <li class="display-name">so_allan</li>
-                    <li class="location">Montreal</li>
-                    <li class="title">Student @ Concordia University</li>
+                <div class="user-profile">
+                    <img src="images/smallLogo.svg" alt="profile image" class="user-profile-image">
+                    <div class="edit-profile-btn">
+                        <a href="profile-editor.html">Edit Profile &#8594;</a> 
+                    </div>
+                </div>
+                <ul class="user-info-table">
+                    <ul>
+                        <li>Username:</li>
+                        <li>GitHub:</li>
+                        <li>University:</li>
+                        <li>Field:</li>
+                        <li>Bio:</li>
+                    </ul>
+                    <ul>
+                        <li>so_allan</li>
+                        <li>allanation</li>
+                        <li>Concordia University</li>
+                        <li>Software Engineering</li>
+                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias voluptatum reprehenderit necessitatibus esse, itaque fuga hic illo. Enim rem unde id at!</li>
+                    </ul>
                 </ul>
             </div>
             
-            <div class="about">
-                <h3>About</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere sequi dolore hic sint minima soluta vitae, et quidem voluptate temporibus.</p>
-            </div>
-
             <div class="user-stats">
                 <ul>
                     <li>#<br> reputation</li>
@@ -163,7 +170,7 @@
                 </div>
             </div>
         </div>
-    </footer> 
+    </footer>
 
     <script>
         const mobileBtn = document.getElementById('menuBtn')  

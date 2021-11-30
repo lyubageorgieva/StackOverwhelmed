@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 import QuestionMark from "../../img/questionMark.svg";
 import Check from "../../img/check.svg";
 import Happy from "../../img/happy.svg";
