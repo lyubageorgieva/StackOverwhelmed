@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {check, validationResult} = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const request = require('superagent');
 const auth = require('../../middleware/auth');
 
@@ -12,37 +12,62 @@ const Profile = require('../../modules/Profile');
 // @route       GET api/feed
 // @description Test route
 // @access      Private             //this section is for posts to be added to the feed by a user
-router.post('/',[auth,[
-    check('text','Text Required').not().isEmpty()
+router.post('/', [auth, [
+    check('title', 'Text Required', 'text', 'Text Required').not().isEmpty()
 ]],
-async  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-    try{
-    const user = await User.findById(req.user.id).select('-password');
+        try {
 
-    const newFeedPOST = new Feed({
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
-        user: user.id
+            const user = await User.findById(req.user.id).select('-password');
+
+            const newFeedPOST = new Feed({
+                title: req.body.title,            //title of post
+                text: req.body.text,           //text body/explanation of issue
+                name: user.name,
+                avatar: user.avatar,
+                user: user.id
+            });
+
+            
+            const feedP = await newFeedPOST.save();
+
+            res.json(feedP);
+
+        }
+        catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+
+
     });
 
-    const feedP = await newFeedPOST.save();
 
-    res.json(feedP);
 
-    }
-    catch (err){
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-    
 
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -51,15 +76,18 @@ async  (req, res) => {
 // @description get all posts
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.get('/', auth,async (req,res) => {
-    try{
-                const feedposts = await Feed.find().sort({
-                    date: -1                //most recent first
-                });
-                res.json(feedposts);
+router.get('/', async (req, res) => {
 
-    } catch (err)
-    {
+    try {
+        const feedposts = await Feed.find().sort({
+            date: -1                //most recent first
+        });
+        res.json(feedposts);
+
+
+
+
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -73,27 +101,26 @@ router.get('/', auth,async (req,res) => {
 // @description get feed posts by ID
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.get('/:id', auth,async (req,res) => {
+router.get('/:id', auth, async (req, res) => {
 
 
-    try{
+    try {
 
-                const feedpost = await Feed.findById(req.params.id);
+        const feedpost = await Feed.findById(req.params.id);
 
-                if (!feedpost){
-                    return res.status(404).json({msg: 'Post not found'});
-                }
+        if (!feedpost) {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
 
 
-                res.json(feedpost);
+        res.json(feedpost);
 
-    } catch (err)
-    {
+    } catch (err) {
         console.error(err.message);
 
 
-        if (err.kind === 'ObjectId'){
-            return res.status(404).json({msg: 'Post not found'});
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
         }
 
 
@@ -108,32 +135,31 @@ router.get('/:id', auth,async (req,res) => {
 // @description delete post from user based on their ID
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
-router.delete('/:id', auth,async (req,res) => {
+router.delete('/:id', auth, async (req, res) => {
 
 
-    try{
+    try {
 
-                const feedpost = await Feed.findById(req.params.id);
-                
-                if (!feedpost){
-                    return res.status(404).json({msg: 'Post not found'});
-                }
-                        //check user
+        const feedpost = await Feed.findById(req.params.id);
 
-                        if(feedpost.user.toString() !== req.user.id){
+        if (!feedpost) {
+            return res.status(404).json({ msg: 'Post not found' });
+        }
+        //check user
 
-                            return res.status(401).json({msg: 'User not authorized'});
-                        }
-                            await feedpost.remove();
+        if (feedpost.user.toString() !== req.user.id) {
 
-                        res.json({msg: 'Feed Post removed'});
+            return res.status(401).json({ msg: 'User not authorized' });
+        }
+        await feedpost.remove();
+
+        res.json({ msg: 'Feed Post removed' });
 
 
 
-    } catch (err)
-    {
-        if (err.kind === 'ObjectId'){
-            return res.status(404).json({msg: 'Post not found'});
+    } catch (err) {
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' });
         }
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -147,31 +173,70 @@ router.delete('/:id', auth,async (req,res) => {
 // @description vote on a post
 // @access      Private        
 
-router.put('/vote/:id', auth, async (req,res) =>{                   //this forces only answers or answers to have votes allowed
-    try{
+router.put('/upvote/:id', auth, async (req, res) => {                   //this forces only answers or answers to have votes allowed
+    try {
 
-            const feedpost = await Feed.findById(req.params.id);
+        const feedpost = await Feed.findById(req.params.id);
 
-            // Check if the post has been voted on by this user
-           
+        // Check if the post has been voted on by this user
 
-            if(feedpost.vote.filter(vote => vote.user.toString() === req.user.id).length > 0){          //if greater than 0, then theyve used their vote
+        if ((feedpost.upvote.filter(upvote => upvote.user.toString() === req.user.id).length > 0) || (feedpost.downvote.filter(downvote => downvote.user.toString() === req.user.id).length > 0)) {          //if greater than 0, then theyve used their upvote or downvote
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this post'});
-            }
-            feedpost.vote.unshift({user: req.user.id});
+
+            return res.status(400).json({ msg: 'You have exceeded your limit of votes for this post' });
+        }
+
+        else {
+            feedpost.upvote.unshift({ user: req.user.id });
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.vote);
-
-
+            res.json(feedpost.upvote);
+        }
     }
-    catch (err){
+
+
+
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
+
+
+
+
+// @route       PUT api/feed/votes/:id
+// @description vote on a post
+// @access      Private        
+
+router.put('/downvote/:id', auth, async (req, res) => {                   //this forces only answers or answers to have votes allowed
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+
+        // Check if the post has been voted on by this user
+
+
+        if ((feedpost.upvote.filter(upvote => upvote.user.toString() === req.user.id).length > 0) || (feedpost.downvote.filter(downvote => downvote.user.toString() === req.user.id).length > 0)) {          //if greater than 0, then theyve used their upvote or downvote
+
+            return res.status(400).json({ msg: 'You have exceeded your limit of votes for this post' });
+        }
+
+        feedpost.downvote.unshift({ user: req.user.id });
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(feedpost.downvote);
+
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 
 
 
@@ -191,34 +256,209 @@ router.put('/vote/:id', auth, async (req,res) =>{                   //this force
 // @description unvote on a post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/unvote/:id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
-    try{
+router.put('/unupvote/:id', auth, async (req, res) => {             //this forces only answers  to have votes allowed
+    try {
 
-            const feedpost = await Feed.findById(req.params.id);
+        const feedpost = await Feed.findById(req.params.id);
 
-            // Check if the post has been voted on by this user
-           
+        // Check if the post has been voted on by this user
 
-            if(feedpost.vote.filter(vote => vote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
 
-                    return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
-                                }
-            
-               const removeIndex = feedpost.vote.map(vote => vote.user.toString()).indexOf(req.user.id);
+        if (feedpost.upvote.filter(vote => vote.user.toString() === req.user.id).length === 0) {          //if greater than 0, then theyve used their downvote
 
-               feedpost.vote.splice(removeIndex, 1);
+            return res.status(400).json({ msg: 'You have not used your downvote yet for this post' });
+        }
 
-            await feedpost.save();              //saves this value back into the database linked to the post id
+        const removeIndex = feedpost.upvote.map(vote => vote.user.toString()).indexOf(req.user.id);
 
-            res.json(feedpost.vote);
+        feedpost.upvote.splice(removeIndex, 1);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(feedpost.upvote);
 
 
     }
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
+
+
+
+
+
+// @route       PUT api/feed/undownvote/:id
+// @description unvote on a post
+// @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
+
+router.put('/undownvote/:id', auth, async (req, res) => {             //this forces only answers  to have votes allowed
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+
+        // Check if the post has been voted on by this user
+
+
+        if (feedpost.downvote.filter(vote => vote.user.toString() === req.user.id).length === 0) {          //if greater than 0, then theyve used their downvote
+
+            return res.status(400).json({ msg: 'You have not used your downvote yet for this post' });
+        }
+
+        const removeIndex = feedpost.downvote.map(vote => vote.user.toString()).indexOf(req.user.id);
+
+        feedpost.downvote.splice(removeIndex, 1);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(feedpost.downvote);
+
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+//////////////////
+//Vote counting
+/////////////////
+
+router.get('/totalvotes/:id', async (req, res) => {                   //+/- counter for post votes
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const upvotes = (feedpost.upvote.length);
+        const downvotes = -(feedpost.downvote.length);
+        const sum = [upvotes, downvotes].reduce(function (result, item) {
+            return result + item;
+        }, 0);
+
+        feedpost.totalvotes.push(sum);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+router.get('/answer/totalvotesANSW/:id/:answer_id', async (req, res) => {                    //+/- counter for answer votes
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);
+        const upvotes = (ans.upvoteANS.length);
+        const downvotes = -(ans.downvoteANS.length);
+        const sum = [upvotes, downvotes].reduce(function (result, item) {
+            return result + item;
+        }, 0);
+        ans.totalvotesANSW.push(sum);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/answer/commentANSW/comANSWvote/:id/:answer_id/:comment_id', async (req, res) => {                 //+/- counter for comment on answers votes
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);
+        const com = await ans.commentANSW.find(com => com.id === req.params.comment_id);
+        const v = (com.comANSWvote.length);
+
+
+        const sum = [v, 0].reduce(function (result, item) {
+            return result + item;
+        }, 0);
+        com.totalvotescomANSW.push(sum);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/comment/Comvote/totalvotesCOM/:id/:comment_id', async (req, res) => {                 //+/- counter for comment votes
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const com = await feedpost.comment.find(com => com.id === req.params.comment_id);
+        const v = (com.Comvote.length);
+
+
+        const sum = [v, 0].reduce(function (result, item) {
+            return result + item;
+        }, 0);
+
+        com.totalvotesCOM.push(sum);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -236,44 +476,44 @@ router.put('/unvote/:id', auth, async (req,res) =>{             //this forces on
 // @description Answer on post
 // @access      Private        
 
-router.post('/answer/:id',[auth,[
-    check('text','Text Required').not().isEmpty()
+router.post('/answer/:id', [auth, [
+    check('text', 'Text Required').not().isEmpty()
 ]],
-async  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
 
-    try{
-const user = await User.findById(req.user.id).select('-password');
-const feedcom = await Feed.findById(req.params.id);
+        try {
+            const user = await User.findById(req.user.id).select('-password');
+            const feedcom = await Feed.findById(req.params.id);
 
 
 
-    const newAnswer =  {
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
-        user: user.id
-    }
+            const newAnswer = {
+                text: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: user.id
+            }
 
 
-    feedcom.answer.unshift(newAnswer);
- 
-    await feedcom.save();
+            feedcom.answer.unshift(newAnswer);
 
-    res.json(feedcom.answer);
+            await feedcom.save();
 
-    }
-    catch (err){
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-    
+            res.json(feedcom.answer);
 
-});
+        }
+        catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+
+
+    });
 
 
 
@@ -289,26 +529,26 @@ router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
 
 
-    try{
+    try {
 
-        const feedcom = await Feed.findById(req.params.id);  
+        const feedcom = await Feed.findById(req.params.id);
 
         //get answer from post (pull out answer)
 
         const ans = feedcom.answer.find(ans => ans.id === req.params.answer_id);
 
 
-            // Make sure answer exists
+        // Make sure answer exists
 
-        if(!ans){
-            return res.status(404).json({msg: 'Answer does not exist'});
+        if (!ans) {
+            return res.status(404).json({ msg: 'Answer does not exist' });
         }
 
         //make sure that the user who made the answer is the one deleting it
 
 
-        if(ans.user.toString() !== req.user.id){
-            return res.status(401).json({msg: 'User not authorized to delete answer'});
+        if (ans.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized to delete answer' });
         }
 
         //get index to remove answer
@@ -316,20 +556,19 @@ router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
         feedcom.answer.splice(removeIndex, 1);
 
-     await feedcom.save();              //saves this value back into the database linked to the post id
+        await feedcom.save();              //saves this value back into the database linked to the post id
 
-     res.json(feedcom.answer);
+        res.json(feedcom.answer);
 
 
-    }catch(err)
-    {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 
 
 }
-    
+
 
 );
 
@@ -343,55 +582,44 @@ router.delete('/answer/:id/:answer_id', auth, async (req, res) => {
 
 
 
-+function maxChar(element)
-{
-    var max_chars = 280;
-
-    if(element.value.length > max_chars) {
-        element.value = element.value.substr(0, max_chars);
-        return res.status(401).json({msg: 'Text has surpassed limit of characters'});
-
-    }
-}
 
 
 //the person who originally posted their question will be able to vote on their favorite answer
 
- 
+
 
 // @route       PUT api/feed/bestanswer/user/:id/:answer_id'           //vote on the best response to YOUR post
 // @description vote on best response
 // @access      Private        
 
-router.put('/answer/supervote/:id/:answer_id', auth, async (req,res) =>{                   
-    try{
-            const user = await User.findById(req.user.id).select('-password');
-            const feedpost = await Feed.findById(req.params.id);
-            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
-            // Check if the post has been voted on by this user
-           
-            if(feedpost.user.toString() !== user.id)
-            {
-                return res.status(400).json({msg: 'You are not the original author of the post and your request to supervote is denied'});
-            }
-            if(feedpost.user.toString() === user.id){
-            
+router.put('/answer/supervote/:id/:answer_id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        // Check if the post has been voted on by this user
 
-            if(ans.supervote.filter(supervote => supervote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+        if (feedpost.user.toString() !== user.id) {
+            return res.status(400).json({ msg: 'You are not the original author of the post and your request to supervote is denied' });
+        }
+        if (feedpost.user.toString() === user.id) {
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of best answer votes for this post'});
+
+            if (ans.supervote.filter(supervote => supervote.user.toString() === user.id).length > 0) {          //if greater than 0, then theyve used their best answer vote
+
+                return res.status(400).json({ msg: 'You have exceeded your limit of best answer votes for this post' });
             }
-            ans.supervote.unshift({user: user.id});
+            ans.supervote.unshift({ user: user.id });
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
             res.json(feedpost.supervote);
 
 
+        }
+
     }
-    
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -415,38 +643,37 @@ router.put('/answer/supervote/:id/:answer_id', auth, async (req,res) =>{
 // @description Unsupervote a answer on your post
 // @access      Private                             //if this doesnt work then remove one and change Feed.js in modules to just "votes:"
 
-router.put('/answer/unsupervote/:id/:answer_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
-    try{
-        
-            const feedpost = await Feed.findById(req.params.id);
-            const user = await User.findById(req.user.id).select('-password');
-            // Check if the post has been voted on by this user
-            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
-            if(ans.user.toString() !== user.id)
-            {
-                return res.status(400).json({msg: 'You are not the original author of the post and your request is denied'});
+router.put('/answer/unsupervote/:id/:answer_id', auth, async (req, res) => {             //this forces only answers or answers to have votes allowed
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const user = await User.findById(req.user.id).select('-password');
+        // Check if the post has been voted on by this user
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        if (ans.user.toString() !== user.id) {
+            return res.status(400).json({ msg: 'You are not the original author of the post and your request is denied' });
+        }
+
+        if (ans.user.toString() === user.id) {
+
+
+            if (ans.supervote.filter(supervote => supervote.user.toString() === user.id).length === 0) {          //if greater than 0, then theyve used their downvote
+
+                return res.status(400).json({ msg: 'You have not used your downvote yet for this post' });
             }
 
-            if(ans.user.toString() === user.id){
+            const removeIndex = ans.supervote.map(supervote => supervote.user.toString()).indexOf(user.id);
 
-
-            if(ans.supervote.filter(supervote => supervote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
-
-                    return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
-                                }
-            
-               const removeIndex = ans.supervote.map(supervote => supervote.user.toString()).indexOf(user.id);
-
-               ans.supervote.splice(removeIndex, 1);
+            ans.supervote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
             res.json(feedpost.supervote);
 
 
+        }
     }
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -467,44 +694,44 @@ router.put('/answer/unsupervote/:id/:answer_id', auth, async (req,res) =>{      
 // @description comment  on a post
 // @access      Private        
 
-router.post('/comment/:id',[auth,[
-    check('text','Text Required').not().isEmpty()
+router.post('/comment/:id', [auth, [
+    check('text', 'Text Required').not().isEmpty()
 ]],
-async  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
 
-    try{
-const user = await User.findById(req.user.id).select('-password');
-const feedcom = await Feed.findById(req.params.id);
+        try {
+            const user = await User.findById(req.user.id).select('-password');
+            const feedcom = await Feed.findById(req.params.id);
 
 
 
-    const newcomment =  {
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
-        user: user.id
-    }
+            const newcomment = {
+                text: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: user.id
+            }
 
 
-    feedcom.comment.unshift(newcomment);
- 
-    await feedcom.save();
+            feedcom.comment.unshift(newcomment);
 
-    res.json(feedcom.comment);
+            await feedcom.save();
 
-    }
-    catch (err){
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-    
+            res.json(feedcom.comment);
 
-});
+        }
+        catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+
+
+    });
 
 
 
@@ -520,26 +747,26 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
 
 
-    try{
+    try {
 
-        const comcomment = await Feed.findById(req.params.id);  
+        const comcomment = await Feed.findById(req.params.id);
 
         //get answer from post (pull out answer)
 
         const comment = comcomment.comment.find(comment => comment.id === req.params.comment_id);
 
 
-            // Make sure answer exists
+        // Make sure answer exists
 
-        if(!comment){
-            return res.status(404).json({msg: 'comment does not exist'});
+        if (!comment) {
+            return res.status(404).json({ msg: 'comment does not exist' });
         }
 
         //make sure that the user who made the answer is the one deleting it
 
 
-        if(comment.user.toString() !== req.user.id){
-            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        if (comment.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized to delete comment' });
         }
 
         //get index to remove answer
@@ -547,20 +774,19 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
         comcomment.comment.splice(removeIndex, 1);
 
-     await comcomment.save();              //saves this value back into the database linked to the post id
+        await comcomment.save();              //saves this value back into the database linked to the post id
 
-     res.json(comcomment.comment);
+        res.json(comcomment.comment);
 
 
-    }catch(err)
-    {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 
 
 }
-    
+
 
 );
 
@@ -586,52 +812,52 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 // @description comment  on an answer
 // @access      Private                 //need post_id to be able to get answer_id
 
-router.post('/answer/commentANSW/:id/:answer_id',[auth,[            //we want to take the id of the answer and of the post in order to comment on them 
-    check('text','Text Required').not().isEmpty()
+router.post('/answer/commentANSW/:id/:answer_id', [auth, [            //we want to take the id of the answer and of the post in order to comment on them 
+    check('text', 'Text Required').not().isEmpty()
 ]],
-async  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
-    }
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
 
-    try{
-const user = await User.findById(req.user.id).select('-password');
-const feedcom = await Feed.findById(req.params.id);             //feedcom is now equal to the id of the post we are looking at 
-const ans = await feedcom.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        try {
+            const user = await User.findById(req.user.id).select('-password');
+            const feedcom = await Feed.findById(req.params.id);             //feedcom is now equal to the id of the post we are looking at 
+            const ans = await feedcom.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
 
 
 
-// Make sure answer exists
+            // Make sure answer exists
 
-if(!ans){
-return res.status(404).json({msg: 'Answer does not exist'});
-}
-
-
-const newcomment =  {
-    text: req.body.text,
-    name: user.name,
-    avatar: user.avatar,
-    user: user.id
-}
-
-ans.commentANSW.unshift(newcomment);
-//feedcom.commentANSW.unshift(newcomment);            //adds newcomment to begining of commentANSW array 
-
-await feedcom.save();
-
-res.json(feedcom.commentANSW);
-
-}
-catch (err){
-    console.error(err.message);
-    res.status(500).send('Server Error');
-}
+            if (!ans) {
+                return res.status(404).json({ msg: 'Answer does not exist' });
+            }
 
 
-});
+            const newcomment = {
+                text: req.body.text,
+                name: user.name,
+                avatar: user.avatar,
+                user: user.id
+            }
+
+            ans.commentANSW.unshift(newcomment);
+            //feedcom.commentANSW.unshift(newcomment);            //adds newcomment to begining of commentANSW array 
+
+            await feedcom.save();
+
+            res.json(feedcom.commentANSW);
+
+        }
+        catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+
+
+    });
 
 
 
@@ -647,9 +873,9 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
 
 
 
-    try{
+    try {
         const user = await User.findById(req.user.id).select('-password');
-        
+
         const comcomment = await Feed.findById(req.params.id);              //has post_id
         const ans = await comcomment.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
         //get answer from post (pull out answer)
@@ -657,17 +883,17 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
         const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
 
 
-            // Make sure answer exists
+        // Make sure answer exists
 
-        if(!com){
-            return res.status(404).json({msg: 'comment does not exist'});
+        if (!com) {
+            return res.status(404).json({ msg: 'comment does not exist' });
         }
 
         //make sure that the user who made the comment is the one deleting it
 
 
-        if(com.user.toString() !== req.user.id){
-            return res.status(401).json({msg: 'User not authorized to delete comment'});
+        if (com.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized to delete comment' });
         }
 
         //get index to remove comment on answer
@@ -675,20 +901,19 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
 
         ans.commentANSW.splice(removeIndex, 1);
 
-     await comcomment.save();              //saves this value back into the database linked to the post id
+        await comcomment.save();              //saves this value back into the database linked to the post id
 
-     res.json(comcomment.com);
+        res.json(comcomment.com);
 
 
-    }catch(err)
-    {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 
 
 }
-    
+
 
 );
 
@@ -704,28 +929,28 @@ router.delete('/answer/commentANSW/:id/:answer_id/:commentANSW_id', auth, async 
 // @description vote on a comment to an answer
 // @access      Private        
 
-router.put('/answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{                   
-    try{
-            const user = await User.findById(req.user.id).select('-password');
-            const feedpost = await Feed.findById(req.params.id);
-            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
-            const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
-            // Check if the comment has been voted on by this user
-           
+router.put('/answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
+        // Check if the comment has been voted on by this user
 
-            if(com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their vote
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
-            }
-            com.comANSWvote.unshift({user: user.id});
+        if (com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === user.id).length > 0) {          //if greater than 0, then theyve used their vote
 
-            await feedpost.save();              //saves this value back into the database linked to the post id
+            return res.status(400).json({ msg: 'You have exceeded your limit of votes for this comment' });
+        }
+        com.comANSWvote.unshift({ user: user.id });
 
-            res.json(feedpost.comANSWvote);
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(feedpost.comANSWvote);
 
 
     }
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -749,33 +974,33 @@ router.put('/answer/commentANSW/comANSWvote/:id/:answer_id/:commentANSW_id', aut
 // @description unvote on a comment to an answer
 // @access      Private                             /
 
-router.put('/answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req,res) =>{             //this forces only answers  to have votes allowed
-    try{
+router.put('/answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', auth, async (req, res) => {             //this forces only answers  to have votes allowed
+    try {
         const user = await User.findById(req.user.id).select('-password');
         const feedpost = await Feed.findById(req.params.id);
         const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
         const com = ans.commentANSW.find(com => com.id === req.params.commentANSW_id);       //has comment_id
-            
 
-            // Check if the post has been voted on by this user
-           
 
-            if(com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === req.user.id).length ===0){          //if greater than 0, then theyve used their downvote
+        // Check if the post has been voted on by this user
 
-                    return res.status(400).json({msg: 'You have not used your downvote yet for this post'});
-                                }
-            
-               const removeIndex = com.comANSWvote.map(comANSWvote => comANSWvote.user.toString()).indexOf(req.user.id);
 
-               com.comANSWvote.splice(removeIndex, 1);
+        if (com.comANSWvote.filter(comANSWvote => comANSWvote.user.toString() === req.user.id).length === 0) {          //if greater than 0, then theyve used their downvote
 
-            await feedpost.save();              //saves this value back into the database linked to the post id
+            return res.status(400).json({ msg: 'You have not used your vote yet for this comment' });
+        }
 
-            res.json(feedpost.comANSWvote);
+        const removeIndex = com.comANSWvote.map(comANSWvote => comANSWvote.user.toString()).indexOf(req.user.id);
+
+        com.comANSWvote.splice(removeIndex, 1);
+
+        await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(feedpost.comANSWvote);
 
 
     }
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -793,30 +1018,30 @@ router.put('/answer/commentANSW/uncomANSWvote/:id/:answer_id/:commentANSW_id', a
 
 
 
-router.put('/comment/Comvote/:id/:comment_id', auth, async (req,res) =>{                   
-    try{
-            const user = await User.findById(req.user.id).select('-password');
-            const feedpost = await Feed.findById(req.params.id);
-            const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
-            // Check if the post has been voted on by this user
-          
-            
-{
-            if(com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+router.put('/comment/Comvote/:id/:comment_id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        // Check if the post has been voted on by this user
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
+
+        {
+            if (com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length > 0) {          //if greater than 0, then theyve used their best answer vote
+
+                return res.status(400).json({ msg: 'You have exceeded your limit of votes for this comment' });
             }
-            com.Comvote.unshift({user: user.id});
+            com.Comvote.unshift({ user: user.id });
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
             res.json(feedpost.Comvote);
 
 
+        }
+
     }
-    
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -840,32 +1065,32 @@ router.put('/comment/Comvote/:id/:comment_id', auth, async (req,res) =>{
 // @description Unvoting a comment on your post
 // @access      Private                           
 
-router.put('/comment/UNComvote/:id/:comment_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
-    try{
-        
-            const feedpost = await Feed.findById(req.params.id);
-            const user = await User.findById(req.user.id).select('-password');
-            // Check if the post has been voted on by this user
-            const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
-           {
+router.put('/comment/UNComvote/:id/:comment_id', auth, async (req, res) => {             //this forces only answers or answers to have votes allowed
+    try {
 
-            if(com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
+        const feedpost = await Feed.findById(req.params.id);
+        const user = await User.findById(req.user.id).select('-password');
+        // Check if the post has been voted on by this user
+        const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        {
 
-                    return res.status(400).json({msg: 'You have not used your downvote yet for this comment'});
-                                }
-            
-               const removeIndex = com.Comvote.map(Comvote => Comvote.user.toString()).indexOf(user.id);
+            if (com.Comvote.filter(Comvote => Comvote.user.toString() === user.id).length === 0) {          //if greater than 0, then theyve used their downvote
 
-               com.Comvote.splice(removeIndex, 1);
+                return res.status(400).json({ msg: 'You have not used your vote yet for this comment' });
+            }
+
+            const removeIndex = com.Comvote.map(Comvote => Comvote.user.toString()).indexOf(user.id);
+
+            com.Comvote.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
             res.json(feedpost.Comvote);
 
 
+        }
     }
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -894,39 +1119,68 @@ router.put('/comment/UNComvote/:id/:comment_id', auth, async (req,res) =>{      
 
 
 
-router.put('/answer/ANSWvote/:id/:answer_id', auth, async (req,res) =>{                   
-    try{
-            const user = await User.findById(req.user.id).select('-password');
-            const feedpost = await Feed.findById(req.params.id);
-            //const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
-            const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
-            
-            // Check if the post has been voted on by this user
-          
-            
-{
-            if(ans.ANSWvote.filter(ANSWvote => ANSWvote.user.toString() === user.id).length > 0){          //if greater than 0, then theyve used their best answer vote
+router.put('/answer/upvoteANS/:id/:answer_id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        //const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
 
-                    return res.status(400).json({msg: 'You have exceeded your limit of votes for this comment'});
+        // Check if the post has been voted on by this user
+
+
+        {
+            if ((ans.upvoteANS.filter(upvoteANS => upvoteANS.user.toString() === user.id).length > 0) || (ans.downvoteANS.filter(downvoteANS => downvoteANS.user.toString() === user.id).length > 0)) {          //if greater than 0, then theyve used their best answer vote
+
+                return res.status(400).json({ msg: 'You have exceeded your limit of votes for this answer' });
             }
-            ans.ANSWvote.unshift({user: user.id});
+            ans.upvoteANS.unshift({ user: user.id });
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.ANSWvote);
+            res.json(feedpost.upvoteANS);
 
+
+        }
 
     }
-    
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
 
 
+router.put('/answer/downvoteANS/:id/:answer_id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        const feedpost = await Feed.findById(req.params.id);
+        //const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
 
+        // Check if the post has been voted on by this user
+
+
+        {
+            if ((ans.downvoteANS.filter(downvoteANS => downvoteANS.user.toString() === user.id).length > 0) || (ans.upvoteANS.filter(upvoteANS => upvoteANS.user.toString() === user.id).length > 0)) {          //if greater than 0, then theyve used their best answer vote
+
+                return res.status(400).json({ msg: 'You have exceeded your limit of votes for this answer' });
+            }
+            ans.downvoteANS.unshift({ user: user.id });
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.downvoteANS);
+
+
+        }
+
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 
 
@@ -943,33 +1197,33 @@ router.put('/answer/ANSWvote/:id/:answer_id', auth, async (req,res) =>{
 // @description Unvoting an answer on your post
 // @access      Private                           
 
-router.put('/answer/UNANSWvote/:id/:answer_id', auth, async (req,res) =>{             //this forces only answers or answers to have votes allowed
-    try{
-        
-            const feedpost = await Feed.findById(req.params.id);
-            const user = await User.findById(req.user.id).select('-password');
-            // Check if the post has been voted on by this user
-           // const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
-           const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
-           {
+router.put('/answer/unupvoteANS/:id/:answer_id', auth, async (req, res) => {             //this forces only answers or answers to have votes allowed
+    try {
 
-            if(ans.ANSWvote.filter(ANSWvote => ANSWvote.user.toString() === user.id).length ===0){          //if greater than 0, then theyve used their downvote
+        const feedpost = await Feed.findById(req.params.id);
+        const user = await User.findById(req.user.id).select('-password');
+        // Check if the post has been voted on by this user
+        // const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        {
 
-                    return res.status(400).json({msg: 'You have not used your downvote yet for this comment'});
-                                }
-            
-               const removeIndex = ans.ANSWvote.map(ANSWvote => ANSWvote.user.toString()).indexOf(user.id);
+            if (ans.upvoteANS.filter(upvoteANS => upvoteANS.user.toString() === user.id).length === 0) {          //if greater than 0, then theyve used their downvote
 
-               ans.ANSWvote.splice(removeIndex, 1);
+                return res.status(400).json({ msg: 'You have not used your upvote yet for this answer' });
+            }
+
+            const removeIndex = ans.upvoteANS.map(upvoteANS => upvoteANS.user.toString()).indexOf(user.id);
+
+            ans.upvoteANS.splice(removeIndex, 1);
 
             await feedpost.save();              //saves this value back into the database linked to the post id
 
-            res.json(feedpost.ANSWvote);
+            res.json(feedpost.upvoteANS);
 
 
+        }
     }
-}
-    catch (err){
+    catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -978,7 +1232,41 @@ router.put('/answer/UNANSWvote/:id/:answer_id', auth, async (req,res) =>{       
 
 
 
+// @route       PUT api/feed/comment/UNComvote/:id/:comment_id
+// @description Unvoting an answer on your post
+// @access      Private                           
 
+router.put('/answer/undownvoteANS/:id/:answer_id', auth, async (req, res) => {             //this forces only answers or answers to have votes allowed
+    try {
+
+        const feedpost = await Feed.findById(req.params.id);
+        const user = await User.findById(req.user.id).select('-password');
+        // Check if the post has been voted on by this user
+        // const com = await feedpost.comment.find(com => com.id === req.params.comment_id);          //ans is now equal to the answer_id
+        const ans = await feedpost.answer.find(ans => ans.id === req.params.answer_id);          //ans is now equal to the answer_id
+        {
+
+            if (ans.downvoteANS.filter(downvoteANS => downvoteANS.user.toString() === user.id).length === 0) {          //if greater than 0, then theyve used their downvote
+
+                return res.status(400).json({ msg: 'You have not used your downvote yet for this answer' });
+            }
+
+            const removeIndex = ans.downvoteANS.map(downvoteANS => downvoteANS.user.toString()).indexOf(user.id);
+
+            ans.downvoteANS.splice(removeIndex, 1);
+
+            await feedpost.save();              //saves this value back into the database linked to the post id
+
+            res.json(feedpost.downvoteANS);
+
+
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 
 

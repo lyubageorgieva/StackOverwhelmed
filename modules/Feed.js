@@ -1,7 +1,8 @@
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 
 
 const FeedSchema = new mongoose.Schema({
+
 
 
 
@@ -10,18 +11,27 @@ const FeedSchema = new mongoose.Schema({
         ref: 'user'
     },
 
+    title: {
+        type: String,
+        ref:'user',
+        
+        
+    },
     text: {
         type: String,
         required: true
+
     },
 
     name: {             //name of the user so we can keep post if the account is deleted
         type: String
     },
-    avatar:{
+    avatar: {
         type: String
     },
-    vote: [
+    
+
+    upvote: [
         {
             user: {
                 type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
@@ -29,14 +39,32 @@ const FeedSchema = new mongoose.Schema({
             }
         }
     ],
-    
-    
-    answer: [             
+    downvote: [
         {
             user: {
-                type: mongoose.Schema.Types.ObjectID,         
+                type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
                 ref: 'user'
-            } ,
+            }
+        }
+    ], totalvotes: [
+        {
+
+            type: Number,            // user can only vote up or down on a post once. Number cannot increase
+            required: true
+
+        },
+    ],
+
+
+
+
+
+    answer: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectID,
+                ref: 'user'
+            },
             text: {
                 type: String,
                 required: true
@@ -49,17 +77,25 @@ const FeedSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now
             },
-            commentANSW: [               
+            totalvotesANSW: [
                 {
-                  
+
+                    type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                    required: true
+
+                },
+            ],
+            commentANSW: [
+                {
+
                     user: {
-                        type: mongoose.Schema.Types.ObjectID,         
+                        type: mongoose.Schema.Types.ObjectID,
                         ref: 'user'
-                    } ,
+                    },
                     text: {
                         type: String,
                         required: true
-        
+
                     },
                     avatar: {
                         type: String
@@ -68,52 +104,80 @@ const FeedSchema = new mongoose.Schema({
                         type: Date,
                         default: Date.now
                     },
-                        comANSWvote: [
+                    comANSWvote: [
                         {
                             user: {
                                 type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
                                 ref: 'user'
                             }
                         }
-                                    ],
-                }
-                
-            ],
-        
-        ANSWvote: [
-            {
-                user: {
-                    type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
-                    ref: 'user'
-                }
-            }
-        ],
-    
-        supervote: [
+                    ],
+                    totalvotescomANSW: [
+                        {
 
-            {
-                user: {
-                    type: mongoose.Schema.Types.ObjectID,
-                    ref: 'user'
+                            type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                            required: true
+
+                        },
+                    ],
                 }
-    
-            }
-    
-    
-    
-        ],
-    
-    
-    
-    
-    }
-    ],  
-    comment: [               
+
+            ],
+
+
+
+
+
+            upvoteANS: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
+            downvoteANS: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,            // user can only vote up or down on a post once. Number cannot increase
+                        ref: 'user'
+                    }
+                }
+            ],
+            totalvotesANS: [
+                {
+                    type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                    required: true
+                }
+            ],
+
+
+
+            supervote: [
+
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectID,
+                        ref: 'user'
+                    }
+
+                }
+
+
+
+            ],
+
+
+
+
+        }
+    ],
+    comment: [
         {
             user: {
-                type: mongoose.Schema.Types.ObjectID,         
+                type: mongoose.Schema.Types.ObjectID,
                 ref: 'user'
-            } ,
+            },
             text: {
                 type: String,
                 required: true
@@ -134,12 +198,22 @@ const FeedSchema = new mongoose.Schema({
                     }
                 }
             ],
+            totalvotesCOM: [
+                {
+                    type: Number,            // user can only vote up or down on a post once. Number cannot increase
+                    required: true
+                }
+
+            ],
         }
     ],
+
     date: {
         type: Date,
         default: Date.now
     }
+
+
 });
 
-module.exports = Feed = mongoose.model('feed',FeedSchema );
+module.exports = Feed = mongoose.model('feed', FeedSchema);
