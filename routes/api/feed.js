@@ -386,7 +386,7 @@ router.get('/answer/totalvotesANSW/:id/:answer_id', async (req,res) =>{         
     }
 });
 
-router.get('/answer/commentANSW/:id/:answer_id/:comment_id', async (req,res) =>{                 //+/- counter for comment votes
+router.get('/answer/commentANSW/comANSWvote/:id/:answer_id/:comment_id', async (req,res) =>{                 //+/- counter for comment on answers votes
     try{
         
         const feedpost = await Feed.findById(req.params.id);
@@ -411,6 +411,37 @@ router.get('/answer/commentANSW/:id/:answer_id/:comment_id', async (req,res) =>{
         res.status(500).send('Server Error');
     }
 });
+
+router.get('/comment/Comvote/totalvotesCOM/:id/:comment_id', async (req,res) =>{                 //+/- counter for comment votes
+    try{
+        
+        const feedpost = await Feed.findById(req.params.id);
+        const com = await feedpost.comment.find(com => com.id === req.params.comment_id); 
+        const v = (com.Comvote.length);
+        
+        
+     const sum =  [v,0].reduce(function(result,item){
+         return result+item;
+      },0);
+       
+        com.totalvotesCOM.push(sum);
+        
+       await feedpost.save();              //saves this value back into the database linked to the post id
+
+        res.json(sum);
+        
+    }
+    catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+
+
+
+
 
 
 
