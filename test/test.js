@@ -24,6 +24,64 @@ MongoClient.connect(url, function(err, db) {
   });
 })
 
+describe('/POST Create Profile',function() {
+  it('It should have the same bio, the same Github name, the same university, the same field', function() {
+
+  
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  // Create a variable that directly is linked to the database
+  var dbo = db.db("myFirstDatabase");
+  // Create profile
+  var myobj = { bio : "Life is awesome!", githubname : "epicpoggersman2022", University : "McGill", Field : "Management"};
+  
+  // Collect an object that is already an existing collection in database & inserts previously created obj inside that collection
+   dbo.collection("profiles").insertOne(myobj, function(err, res) {
+     if (err) throw err;
+    
+    
+
+
+
+
+
+    //If object was inserted will return this message
+     console.log("1 document inserted");
+  });
+
+
+
+
+
+})
+  }); });
+
+
+describe('/DELETE Delete Profile',function() {
+  it('It should remove the same bio, the same Github name, the same university, the same field', function() {
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  // Create a variable that directly is linked to the database
+  var dbo = db.db("myFirstDatabase");
+  // Create profile
+  var myobj = {bio : "Life is awesome!", githubname : "epicpoggersman2022", University : "McGill", Field : "Management"};
+
+  // Delete the profile from the database
+    dbo.collection("profiles").deleteOne(myobj, function(err, res) {
+      if (err) throw err;
+     //If object was inserted will return this message
+      console.log("1 document removed");
+   });
+
+
+
+
+
+})
+  }); });
+
+
 // Function used to return the number of a specific collection // Not important!!!
 async function Count(client,obj) {
   await client.connect();
