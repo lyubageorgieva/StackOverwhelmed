@@ -62,7 +62,7 @@ const CreateProfile = ({createProfile, history}) => {
                         </label>
                         <textarea name="bio" id="bio" cols="30" rows="5" value={bio} onChange={e => onChange(e)}></textarea>
                     </div>
-                    <Link to="/account"><button id="registration-button" className="signup-btn" type="submit">Create Profile &#8594;</button></Link>
+                    <button id="registration-button" className="signup-btn" type="submit">Create Profile &#8594;<Link to="/account"></Link></button>
                 </div>
             </form>
         </div>

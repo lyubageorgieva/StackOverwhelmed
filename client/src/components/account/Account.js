@@ -24,11 +24,11 @@ const Account = ({getCurrentProfile, auth: {user}, profile: {profile, loading}})
                 </div>
                 <ul className="user-info-table">
                     <ul>
-                        <li>Username: {user.name}</li>
-                        <li>GitHub: {profile.githubname}</li>
-                        <li>University: {profile.University}</li>
-                        <li>Field: {profile.Field}</li>
-                        <li>Bio: {profile.bio}</li>
+                        <li>Username: {user && user.name}</li>
+                        <li>GitHub: {profile && profile.githubname}</li>
+                        <li>University: {profile && profile.University}</li>
+                        <li>Field: {profile && profile.Field}</li>
+                        <li>Bio: {profile && profile.bio}</li>
                     </ul>
                 </ul>
             </div>
