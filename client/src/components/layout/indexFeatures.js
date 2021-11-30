@@ -1,4 +1,9 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
+
 import QuestionMark from "../../img/questionMark.svg";
 import Check from "../../img/check.svg";
 import Happy from "../../img/happy.svg";
@@ -11,7 +16,12 @@ import Ville from "../../img/villemtl.png";
 import Desjardins from "../../img/desjardins.png";
 import Saputo from "../../img/saputo.png";
 
-export const indexFeatures = () => {
+export const indexFeatures = ({isAuthenticated, profile}) => {
+
+    if (isAuthenticated && profile){
+        return <Redirect to="/account"/>;
+    }
+
 return (
     <div>
         <section className="core-features-section">
@@ -100,4 +110,12 @@ return (
 );
 };
 
-export default indexFeatures;
+indexFeatures.propTypes ={
+    isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(indexFeatures);

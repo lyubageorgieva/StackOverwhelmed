@@ -22,7 +22,7 @@ export const Login = ({ login, isAuthenticated }) => {
 
     // Redirection if the user is logged in
     if(isAuthenticated) {
-        return <Redirect to="/profile" />
+        return <Redirect to="/account"/>
     }
 
     return (

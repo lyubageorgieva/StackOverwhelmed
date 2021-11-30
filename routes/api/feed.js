@@ -78,7 +78,6 @@ async  (req, res) => {
 router.get('/',async (req,res) => {
    
     try{
-
                 const feedposts = await Feed.find().sort({
                     date: -1                //most recent first
                 });
