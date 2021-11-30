@@ -23,6 +23,9 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <Link to="/profile">Profile</Link>
         </li>
         <li>
+          <Link to="/account">Account</Link>
+        </li>
+        <li>
           <Link onClick={logout} to="/">
             <i className="fas fa-sign-out-alt" />{" "}
             <span className="hide-sm">Logout</span>

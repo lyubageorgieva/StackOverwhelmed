@@ -52,10 +52,7 @@ async  (req, res) => {
 // @access      Private         //why? because you cant see the posts page unless you have an account
 
 router.get('/', auth,async (req,res) => {
-
-
     try{
-
                 const feedposts = await Feed.find().sort({
                     date: -1                //most recent first
                 });
