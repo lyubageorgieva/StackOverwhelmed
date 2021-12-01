@@ -17,7 +17,7 @@ const Account = ({getCurrentProfile, deleteAccount, auth: {user}, profile: {prof
         <div className="container">            
             <div className="user-info">
                 <div className="user-profile">
-                    <img src={image1} alt="profile image" className="user-profile-image"/>
+                    <img src={user.avatar} alt="profile image" className="user-profile-image"/>
                     <div className="edit-profile-btn">
                         <Link to="/edit-profile">Edit Profile &#8594;</Link> 
                     </div>
@@ -95,7 +95,7 @@ const Account = ({getCurrentProfile, deleteAccount, auth: {user}, profile: {prof
                 </ul>
             </div>
             <div>
-                <button id="registration-button" onClick={() => deleteAccount()} className="signup-btn" type="submit">Delete Account & Profile &#8594;</button>
+                <button id="delete-account-button" onClick={() => deleteAccount()} className="signup-btn" type="submit">Delete Account &#8594;</button>
             </div>
         </div>
     </section>
