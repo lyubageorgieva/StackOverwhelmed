@@ -32,15 +32,6 @@ const Account = ({getCurrentProfile, deleteAccount, auth: {user}, profile: {prof
                     </ul>
                 </ul>
             </div>
-            
-            <div className="user-stats">
-                <ul>
-                    <li>#<br/> reputation</li>
-                    <li>#<br/>questions</li>
-                    <li>#<br/>answers</li>
-                    <li>#<br/>comments</li>
-                </ul>
-            </div>
 
             <div className="activity">
                 <ul className="activity-container">
@@ -109,7 +100,7 @@ const Account = ({getCurrentProfile, deleteAccount, auth: {user}, profile: {prof
         </div>
     </section>
 
-        {profile !== null ? (<Fragment></Fragment>) : (<Fragment><Redirect to='/create-profile'></Redirect></Fragment>)}
+        {profile !== null ? (<Fragment><Redirect to='/account'></Redirect></Fragment>) : (<Fragment></Fragment>)}
     </Fragment>);
 }
 
