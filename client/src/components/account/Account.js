@@ -2,11 +2,11 @@ import React, {Fragment, useEffect} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile';
+import { deleteAccount, getCurrentProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import image1 from '../../img/smallLogo1.svg';
 
-const Account = ({getCurrentProfile, auth: {user}, profile: {profile, loading}}) => {
+const Account = ({getCurrentProfile, deleteAccount, auth: {user}, profile: {profile, loading}}) => {
     useEffect(() => {
         getCurrentProfile();
     }, []);
@@ -18,7 +18,7 @@ const Account = ({getCurrentProfile, auth: {user}, profile: {profile, loading}})
             <div className="user-info">
                 <div className="user-profile">
                     <img src={image1} alt="profile image" className="user-profile-image"/>
-                    <div class="edit-profile-btn">
+                    <div className="edit-profile-btn">
                         <Link to="/edit-profile">Edit Profile &#8594;</Link> 
                     </div>
                 </div>
@@ -30,15 +30,6 @@ const Account = ({getCurrentProfile, auth: {user}, profile: {profile, loading}})
                         <li>Field: {profile && profile.Field}</li>
                         <li>Bio: {profile && profile.bio}</li>
                     </ul>
-                </ul>
-            </div>
-            
-            <div className="user-stats">
-                <ul>
-                    <li>#<br/> reputation</li>
-                    <li>#<br/>questions</li>
-                    <li>#<br/>answers</li>
-                    <li>#<br/>comments</li>
                 </ul>
             </div>
 
@@ -103,15 +94,19 @@ const Account = ({getCurrentProfile, auth: {user}, profile: {profile, loading}})
                     </li>
                 </ul>
             </div>
+            <div>
+                <button id="registration-button" onClick={() => deleteAccount()} className="signup-btn" type="submit">Delete Account & Profile &#8594;</button>
+            </div>
         </div>
     </section>
 
-        {profile !== null ? (<Fragment></Fragment>) : (<Fragment><Redirect to='/create-profile'></Redirect></Fragment>)}
+        {profile !== null ? (<Fragment><Redirect to='/account'></Redirect></Fragment>) : (<Fragment></Fragment>)}
     </Fragment>);
 }
 
 Account.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
+    deleteAccount: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
 };
@@ -121,4 +116,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, {getCurrentProfile})(Account);
+export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Account);
