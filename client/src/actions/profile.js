@@ -46,6 +46,10 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         {
             history.push('/account');
         }
+        else
+        {
+            history.push('/account');
+        }
     }catch(err)
     {
         const errors = err.response.data.errors;
