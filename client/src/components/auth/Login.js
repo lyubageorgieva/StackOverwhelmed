@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
 
-export const Login = ({ login, isAuthenticated }) => {
+export const Login = ({ login, isAuthenticated, profile }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''

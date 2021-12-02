@@ -29,7 +29,7 @@ export const SignUp = ({ setAlert, signup, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/account" />;
+    return <Redirect to="/create-profile"/>;
   }
   return (
     <Fragment>

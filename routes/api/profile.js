@@ -5,6 +5,9 @@ const { check, validationResult, Result } = require('express-validator'); // no 
 const Feed = require('../../modules/Feed');     //this is so we can aquire the feed setup to use for allocating posts
 const Profile = require('../../modules/Profile');
 const User = require('../../modules/User');
+const { contextsKey } = require('express-validator/src/base');
+const mongoose = require('mongoose');
+
 //@route GET api/profile/me
 //@description Get current users profile
 //@access Private
@@ -120,6 +123,8 @@ router.get('/user/:user_id', async (req, res) => {
 //@access Private
 router.delete('/', auth, async (req, res) => {
     try {
+        //remove user posts
+        await Feed.deleteMany({user: req.user.id});
         //Remove Profile
         await Profile.findOneAndRemove({ user: req.user.id });
         //Remove User
@@ -135,30 +140,33 @@ router.delete('/', auth, async (req, res) => {
 
 
 // @route       GET api/profile/:id/:user_id
-// @description get USer posts by IDs
+// @description get User posts by IDs and show that in Profile
 // @access      Private         
 
-router.get('/Posts/:id/:user_id', auth,async (req, res) => {
-
+router.get('/Posts/:user_id', auth,async (req, res) => {
 
     try {
+        
         const user = await User.findById(req.user.id).select('-password');
-        const feedpost = await Feed.findById(req.params.id);
-        const profile = await Profile.findById(req.params.id);
         
-        
-        const finder = await Feed.findById(feedpost.id);
-            console.log(finder);
-        const smth = feedpost.user.id === user.id;
-        console.log(smth);
-        //profile.Posts.push(smth);
-        //await profile.save();              //saves this value back into the database linked to the post id
+    
+        const profile = await Profile.findOne({
+            user: req.params.user_id
+        });
+    
+        const feeds = await Feed.find({
+            user: user._id,    // <-- this is what i changed
+            
 
-res.json(smth);
-
-
+        })
+    
+        const payload = {
+            ...profile.toJSON(),
+            Posts: feeds.map(feed => feed.toJSON())
+        }
+                    //it is not saved here since we would be duplicating information. This is just retreiving information based on parameters and can be called upon any time 
+        res.json(payload);
     }
-
 
 
 
