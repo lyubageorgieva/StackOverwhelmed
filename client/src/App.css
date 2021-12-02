@@ -1437,15 +1437,75 @@ footer .right-col ul li:hover {
   color: var(--primary-color);
   width: 30%;
   margin: 1em 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#h1-post {
+  width:500px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 2em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.postdelete {
+  color: red;
+  background-color: transparent;
+  text-decoration: none;
+  margin-left: 0.5em;
+}
+
+#post-form-button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  width: 30%;
   padding: 0.5em;
   text-align: center;
   border-radius: 5em;
   color: var(--primary-color);
   border-style: none;
   font-size: 16px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /*# sourceMappingURL=main.css.map */

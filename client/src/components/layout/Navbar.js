@@ -17,7 +17,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/question">Q&A</Link>
+          <Link to="/feed">Q&A</Link>
         </li>
         <li>
           <Link to="/account">Account</Link>
@@ -40,7 +40,7 @@ export const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/signup">Q&A</Link>
+          <Link to="/feed">Q&A</Link>
         </li>
         <li>
           <Link to="/login">Login</Link>
