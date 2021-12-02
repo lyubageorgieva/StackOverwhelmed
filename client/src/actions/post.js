@@ -9,7 +9,8 @@ import {
     ADD_COMMENT_POST,
     DELETE_COMMENT_POST,
     ADD_ANSWER,
-    DELETE_ANSWER
+    DELETE_ANSWER,
+    UPDATE_VOTES
 } from './types';
 
 // Get posts
@@ -153,6 +154,44 @@ export const addAnswer = (postId, formData) => async dispatch => {
         });
     }
 };
+
+
+// Add vote
+export const addVote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/feed/upvote/${id}`);
+
+        dispatch({
+            type: UPDATE_VOTES,
+            payload: { id, votes: res.data }
+        });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+        
+    }
+};
+
+// Remove vote
+export const removeVote = id => async dispatch => {
+    try {
+        const res = await axios.put(`/api/feed/unupvote/${id}`);
+
+        dispatch({
+            type: UPDATE_VOTES,
+            payload: { id, votes: res.data }
+        });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+        
+    }
+};
+
 
 
 

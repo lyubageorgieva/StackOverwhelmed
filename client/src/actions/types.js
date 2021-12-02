@@ -20,6 +20,8 @@ export const ADD_COMMENT_POST = 'ADD_COMMENT_POST';
 export const DELETE_COMMENT_POST = 'DELETE_COMMENT_POST';
 export const ADD_ANSWER = 'ADD_POST';
 export const DELETE_ANSWER = 'DELETE_ANSWER';
+export const UPDATE_VOTES = 'UPDATE_VOTES';
+
 
 
 
