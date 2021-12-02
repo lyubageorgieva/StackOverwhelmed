@@ -7,7 +7,10 @@ import {
     ADD_POST,
     GET_POST,
     ADD_COMMENT_POST,
-    DELETE_COMMENT_POST
+    DELETE_COMMENT_POST,
+    ADD_ANSWER,
+    DELETE_ANSWER,
+    UPDATE_VOTES
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +36,12 @@ export default function(state = initialState, action) {
                 post: payload,
                 loading: false
             };
+        case UPDATE_VOTES:
+            return {
+                ...state,
+                posts: state.posts.map(post => post._id === payload.id ? { ...post, votes: payload.votes} : post),
+                loading: false
+            }
         case ADD_POST:
             return {
                 ...state,
@@ -64,6 +73,23 @@ export default function(state = initialState, action) {
                     ...state.post,
                     comments: state.post.comments.filter(
                         comment => comment._id !== payload
+                    )
+                },
+                loading: false
+            };
+        case ADD_ANSWER:
+            return {
+                ...state,
+                post: { ...state.post, answers: payload },
+                loading: false
+            };
+        case DELETE_ANSWER:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    answers: state.post.answers.filter(
+                        answer => answer._id !== payload
                     )
                 },
                 loading: false
