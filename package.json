@@ -4,7 +4,7 @@
   "description": "Implement a simplified version of Stack Overflow (Q&A website).",
   "main": "server.js",
   "scripts": {
-    "test": "mocha ./test/test.js",
+    "test": "mocha ./test",
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
