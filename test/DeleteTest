@@ -65,3 +65,30 @@ describe('/DELETE  POST', function() {
         });
     });
   });});
+
+
+  describe('/DELETE  USER', function() {
+    it('DELETE a user', function(done) {
+      MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var mongoose = require('mongoose');
+  
+        // Direct Reference to Database
+        var dbo = db.db("myFirstDatabase");
+        // Create user
+        var myobj = { 
+          name : "Friendly Reminde", email : "STTT@hotmail.com", password : "12345678"};
+        // Remove user
+          dbo.collection("users").deleteOne(myobj, function(err, res) {
+          // Will test if object can be removed
+            if (err) throw err;
+            console.log("1 document removed");
+          });
+        
+          dbo.collection("users").find({}).toArray(function(err, docs) {
+          // Will not go through if object is not retrievable
+          if (err) throw err;
+          done()
+          });
+      });
+    });});
