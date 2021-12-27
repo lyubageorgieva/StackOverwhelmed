@@ -3,17 +3,25 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteCommentPost } from '../../actions/post';
+import formatDate from '../../utils/formatDate';
 
 const CommentItem = ({
     postId,
-    comment: { _id, text, user, avatar, date, Comvote, totalvotesCOM },
+    deleteCommentPost,
+    comment: { _id, text, user, name, avatar, date, Comvote, totalvotesCOM },
     auth,
 }) => (
         <div className="post-comments">
             <p>
                 <span><span className="vote">&#128077; </span>{totalvotesCOM[totalvotesCOM.length-1]}</span>
                 <span className="comment">{text}</span>
-                <a href="#">u/</a>
+                <a href="#">u/{name}</a>
+                <span> posted on: {formatDate(date)}</span>
+                {/* {auth?.user?._id && user == auth.user._id && (
+                <span className="postdelete">
+                <Link to={`/feed/${_id}`} onClick={e => deleteCommentPost(_id)} className="postdelete">delete</Link> 
+                </span>
+                )}  */}
             </p>
         </div>
 );

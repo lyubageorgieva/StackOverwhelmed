@@ -177,7 +177,7 @@ export const addVote = id => async dispatch => {
 // Remove vote
 export const removeVote = id => async dispatch => {
     try {
-        const res = await axios.put(`/api/feed/unupvote/${id}`);
+        const res = await axios.put(`/api/feed/downvote/${id}`);
 
         dispatch({
             type: UPDATE_VOTES,
