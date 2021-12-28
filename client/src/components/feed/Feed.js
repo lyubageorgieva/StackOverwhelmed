@@ -21,7 +21,7 @@ const Feed = ({ getFeed, post: { posts, loading } }) => {
                     <p>Welcome to the <span>Q&A</span>!</p>
                 </div>
                 <div className="posts">
-                    {posts.map(post => (
+                    {(posts || []).map(post => (
                         <FeedItem key={post._id} post={post} />
                     ))}
                 </div>
@@ -42,7 +42,6 @@ const Feed = ({ getFeed, post: { posts, loading } }) => {
 Feed.propTypes = {
     getFeed: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired
-
 }
 
 const mapStateToProps = state => ({
