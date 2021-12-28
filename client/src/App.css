@@ -865,7 +865,6 @@ footer .right-col ul li:hover {
 }
 
 .your-answer #user-answer {
-  text-align: center;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
@@ -1444,7 +1443,7 @@ footer .right-col ul li:hover {
   border-radius: 5em;
 }
 #h1-post {
-  width:500px;
+  width: 500px;
   margin: 0 auto;
   text-align: center;
   font-size: 2em;

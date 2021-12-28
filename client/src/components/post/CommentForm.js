@@ -5,6 +5,10 @@ import { addCommentPost } from '../../actions/post';
 
 const CommentForm = ({ postId, addCommentPost }) => {
     const [text, setText] = useState('');
+    
+    function refreshPage() {
+    window.location.reload(false);
+    }
     return (
         <form onSubmit={e => {
             e.preventDefault();
@@ -16,7 +20,7 @@ const CommentForm = ({ postId, addCommentPost }) => {
             <p className="comment-prompt">Add a comment...</p>
             <div className="comment-form">
                 <textarea name="comment" className="comment-form-details" cols="125" rows="2" value={text} onChange={e => setText(e.target.value)} required></textarea>
-                <button id="post-form-button" className="comment-submit-btn" type="submit">Comment!</button>
+                <button id="post-form-button" className="comment-submit-btn" type="submit" onClick={refreshPage}>Comment!</button>
             </div>
         </div>
         </form>
