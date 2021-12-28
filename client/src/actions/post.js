@@ -10,6 +10,8 @@ import {
     DELETE_COMMENT_POST,
     ADD_ANSWER,
     DELETE_ANSWER,
+    ADD_COMMENT_ANSWER,
+    DELETE_COMMENT_ANSWER,
     UPDATE_VOTES
 } from './types';
 
@@ -154,6 +156,70 @@ export const addAnswer = (postId, formData) => async dispatch => {
         });
     }
 };
+
+// Delete answer to a post 
+export const deleteAnswer = (postId, answerId) => async dispatch => {
+
+
+    try {
+        const res = await axios.delete(`/api/feed/answer/${postId}/${answerId}`); 
+        dispatch({
+            type: DELETE_ANSWER,
+            payload: answerId
+        });
+        dispatch(setAlert('Answer Deleted', 'danger'));
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+};
+
+
+
+// Add comment to an answer
+export const addCommentAnswer = (postId, answerId, formData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.post(`/api/feed/answer/commentANSW/${postId}/${answerId}`, formData, config); 
+        dispatch({
+            type: ADD_COMMENT_ANSWER,
+            payload: res.data
+        });
+        dispatch(setAlert('Comment Added', 'danger'));
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+};
+
+
+// Delete comment to an answer 
+export const deleteCommentAnswer = (postId, answerId, commentId) => async dispatch => {
+
+
+    try {
+        const res = await axios.delete(`/api/feed/answer/commentANSW/${postId}/${answerId}/${commentId}`); 
+        dispatch({
+            type: DELETE_COMMENT_ANSWER,
+            payload: commentId
+        });
+        dispatch(setAlert('Comment Deleted', 'danger'));
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        });
+    }
+};
+
 
 
 // Add vote

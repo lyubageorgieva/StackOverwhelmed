@@ -100,6 +100,9 @@ const FeedSchema = new mongoose.Schema({
                         required: true
 
                     },
+                    name: {             //name of the user so we can keep post if the account is deleted
+                        type: String
+                    },
                     avatar: {
                         type: String
                     },
