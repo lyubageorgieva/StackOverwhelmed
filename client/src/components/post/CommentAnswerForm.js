@@ -1,9 +1,9 @@
 import React , {useState} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addCommentPost } from '../../actions/post';
+import { addCommentAnswer } from '../../actions/post';
 
-const CommentForm = ({ postId, addCommentPost }) => {
+const CommentAnswerForm = ({ postId, answerId, addCommentAnswer }) => {
     const [text, setText] = useState('');
     
     function refreshPage() {
@@ -12,7 +12,7 @@ const CommentForm = ({ postId, addCommentPost }) => {
     return (
         <form onSubmit={e => {
             e.preventDefault();
-            addCommentPost(postId, {text});
+            addCommentAnswer(postId, answerId, {text});
             setText('');
         }}
         >
@@ -27,8 +27,8 @@ const CommentForm = ({ postId, addCommentPost }) => {
     )
 }
 
-CommentForm.propTypes = {
-    addCommentPost: PropTypes.func.isRequired
+CommentAnswerForm.propTypes = {
+    addCommentAnswer: PropTypes.func.isRequired
 }
 
-export default connect(null, {addCommentPost})(CommentForm);
+export default connect(null, {addCommentAnswer})(CommentAnswerForm);

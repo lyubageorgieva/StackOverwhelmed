@@ -5,6 +5,11 @@ import { addAnswer } from '../../actions/post';
 
 const AnswerForm = ({ postId, addAnswer }) => {
     const [text, setText] = useState('');
+
+    function refreshPage() {
+    window.location.reload(false);
+    }
+
     return (
         <form onSubmit={e => {
             e.preventDefault();
@@ -15,7 +20,7 @@ const AnswerForm = ({ postId, addAnswer }) => {
         <section class="your-answer">
             <p>Your Answer</p>
             <textarea name="user-answer" id="user-answer" cols="125" rows="10" value={text} onChange={e => setText(e.target.value)} required>{text}</textarea>
-            <button id="post-form-button" class="answer-submit-btn"  type="submit">Answer!</button>
+            <button id="post-form-button" class="answer-submit-btn"  type="submit" onClick={refreshPage}>Answer!</button>
         </section>
         </form>
     )
