@@ -32,17 +32,16 @@ const AnswerItem = ({
                 <span className="date-posted-answ"> posted on: {formatDate(date)}</span>
             </div>
 
-            {/* TODO, FIX COMMENTS ON ANSWERS!!! CODE IS COMMENTED FOR NOW */}
-
-            {/* <div className="answer-comments">
-                {post.answer.commentANSW.map(commentANSW => (
-                    <CommentAnswerItem key={commentANSW._id} commentANSW={commentANSW} postId={post._id} answerId={answer._id} />
+            <div className="answer-comments">
+                {commentANSW.map(commentANSW_ => (
+                    <CommentAnswerItem key={commentANSW_._id} commentANSW={commentANSW_} postId={postId} answerId={postId} />
                 ))}
             </div>
 
             <div className="add-comment">
-                <CommentAnswerForm postId={post._id} answerId={answer._id}/>
-            </div> */}
+                <CommentAnswerForm postId={postId} answerId={postId}/>
+            </div>
+
 
         </div>
     </section>
