@@ -16,7 +16,7 @@ const CommentAnswerItem = ({
             <p>
                 <span><span className="vote">&#128077; </span>{totalvotescomANSW[totalvotescomANSW.length-1]}</span>
                     <span className="comment">{text}</span>
-                    <a href="profile.html">u/so_{name}</a>
+                    <a href="profile.html">u/{name}</a>
                     <span className="date-posted-answ"> posted on: {formatDate(date)}</span>
                 {/* {auth?.user?._id && user == auth.user._id && (
                 <span className="postdelete">

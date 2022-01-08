@@ -33,23 +33,6 @@ const Post = ({ getPost, post: { post, loading }, match,}) => {
         </div>
         <section className="post-section">
             <PostItem post={post}/>
-            {/* <div className="post-comments">
-                <p>
-                    <span><span className="vote">&#128077; </span>#</span>
-                    <span className="comment">Lorem ipsum dolor sit amet.</span>
-                    <a href="profile.html">u/so_argiro</a>
-                </p>
-                <p>
-                    <span><span className="vote">&#128077; </span>#</span>
-                    <span className="comment">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
-                    <a href="profile.html">u/so_lyuba</a>
-                </p>
-                <p>
-                    <span><span className="vote">&#128077; </span>#</span>
-                    <span className="comment">Lorem ipsum dolor sit.</span>
-                    <a href="profile.html">u/so_rudy</a>
-                </p>
-            </div> */}
             <div className="post-comments"> 
                 {post.comment.map(comment => (
                     <CommentItem key={comment._id} comment={comment} postId={post._id} />
