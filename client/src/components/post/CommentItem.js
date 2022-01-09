@@ -19,7 +19,7 @@ const CommentItem = ({
                 <span> posted on: {formatDate(date)}</span>
                 {/* {auth?.user?._id && user == auth.user._id && (
                 <span className="postdelete">
-                <Link to={`/feed/${_id}`} onClick={e => deleteCommentPost(_id)} className="postdelete">delete</Link> 
+                <Link to={`/feed/${_id}`} onClick={e => deleteCommentPost(postId, _id)} className="postdelete">delete</Link> 
                 </span>
                 )}  */}
             </p>
