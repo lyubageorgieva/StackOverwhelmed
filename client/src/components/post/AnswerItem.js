@@ -27,22 +27,20 @@ const AnswerItem = ({
             <div className="poster">
                 <a href="#!" className="username">
                     <img src={smallLogo} atl="user profile picture" className="user-profile-picture"/>
-                    u/<span>so_{name}</span>
+                    u/<span>{name}</span>
                 </a>
                 <span className="date-posted-answ"> posted on: {formatDate(date)}</span>
             </div>
 
-            {/* TODO, FIX COMMENTS ON ANSWERS!!! CODE IS COMMENTED FOR NOW */}
-
-            {/* <div className="answer-comments">
-                {post.answer.commentANSW.map(commentANSW => (
-                    <CommentAnswerItem key={commentANSW._id} commentANSW={commentANSW} postId={post._id} answerId={answer._id} />
+            <div className="answer-comments">
+                {commentANSW.map(commentANSW => (
+                    <CommentAnswerItem key={commentANSW._id} commentANSW={commentANSW} postId={postId} answerId={_id} />
                 ))}
             </div>
 
             <div className="add-comment">
-                <CommentAnswerForm postId={post._id} answerId={answer._id}/>
-            </div> */}
+                <CommentAnswerForm postId={postId} answerId={_id}/>
+            </div>
 
         </div>
     </section>
