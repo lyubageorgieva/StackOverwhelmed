@@ -1,16 +1,15 @@
-# SOEN341
 # Team Members
-Format: Full name | GitHub name | Student ID
-* Allan Paul Lopez | allanation | 40000945
-* Matthieu Pourrat | MatthieuPourrat | 40089209
-* Argiro Skokos | SimplyRed900 | 40126415
-* Nicholas Werugia | NicholasWahome | 40131956
-* Kenny Dao | KungFuKennyOG | 40166523
-* Rudy Zoghaib | gucciz7 | 40025399
-* Shawn Gorman | gormshaw23 | 40157925
-* Lyuba Georgieva | lyubageorgieva | 40173739
+Format: Full name | GitHub name 
+* Allan Paul Lopez | allanation 
+* Matthieu Pourrat | MatthieuPourrat
+* Argiro Skokos | SimplyRed900
+* Nicholas Werugia | NicholasWahome
+* Kenny Dao | KungFuKennyOG
+* Rudy Zoghaib | gucciz7
+* Shawn Gorman | gormshaw23
+* Lyuba Georgieva | lyubageorgieva
 # Team Lead
-* Lyuba Georgieva | lyubageorgieva | 40173739
+* Lyuba Georgieva | lyubageorgieva
 # Objective
 Implement a simplified version of Stack Overflow (Q&A website).
 # Description
