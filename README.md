@@ -1,4 +1,5 @@
 # Team Members
+
 Format: Full name | GitHub name 
 * Allan Paul Lopez | allanation 
 * Matthieu Pourrat | MatthieuPourrat
@@ -25,5 +26,5 @@ Stack Overflow is a platform used to be able to ask or respond to coding questio
 Using web development framework MERN stack
 * Front End: HTML/CSS/React.JS
 * Back End: Node.JS/Express.JS
-* Database: MongoDB
+* Database: MongoDB 
 
