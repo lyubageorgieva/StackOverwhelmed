@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
-import FeedIndex from './components/layout/Feed'; 
 import indexFeatures from './components/layout/indexFeatures';
-import Question from './components/layout/Question';
 import Alert from './components/layout/Alert'; 
 import Account from './components/account/Account'; 
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -51,10 +49,6 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Header} />
         </Switch>
-
-        {/* <Switch>
-          <Route exact path="/" component={FeedIndex} />
-        </Switch>  */}
         
         <Switch>
           <Route exact path="/" component={indexFeatures} />
